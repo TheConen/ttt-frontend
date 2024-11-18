@@ -2,6 +2,8 @@ printWidth: 140
 tabWidth: 4
 endOfLine: auto # EOL is handled by Git via .gitattributes
 useTabs: false
+plugins:
+    - "prettier-plugin-tailwindcss"
 overrides:
   - files:
       - "*.js"
