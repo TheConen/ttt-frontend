@@ -1,12 +1,16 @@
-<mat-toolbar>
-    <img src="/logo.png" alt="Tactical Training Team Logo" class="m-32">
-    <button mat-button>Home</button>
-    <button mat-button>Events</button>
-    <button mat-button>Discord</button>
-    <button mat-button>TS3</button>
-    <button mat-button>Wiki</button>
-    <button mat-button>Über uns</button>
-    <button mat-button>Intern</button>
+<mat-toolbar role="heading">
+    <a routerLink="/">
+        <img src="/logo.png" alt="Tactical Training Team Logo" class="m-16">
+    </a>
+    <nav>
+        <a mat-button routerLink="/" class="m-2">Home</a>
+        <a mat-button routerLink="/events" class="m-2">Events</a>
+        <a mat-button href="https://discord.tacticalteam.de/" target="_blank" class="m-2">Discord</a>
+        <a mat-button href="ts3server://ts3.tacticalteam.de" class="m-2">TS3</a>
+        <a mat-button href="https://wiki.tacticalteam.de/" target="_blank" class="m-2">Wiki</a>
+        <a mat-button routerLink="ueber-uns" class="m-2">Über uns</a>
+        <a mat-button routerLink="intern" class="m-2">Intern</a>
+    </nav>
     <span class="flex-auto"></span>
-    <button mat-raised-button class="m-32">Jetzt mitmachen!</button>
+    <button mat-fab extended class="m-16">Jetzt mitmachen!</button>
 </mat-toolbar>
