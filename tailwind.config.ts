@@ -5,5 +5,5 @@ export default {
     content: ['./src/**/*.{html,ts}'],
     theme: tttTailwindTheme,
     // eslint-disable-next-line @typescript-eslint/no-require-imports
-    plugins: [require('tailwindcss-primeui')],
+    plugins: [require('tailwindcss-primeui'), require('@tailwindcss/typography')],
 };
