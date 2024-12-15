@@ -1,2 +1,13 @@
-<ttt-header></ttt-header>
-<router-outlet />
+<div class="dark flex min-h-screen flex-col bg-tttGray">
+    <ttt-header></ttt-header>
+
+    <div class="flex flex-1 flex-col sm:flex-row">
+        <nav class="order-first sm:w-64">Sidebar</nav>
+        <main class="flex-1">
+            <router-outlet />
+        </main>
+        <aside class="sm:w-64">Right Sidebar</aside>
+    </div>
+
+    <ttt-footer></ttt-footer>
+</div>
