@@ -1,17 +1,18 @@
 import { definePreset } from '@primeng/themes';
 import Aura from '@primeng/themes/aura';
 import { tttGrayPalette, tttRedPalette, tttWhite } from './themes.config';
+import { ThemeType } from 'primeng/config';
 
 // When this is in the same file as the tailwind theme config, compilation will fail
-export const tttPrimeNgTheme = {
+export const tttPrimeNgTheme: ThemeType = {
     options: {
+        darkModeSelector: '.dark',
         cssLayer: {
             name: 'primeng',
             order: 'tailwind-base, primeng, tailwind-utilities',
         },
     },
     preset: definePreset(Aura, {
-        darkModeSelector: '.dark',
         primitive: {
             red: tttRedPalette,
             gray: tttGrayPalette,
@@ -33,7 +34,7 @@ export const tttPrimeNgTheme = {
             colorScheme: {
                 light: {
                     surface: {
-                        0: tttWhite,
+                        0: '{gray.0}',
                         50: '{gray.50}',
                         100: '{gray.100}',
                         200: '{gray.200}',
@@ -48,6 +49,34 @@ export const tttPrimeNgTheme = {
                     },
                     primary: {
                         color: '{primary.500}',
+                        contrastColor: '{surface.900}',
+                    },
+                    highlight: {
+                        color: '{primary.700}',
+                    },
+                    formField: {
+                        focusBorderColor: '{primary.color}',
+                        floatLabelFocusColor: '{primary.color}',
+                        floatLabelActiveColor: '{primary.color}',
+                    },
+                    list: {
+                        option: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                            },
+                        },
+                    },
+                    navigation: {
+                        item: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                                activeColor: '{primary.500}',
+                            },
+                        },
+                        submenuIcon: {
+                            focusColor: '{primary.500}',
+                            activeColor: '{primary.500}',
+                        },
                     },
                 },
                 dark: {
@@ -67,6 +96,34 @@ export const tttPrimeNgTheme = {
                     },
                     primary: {
                         color: '{primary.500}',
+                        contrastColor: '{surface.0}',
+                    },
+                    highlight: {
+                        color: '{primary.300}',
+                    },
+                    formField: {
+                        focusBorderColor: '{primary.color}',
+                        floatLabelFocusColor: '{primary.color}',
+                        floatLabelActiveColor: '{primary.color}',
+                    },
+                    list: {
+                        option: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                            },
+                        },
+                    },
+                    navigation: {
+                        item: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                                activeColor: '{primary.500}',
+                            },
+                        },
+                        submenuIcon: {
+                            focusColor: '{primary.500}',
+                            activeColor: '{primary.500}',
+                        },
                     },
                 },
             },
