@@ -24,21 +24,25 @@ export class HeaderComponent implements OnInit {
                 label: 'Events',
                 icon: 'pi pi-calendar',
                 styleClass: 'font-heading',
+                url: 'https://events.tacticalteam.de'
             },
             {
                 label: 'Discord',
                 icon: 'pi pi-discord',
                 styleClass: 'font-heading',
+                url: 'https://discord.tacticalteam.de'
             },
             {
                 label: 'TS3',
                 icon: 'pi pi-microphone',
                 styleClass: 'font-heading',
+                url: 'ts3server://ts3.tacticalteam.de'
             },
             {
                 label: 'Wiki',
                 icon: 'pi pi-book',
                 styleClass: 'font-heading',
+                url: 'https://wiki.tacticalteam.de'
             },
             {
                 label: 'Medien',
@@ -60,6 +64,7 @@ export class HeaderComponent implements OnInit {
                     {
                         label: 'Shop',
                         styleClass: 'font-heading',
+                        url: 'https://tacticalteam.myspreadshop.de'
                     },
                 ],
             },
