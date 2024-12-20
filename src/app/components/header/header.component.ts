@@ -41,27 +41,24 @@ export class HeaderComponent implements OnInit {
                 styleClass: 'font-heading',
             },
             {
+                label: 'Medien',
+                icon: 'pi pi-images',
+                styleClass: 'font-heading',
+            },
+            {
                 label: 'Über uns',
                 styleClass: 'font-heading',
                 items: [
                     {
-                        label: 'Ansprechpartner',
+                        label: 'Aufstellung',
                         styleClass: 'font-heading',
                     },
                     {
-                        label: 'Livestreams',
-                        styleClass: 'font-heading',
-                    },
-                    {
-                        label: 'Newsletter',
+                        label: 'Unsere Geschichte',
                         styleClass: 'font-heading',
                     },
                     {
                         label: 'Shop',
-                        styleClass: 'font-heading',
-                    },
-                    {
-                        label: '10 Jahre TTT',
                         styleClass: 'font-heading',
                     },
                 ],
