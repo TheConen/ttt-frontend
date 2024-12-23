@@ -51,18 +51,22 @@ export class HeaderComponent implements OnInit {
             },
             {
                 label: 'Über uns',
+                icon: 'pi pi-info-circle',
                 styleClass: 'font-heading',
                 items: [
                     {
                         label: 'Aufstellung',
+                        icon: 'pi pi-sitemap',
                         styleClass: 'font-heading',
                     },
                     {
                         label: 'Unsere Geschichte',
+                        icon: 'pi pi-history',
                         styleClass: 'font-heading',
                     },
                     {
                         label: 'Shop',
+                        icon: 'pi pi-shopping-bag',
                         styleClass: 'font-heading',
                         url: 'https://tacticalteam.myspreadshop.de'
                     },
