@@ -1,23 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+/* Global styles and Tailwind CSS v4 setup */
 @import "primeicons/primeicons.css";
-@layer tailwind-base, primeng, tailwind-utilities;
+@import "tailwindcss";
+@plugin "tailwindcss-primeui";
 
-@layer tailwind-base {
-    @tailwind base;
+/* Tailwind v4: define design tokens with @theme to preserve the custom theme */
+@theme {
+  /* Fonts */
+  --font-sans: Ubuntu, ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Ubuntu Mono", ui-monospace, monospace;
+  --font-heading: Rubik, ui-sans-serif, system-ui, sans-serif;
+  --font-logo: Raleway, ui-sans-serif, system-ui, sans-serif;
+
+  /* Colors */
+  --color-tttWhite: #f5f3f2;
+  --color-tttBlack: #191919;
+  --color-tttGreen: #c6cfba;
+
+  /* tttRed palette */
+  --color-tttRed-0: var(--color-tttWhite);
+  --color-tttRed-50: #faf3f4;
+  --color-tttRed-100: #e8c5cc;
+  --color-tttRed-200: #d798a4;
+  --color-tttRed-300: #c56a7c;
+  --color-tttRed-400: #b33d53;
+  --color-tttRed: #a10f2b; /* DEFAULT */
+  --color-tttRed-500: #a10f2b;
+  --color-tttRed-600: #890d25;
+  --color-tttRed-700: #710b1e;
+  --color-tttRed-800: #590818;
+  --color-tttRed-900: #400611;
+  --color-tttRed-950: #28040b;
+
+  /* tttGray palette */
+  --color-tttGray-0: var(--color-tttWhite);
+  --color-tttGray-50: #f5f5f5;
+  --color-tttGray-100: #d1d1d1;
+  --color-tttGray-200: #adadac;
+  --color-tttGray-300: #898987;
+  --color-tttGray-400: #646463;
+  --color-tttGray: #40403e; /* DEFAULT */
+  --color-tttGray-500: #40403e;
+  --color-tttGray-600: #363635;
+  --color-tttGray-700: #2d2d2b;
+  --color-tttGray-800: #232322;
+  --color-tttGray-900: #191919;
+  --color-tttGray-950: #101010;
 }
 
-@layer tailwind-utilities {
-    @tailwind components;
-    @tailwind utilities;
-}
-
+/* Global heading font rule */
 @layer base {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
-        @apply font-heading;
-    }
+  h1, h2, h3, h4, h5, h6 { @apply font-heading; }
 }

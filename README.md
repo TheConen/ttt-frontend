@@ -1,6 +1,6 @@
 # TttFrontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.12.
+This project is using [Angular CLI](https://github.com/angular/angular-cli) version 20.x, PrimeNG 20 and Tailwind CSS 4.
 
 ## Development server
 
