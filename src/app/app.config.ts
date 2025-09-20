@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { providePrimeNG } from 'primeng/config';
-import { tttPrimeNgTheme } from './themes-primeng.config';
+import { tttPrimeNgTheme } from './themes.config';
 
 export const appConfig: ApplicationConfig = {
     providers: [

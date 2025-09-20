@@ -1,4 +1,6 @@
-import { PluginAPI } from 'tailwindcss/types/config';
+import { ThemeType } from 'primeng/config';
+import { definePreset } from '@primeuix/themes';
+import Aura from '@primeuix/themes/aura';
 
 export const tttRed = '#a10f2b';
 export const tttGray = '#40403e';
@@ -36,64 +38,129 @@ export const tttGrayPalette = {
     950: '#101010',
 };
 
-export const tttTailwindTheme = {
-    extend: {
-        colors: {
-            tttRed: { ...tttRedPalette, DEFAULT: tttRed },
-            tttGray: { ...tttGrayPalette, DEFAULT: tttGray },
-            tttWhite,
-            tttBlack,
-            tttGreen,
+export const tttPrimeNgTheme: ThemeType = {
+    options: {
+        darkModeSelector: '.dark',
+        cssLayer: {
+            name: 'primeng',
+            order: 'theme, base, primeng',
         },
-        fontFamily: {
-            sans: ['Ubuntu', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            mono: ['Ubuntu Mono', 'ui-monospace', 'monospace'],
-            heading: ['Rubik', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-            logo: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+    },
+    preset: definePreset(Aura, {
+        primitive: {
+            red: tttRedPalette,
+            gray: tttGrayPalette,
         },
-        typography: (theme: PluginAPI['theme']) => ({
-            ttt: {
-                css: {
-                    // TODO These colors probably need to be tweaked a bit, currently it's just a copy of
-                    // https://github.com/tailwindlabs/tailwindcss-typography/blob/main/src/styles.js#L1089 using tttGrayPalette instead of default tailwind gray palette
-                    '--tw-prose-body': theme('colors.tttGray[700]'),
-                    '--tw-prose-headings': theme('colors.tttGray[900]'),
-                    '--tw-prose-lead': theme('colors.tttGray[600]'),
-                    '--tw-prose-links': theme('colors.tttGray[900]'),
-                    '--tw-prose-bold': theme('colors.tttGray[900]'),
-                    '--tw-prose-counters': theme('colors.tttGray[500]'),
-                    '--tw-prose-bullets': theme('colors.tttGray[300]'),
-                    '--tw-prose-hr': theme('colors.tttGray[200]'),
-                    '--tw-prose-quotes': theme('colors.tttGray[900]'),
-                    '--tw-prose-quote-borders': theme('colors.tttGray[200]'),
-                    '--tw-prose-captions': theme('colors.tttGray[500]'),
-                    '--tw-prose-kbd': theme('colors.tttGray[900]'),
-                    '--tw-prose-kbd-shadows': theme('colors.tttGray[900])'),
-                    '--tw-prose-code': theme('colors.tttGray[900]'),
-                    '--tw-prose-pre-code': theme('colors.tttGray[200]'),
-                    '--tw-prose-pre-bg': theme('colors.tttGray[800]'),
-                    '--tw-prose-th-borders': theme('colors.tttGray[300]'),
-                    '--tw-prose-td-borders': theme('colors.tttGray[200]'),
-                    '--tw-prose-invert-body': theme('colors.tttGray[300]'),
-                    '--tw-prose-invert-headings': theme('colors.tttWhite'),
-                    '--tw-prose-invert-lead': theme('colors.tttGray[400]'),
-                    '--tw-prose-invert-links': theme('colors.tttWhite'),
-                    '--tw-prose-invert-bold': theme('colors.tttWhite'),
-                    '--tw-prose-invert-counters': theme('colors.tttGray[400]'),
-                    '--tw-prose-invert-bullets': theme('colors.tttGray[600]'),
-                    '--tw-prose-invert-hr': theme('colors.tttGray[700]'),
-                    '--tw-prose-invert-quotes': theme('colors.tttGray[100]'),
-                    '--tw-prose-invert-quote-borders': theme('colors.tttGray[700]'),
-                    '--tw-prose-invert-captions': theme('colors.tttGray[400]'),
-                    '--tw-prose-invert-kbd': theme('colors.tttWhite'),
-                    '--tw-prose-invert-kbd-shadows': theme('colors.tttWhite'),
-                    '--tw-prose-invert-code': theme('colors.tttWhite'),
-                    '--tw-prose-invert-pre-code': theme('colors.tttGray[300]'),
-                    '--tw-prose-invert-pre-bg': 'rgb(0 0 0 / 50%)',
-                    '--tw-prose-invert-th-borders': theme('colors.tttGray[600]'),
-                    '--tw-prose-invert-td-borders': theme('colors.tttGray[700]'),
+        semantic: {
+            primary: {
+                50: '{red.50}',
+                100: '{red.100}',
+                200: '{red.200}',
+                300: '{red.300}',
+                400: '{red.400}',
+                500: '{red.500}',
+                600: '{red.600}',
+                700: '{red.700}',
+                800: '{red.800}',
+                900: '{red.900}',
+                950: '{red.950}',
+            },
+            colorScheme: {
+                light: {
+                    surface: {
+                        0: '{gray.0}',
+                        50: '{gray.50}',
+                        100: '{gray.100}',
+                        200: '{gray.200}',
+                        300: '{gray.300}',
+                        400: '{gray.400}',
+                        500: '{gray.500}',
+                        600: '{gray.600}',
+                        700: '{gray.700}',
+                        800: '{gray.800}',
+                        900: '{gray.900}',
+                        950: '{gray.950}',
+                    },
+                    primary: {
+                        color: '{primary.500}',
+                        contrastColor: '{surface.900}',
+                    },
+                    highlight: {
+                        color: '{primary.700}',
+                    },
+                    formField: {
+                        focusBorderColor: '{primary.color}',
+                        floatLabelFocusColor: '{primary.color}',
+                        floatLabelActiveColor: '{primary.color}',
+                    },
+                    list: {
+                        option: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                            },
+                        },
+                    },
+                    navigation: {
+                        item: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                                activeColor: '{primary.500}',
+                            },
+                        },
+                        submenuIcon: {
+                            focusColor: '{primary.500}',
+                            activeColor: '{primary.500}',
+                        },
+                    },
+                },
+                dark: {
+                    surface: {
+                        0: tttWhite,
+                        50: '{gray.50}',
+                        100: '{gray.100}',
+                        200: '{gray.200}',
+                        300: '{gray.300}',
+                        400: '{gray.400}',
+                        500: '{gray.500}',
+                        600: '{gray.600}',
+                        700: '{gray.700}',
+                        800: '{gray.800}',
+                        900: '{gray.900}',
+                        950: '{gray.950}',
+                    },
+                    primary: {
+                        color: '{primary.500}',
+                        contrastColor: '{surface.0}',
+                    },
+                    highlight: {
+                        color: '{primary.300}',
+                    },
+                    formField: {
+                        focusBorderColor: '{primary.color}',
+                        floatLabelFocusColor: '{primary.color}',
+                        floatLabelActiveColor: '{primary.color}',
+                    },
+                    list: {
+                        option: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                            },
+                        },
+                    },
+                    navigation: {
+                        item: {
+                            icon: {
+                                focusColor: '{primary.500}',
+                                activeColor: '{primary.500}',
+                            },
+                        },
+                        submenuIcon: {
+                            focusColor: '{primary.500}',
+                            activeColor: '{primary.500}',
+                        },
+                    },
                 },
             },
-        }),
-    },
+        },
+    }),
 };
