@@ -276,8 +276,17 @@ export class DatenschutzComponent {
       content: {
         type: 'text',
         paragraphs: [
-          `Diese Datenschutzerklärung ist aktuell gültig und hat den Stand ${this.lastUpdated}.`,
-          'Basierend auf der Datenschutzerklärung von tacticalteam.de'
+          `Diese Datenschutzerklärung ist aktuell gültig und hat den Stand ${this.lastUpdated}.`
+        ]
+      }
+    },
+    {
+      id: 'disclaimer',
+      title: 'Haftungsausschluss',
+      content: {
+        type: 'text',
+        paragraphs: [
+          'This website is not affiliated or authorized by Bohemia Interactive a.s. Bohemia Interactive, ARMA, DAYZ and all associated logos and designs are trademarks or registered trademarks of Bohemia Interactive a.s.'
         ]
       }
     }
@@ -321,8 +330,7 @@ export class DatenschutzComponent {
 
   // Helper methods for template
   hasSpecialLink(section: DatenschutzSection, linkType: string): boolean {
-    return section.id === 'scope' && linkType === 'slotbot' ||
-           section.id === 'last-updated' && linkType === 'tacticalteam';
+    return section.id === 'scope' && linkType === 'slotbot';
   }
 
   getDataList(content: string): string[] {

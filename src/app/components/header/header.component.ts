@@ -61,9 +61,16 @@ export class HeaderComponent implements OnInit {
                         styleClass: 'font-heading',
                     },
                     {
-                        label: 'Unsere Geschichte',
+                        label: 'Event-Replay',
+                        icon: 'pi pi-play',
+                        styleClass: 'font-heading',
+                        url: 'https://replay.tacticalteam.de'
+                    },
+                    {
+                        label: 'TTT-Chronik',
                         icon: 'pi pi-history',
                         styleClass: 'font-heading',
+                        routerLink: ['/chronik']
                     },
                     {
                         label: 'Shop',

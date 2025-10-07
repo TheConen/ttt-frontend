@@ -1,0 +1,155 @@
+<!-- TTT-Chronik Page -->
+<section class="min-h-screen bg-tttBlack py-8">
+  <div class="ttt-page-container">
+    <!-- TTT Geschichte Header -->
+    <div class="mb-8 ttt-text-center">
+      <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
+      <p class="ttt-hero-text text-tttGray-200 mb-4">{{ pageSubtitle }}</p>
+    </div>
+
+    <!-- Warum gibt es ein TTT? Section -->
+    <div class="mb-8">
+      <div class="ttt-content-card py-6 px-6">
+        
+        <!-- Section Header -->
+        <div class="mb-4 border-b border-tttGray-700 pb-3">
+          <div class="flex items-center gap-3 mb-2">
+            <i class="pi pi-question-circle text-tttRed text-xl"></i>
+            <h2 class="text-2xl font-bold text-tttWhite">{{ historySection.title }}</h2>
+          </div>
+          <p class="text-sm text-tttRed">{{ historySection.subtitle }}</p>
+        </div>
+        
+        <!-- Content -->
+        <div class="text-base text-tttGray-300 space-y-4 leading-relaxed">
+          <p *ngFor="let paragraph of historySection.paragraphs; trackBy: trackByIndex">
+            {{ paragraph }}
+          </p>
+          
+          <p class="text-tttWhite font-medium">
+            <i class="pi pi-user text-tttRed mr-2"></i>
+            Gegründet wurde das TTT von <strong>{{ founderInfo.name }}</strong>, der im {{ founderInfo.retirementDate }} von seiner 
+            Leitungsposition zurückgetreten ist.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline Section -->
+    <div class="mb-8">
+      <div class="mb-6 ttt-text-center">
+        <h2 class="ttt-section-title mb-2">TTT Timeline</h2>
+        <p class="ttt-description-text">Meilensteine des Tactical Training Teams</p>
+      </div>
+
+      <!-- Timeline Container - Sehr kompakte Karten mit Ausklapp-Effekt -->
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+        <div 
+          *ngFor="let event of timelineEvents; trackBy: trackByEvent" 
+          class="group relative bg-tttGray-800/50 rounded-lg border border-tttGray-600/30 p-3 transition-all duration-300 hover:border-tttRed/50 hover:bg-tttGray-800/80 cursor-pointer overflow-hidden">
+          
+          <!-- Kompakter Event Header -->
+          <div class="flex flex-col items-center text-center mb-2">
+            <!-- Timeline Icon -->
+            <div class="flex h-8 w-8 items-center justify-center rounded border-2 shadow-sm mb-2 flex-shrink-0"
+                 [class]="getEventTypeColor(event.type)">
+              <i [class]="getEventIconClasses(event.icon)" class="text-xs"></i>
+            </div>
+            
+            <!-- Title und Date -->
+            <h3 class="text-base font-bold text-tttWhite group-hover:text-tttRed transition-colors leading-tight">
+              {{ event.title }}
+            </h3>
+            <p class="text-sm text-tttRed font-medium mt-1">{{ event.date }}</p>
+          </div>
+          
+          <!-- Grundlegende Info - Immer sichtbar -->
+          <div class="mb-2">
+            <!-- Trennlinie -->
+            <div class="h-px bg-gradient-to-r from-transparent via-tttRed/30 to-transparent mb-2"></div>
+            
+            <!-- Mission Description -->
+            <p class="text-sm text-tttGray-300 mb-2 leading-relaxed">{{ event.description }}</p>
+          </div>
+          
+          <!-- Weitere Details - Ausklappbar beim Hover -->
+          <div *ngIf="event.details && event.details.length > 0" 
+               class="transition-all duration-500 ease-in-out max-h-0 group-hover:max-h-96 overflow-hidden">
+            
+            <!-- Details Liste -->
+            <div class="space-y-1 pt-1">
+              <h4 class="text-sm font-semibold text-tttWhite uppercase tracking-wide">Weitere Details:</h4>
+              <ul class="space-y-1">
+                <li *ngFor="let detail of event.details; trackBy: trackByIndex" 
+                    class="flex items-start gap-2 text-sm text-tttGray-400">
+                  <i class="pi pi-angle-right text-tttRed mt-0.5 text-sm flex-shrink-0"></i>
+                  <span>{{ detail }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <!-- Type Badge - Klein und dezent -->
+          <div class="absolute top-2 right-2">
+            <span class="inline-block rounded px-2 py-1 text-xs font-medium border opacity-50"
+                  [class]="getEventTypeColor(event.type)">
+              {{ getEventTypeLabel(event.type) }}
+            </span>
+          </div>
+          
+          <!-- Hover Glow Effect -->
+          <div class="absolute inset-0 rounded-lg bg-gradient-to-br from-tttRed/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mission Briefing - Fiktive Geschichte -->
+    <div class="mb-8">
+      <div class="ttt-content-card py-4 px-5">
+        
+        <!-- Section Header -->
+        <div class="mb-3 border-b border-tttRed/30 pb-2">
+          <div class="flex items-center gap-2 mb-2">
+            <i class="pi pi-shield text-tttRed"></i>
+            <h2 class="text-xl font-bold text-tttWhite">{{ fictionSection.title }}</h2>
+          </div>
+          <p class="text-sm text-tttRed">{{ fictionSection.subtitle }}</p>
+        </div>
+        
+        <!-- Fiktive Geschichte Content -->
+        <div class="text-sm text-tttGray-300 space-y-3">
+          <div class="mt-4 flex items-center gap-2">
+            <a [href]="fictionSection.documentationLink" 
+               target="_blank"
+               class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-3 py-1 text-xs font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
+              <i class="pi pi-external-link"></i>
+              Vollständige Dokumentation
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="mt-8 ttt-text-center">
+      <div class="ttt-content-card py-4 px-5">
+        <h2 class="text-xl font-bold text-tttWhite mb-2">{{ callToAction.title }}</h2>
+        <p class="text-sm text-tttGray-300 mb-4">
+          {{ callToAction.subtitle }}
+        </p>
+        <div class="flex flex-col sm:flex-row gap-3 justify-center">
+          <a *ngFor="let link of callToAction.links; trackBy: trackByIndex"
+             [href]="link.url || null"
+             [routerLink]="link.routerLink || null"
+             [attr.target]="link.url ? '_blank' : null"
+             [class]="link.isPrimary ? 
+               'inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30' : 
+               'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20'">
+            <i [class]="'pi ' + link.icon"></i>
+            {{ link.label }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
