@@ -1,0 +1,53 @@
+<!-- Impressum Page -->
+<section class="min-h-screen bg-tttBlack py-12">
+  <div class="ttt-page-container">
+    <!-- Header -->
+    <div class="mb-10 text-center">
+      <h1 class="ttt-page-title">{{ pageTitle }}</h1>
+      <div class="mx-auto mb-4 h-1 w-20 bg-gradient-to-r from-tttRed to-tttRed-600 rounded-full"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="space-y-8">
+      <!-- Dynamic Sections -->
+      <div 
+        *ngFor="let section of impressumSections; trackBy: trackBySection"
+        class="ttt-content-card">
+        
+        <h2 class="ttt-section-title">{{ section.title }}</h2>
+        
+        <!-- Contact Information Template -->
+        <div *ngIf="section.content.type === 'contact'" class="ttt-content-text-compact">
+          <p><strong class="ttt-highlight-text">{{ getContactInfo(section).name }}</strong></p>
+          <p><strong class="ttt-highlight-text">{{ section.id === 'tmg-info' ? 'Kontakt:' : 'E-Mail:' }}</strong> 
+            {{ getContactInfo(section).email.replace('@', '&#64;') }}
+          </p>
+        </div>
+
+        <!-- Disclaimer Template -->
+        <div *ngIf="section.content.type === 'disclaimer'" class="ttt-content-text">
+          <div *ngFor="let disclaimerSection of getDisclaimerSections(section); trackBy: trackByDisclaimer">
+            <h3 class="ttt-subsection-title">{{ disclaimerSection.subtitle }}</h3>
+            <p *ngFor="let paragraph of disclaimerSection.paragraphs; trackBy: trackByIndex">
+              {{ paragraph }}
+            </p>
+          </div>
+          
+          <!-- Source Link -->
+          <div>
+            <h3 class="ttt-subsection-title">Quelle</h3>
+            <p class="ttt-small-text">
+              Quelle: 
+              <a 
+                [href]="sourceLink.url" 
+                target="_blank" 
+                class="ttt-link">
+                {{ sourceLink.label }}
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
