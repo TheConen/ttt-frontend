@@ -1,12 +1,59 @@
-<div class="flex min-h-screen flex-col bg-tttGray">
-    <ttt-header></ttt-header>
+<div class="flex min-h-screen flex-col bg-tttBlack text-tttWhite">
+    <div class="relative z-50">
+        <ttt-header></ttt-header>
+    </div>
 
     <div class="flex flex-1 flex-col md:flex-row">
         <main class="flex-1">
             <router-outlet />
         </main>
-        <nav class="order-first md:w-64">Left Sidebar</nav>
-        <aside class="md:w-64">Right Sidebar</aside>
+        <nav class="order-first md:w-64 bg-tttGray-900 border-r border-tttGray-800">
+            <div class="p-6">
+                <h3 class="mb-4 text-lg font-bold text-tttWhite">Left Sidebar</h3>
+                <div class="space-y-3">
+                    <div class="rounded-lg bg-tttGray-800 p-3">
+                        <p class="text-sm text-tttGray-300">Zukünftig: Eventliste anzeigen, darunter TTT-Login. Nach dem Login erscheinen weitere Links für Missions-Upload, SquadXML usw.
+</p>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <aside class="md:w-64 bg-tttGray-900 border-l border-tttGray-800">
+            <div class="p-6">
+                <h3 class="mb-4 text-lg font-bold text-tttWhite">
+                    <i class="pi pi-discord text-[#5865F2] mr-2"></i>
+                    Live Discord
+                </h3>
+                <div class="space-y-3">
+                    <!-- Discord Widget -->
+                    <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 overflow-hidden">
+                        <iframe 
+                            src="https://discord.com/widget?id=121399943393968128&theme=dark" 
+                            width="100%" 
+                            height="400" 
+                            allowtransparency="true" 
+                            frameborder="0" 
+                            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                            class="w-full"
+                            title="TTT Discord Server">
+                        </iframe>
+                    </div>
+                    
+                    <!-- Fallback Discord Link -->
+                    <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 p-4">
+                        <div class="text-center">
+                            <p class="text-sm text-tttGray-300 mb-3">Widget lädt nicht?</p>
+                            <a href="https://discord.tacticalteam.de" 
+                               target="_blank"
+                               class="inline-flex items-center gap-2 rounded-lg bg-[#5865F2] px-4 py-2 text-sm font-medium text-white hover:bg-[#4752C4] transition-colors">
+                                <i class="pi pi-discord"></i>
+                                Discord beitreten
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </aside>
     </div>
 
     <ttt-footer></ttt-footer>
