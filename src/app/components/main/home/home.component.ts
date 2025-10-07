@@ -85,7 +85,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     ];
 
 
-
     // Community statistics
     readonly communityStats: CommunityStats[] = [
         { value: '90+', label: 'Mitglieder', color: 'text-tttRed' },
