@@ -1,0 +1,127 @@
+<!-- Datenschutz Page -->
+<section class="min-h-screen bg-tttBlack py-12">
+  <div class="ttt-page-container">
+    <!-- Header -->
+    <div class="mb-10 text-center">
+      <h1 class="ttt-page-title">{{ pageTitle }}</h1>
+      <div class="mx-auto mb-4 h-1 w-20 bg-gradient-to-r from-tttRed to-tttRed-600 rounded-full"></div>
+    </div>
+
+    <!-- Content -->
+    <div class="space-y-8">
+      <!-- Dynamic Sections -->
+      <div 
+        *ngFor="let section of datenschutzSections; trackBy: trackBySection"
+        class="ttt-content-card">
+        
+        <h2 class="ttt-section-title">{{ section.title }}</h2>
+        
+        <!-- Text Content -->
+        <div *ngIf="section.content.type === 'text'" class="ttt-content-text">
+          <p *ngFor="let paragraph of getTextContent(section).paragraphs; trackBy: trackByIndex">
+            <span *ngIf="!hasSpecialLink(section, 'slotbot') && !hasSpecialLink(section, 'tacticalteam')">{{ paragraph }}</span>
+            
+            <!-- Special handling for links -->
+            <span *ngIf="hasSpecialLink(section, 'slotbot')">
+              {{ paragraph.split('slotbot.de')[0] }}
+              <a [href]="externalLinks.slotbot.url" target="_blank" class="ttt-link">
+                {{ externalLinks.slotbot.label }}
+              </a>
+              {{ paragraph.split('slotbot.de')[1] || '' }}
+            </span>
+            
+            <span *ngIf="hasSpecialLink(section, 'tacticalteam')">
+              {{ paragraph.split('tacticalteam.de')[0] }}
+              <a [href]="externalLinks.tacticalteam.url" target="_blank" class="ttt-link">
+                {{ externalLinks.tacticalteam.label }}
+              </a>
+              {{ paragraph.split('tacticalteam.de')[1] || '' }}
+            </span>
+          </p>
+          
+          <!-- Subsections -->
+          <div *ngFor="let subsection of getTextContent(section).subsections; trackBy: trackByIndex">
+            <h3 class="ttt-subsection-title mt-6">{{ subsection.title }}</h3>
+            <div *ngFor="let content of getSubsectionContent(subsection); trackBy: trackByIndex">
+              <p *ngIf="!content.includes('|')">{{ content }}</p>
+              <ul *ngIf="content.includes('|')" class="list-disc ml-6 space-y-1">
+                <li *ngFor="let item of getDataList(content); trackBy: trackByIndex">{{ item }}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Definitions Content -->
+        <div *ngIf="section.content.type === 'definitions'" class="ttt-content-text">
+          <p>{{ getDefinitionsContent(section).intro }}</p>
+          
+          <div class="space-y-3">
+            <div *ngFor="let definition of getDefinitionsContent(section).definitions; trackBy: trackByDefinition">
+              <h3 class="ttt-subsection-title-compact">{{ definition.number }}. {{ definition.title }}</h3>
+              <p class="ttt-small-text">{{ definition.description }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Cookies Content -->
+        <div *ngIf="section.content.type === 'cookies'" class="ttt-content-text">
+          <p>{{ getCookiesContent(section).intro }}</p>
+          
+          <p>Diese Website nutzt folgende Arten von Cookies, deren Umfang und Funktionsweise im Folgenden erläutert werden:</p>
+          <ul class="list-disc ml-6 space-y-1">
+            <li *ngFor="let type of getCookiesContent(section).types; trackBy: trackByIndex">{{ type }}</li>
+          </ul>
+          
+          <div class="space-y-3 mt-4">
+            <div *ngFor="let detail of getCookiesContent(section).details; trackBy: trackByCookie">
+              <h3 class="ttt-subsection-title">{{ detail.title }}</h3>
+              <p class="ttt-small-text">{{ detail.description }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Newsletter Content -->
+        <div *ngIf="section.content.type === 'newsletter'" class="ttt-content-text">
+          <p *ngFor="let paragraph of getNewsletterContent(section).paragraphs; trackBy: trackByIndex">
+            {{ paragraph }}
+          </p>
+          
+          <h3 class="ttt-subsection-title mt-6">{{ getNewsletterContent(section).provider.name }}</h3>
+          <p>Für den Versand von Newslettern verwenden wir einen externen Dienstleister. Derzeit arbeiten wir mit folgendem Dienstleister zusammen:</p>
+          
+          <div class="bg-tttGray-900 p-4 rounded-lg mt-4">
+            <p class="ttt-small-text">
+              <strong class="ttt-highlight-text">{{ getNewsletterContent(section).provider.name }}</strong><br>
+              {{ getNewsletterContent(section).provider.company }}<br>
+              <span *ngFor="let line of getNewsletterContent(section).provider.address; trackBy: trackByIndex">
+                {{ line }}<br>
+              </span>
+              Tel.: {{ getNewsletterContent(section).provider.phone }}<br>
+              E-Mail: {{ getNewsletterContent(section).provider.email.replace('@', '&#64;') }}
+            </p>
+          </div>
+          
+          <p>Dabei werden folgende Daten an {{ getNewsletterContent(section).provider.name }} übermittelt:</p>
+          <ul class="list-disc ml-6 space-y-1">
+            <li *ngFor="let data of getNewsletterContent(section).dataTransmitted; trackBy: trackByIndex">{{ data }}</li>
+          </ul>
+          
+          <p>Weitere Informationen können Sie der Datenschutzerklärung von {{ getNewsletterContent(section).provider.name }} entnehmen welche unter 
+            <a [href]="externalLinks.mailchimp.url" target="_blank" class="ttt-link">
+              {{ externalLinks.mailchimp.label }}
+            </a> abrufbar ist.
+          </p>
+        </div>
+        
+        <!-- Rights Content -->
+        <div *ngIf="section.content.type === 'rights'" class="ttt-content-text">
+          <p><strong class="ttt-highlight-text">{{ getRightsContent(section).intro }}</strong></p>
+          <ul class="list-disc ml-6 space-y-1">
+            <li *ngFor="let right of getRightsContent(section).rights; trackBy: trackByIndex">{{ right }}</li>
+          </ul>
+          <p>{{ getRightsContent(section).outro }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

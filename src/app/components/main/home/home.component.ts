@@ -68,7 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         {
             image: '/img/home-banner/home-banner3.webp',
             title: 'STARKE <span class="text-tttRed">COMMUNITY</span>',
-            subtitle: 'Über 90 aktive Community-Mitglieder, regelmäßige Missionen und eine europaweite vernetzte MilSim-Community erwarten dich.'
+            subtitle: 'Über 80 aktive Community-Mitglieder, regelmäßige Missionen und eine europaweite vernetzte MilSim-Community erwarten dich.'
         }
     ];
 
@@ -87,9 +87,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // Community statistics
     readonly communityStats: CommunityStats[] = [
-        { value: '90+', label: 'Mitglieder', color: 'text-tttRed' },
+        { value: '80+', label: 'Mitglieder', color: 'text-tttGreen' },
         { value: '2013', label: 'Gegründet', color: 'text-tttGreen' },
-        { value: '2x', label: 'Events/Woche', color: 'text-tttRed' }
+        { value: '2x', label: 'Events/Woche', color: 'text-tttGreen' }
     ];
 
     // CTA buttons data
