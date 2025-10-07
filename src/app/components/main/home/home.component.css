@@ -1,0 +1,28 @@
+/* Gallery Animation Styles */
+.gallery-container {
+    mask-image: linear-gradient(
+        to right,
+        transparent,
+        black 5%,
+        black 95%,
+        transparent
+    );
+}
+
+.gallery-track {
+    animation: scroll-horizontal 30s linear infinite;
+    width: max-content;
+}
+
+.gallery-track:hover {
+    animation-play-state: paused;
+}
+
+@keyframes scroll-horizontal {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
