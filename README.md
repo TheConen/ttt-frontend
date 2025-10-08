@@ -1,22 +1,45 @@
-# TttFrontend
+# TTT Frontend
 
-This project is using [Angular CLI](https://github.com/angular/angular-cli) version 20.x, PrimeNG 20 and Tailwind CSS 4.
+Angular 20 application for Tactical Training Team website.
 
-## Development server
+## Project Structure
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```
+src/app/
+├── core/
+│   ├── services/          # Singleton services
+│   ├── guards/           # Route guards
+│   ├── interceptors/     # HTTP interceptors
+│   └── config/          # Application configuration
+├── shared/
+│   └── utils/           # Utility functions
+└── components/          # Feature components
+```
 
-## Code scaffolding
+## Development
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+pnpm install
+pnpm run start
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+pnpm run build
+```
 
-## Running unit tests
+## Documentation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- [Security](docs/security.md) - Security implementation details
+- [CSP Management](docs/csp-management.md) - Content Security Policy configuration
+
+## Technology Stack
+
+- Angular 20
+- PrimeNG 20
+- TailwindCSS 4
+- TypeScript
 
 ## Running end-to-end tests
 
