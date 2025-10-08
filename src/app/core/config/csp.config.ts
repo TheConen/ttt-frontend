@@ -141,7 +141,6 @@ export const PRODUCTION_CSP_CONFIG: Partial<CSPConfig> = {
   
   styleSrc: [
     "'self'",
-    "'sha256-hash'", // Replace with actual hash of inline styles
     TRUSTED_SOURCES.google.fonts,
     TRUSTED_SOURCES.discord.main
   ]
