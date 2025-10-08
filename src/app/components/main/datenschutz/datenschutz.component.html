@@ -4,7 +4,7 @@
     <!-- Header -->
     <div class="mb-8 ttt-text-center">
       <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
-      <p class="ttt-hero-text text-tttGray-200 mb-4">Datenschutzbestimmungen</p>
+      <p class="ttt-hero-text text-tttGray-200 mb-4">{{ pageSubtitle }}</p>
     </div>
 
     <!-- Content -->
@@ -67,7 +67,7 @@
         <div *ngIf="section.content.type === 'cookies'" class="ttt-content-text">
           <p>{{ getCookiesContent(section).intro }}</p>
           
-          <p>Diese Website nutzt folgende Arten von Cookies, deren Umfang und Funktionsweise im Folgenden erläutert werden:</p>
+          <p>{{ staticTexts.cookiesIntro }}</p>
           <ul class="list-disc ml-6 space-y-1">
             <li *ngFor="let type of getCookiesContent(section).types; trackBy: trackByIndex">{{ type }}</li>
           </ul>
@@ -87,7 +87,7 @@
           </p>
           
           <h3 class="ttt-subsection-title mt-6">{{ getNewsletterContent(section).provider.name }}</h3>
-          <p>Für den Versand von Newslettern verwenden wir einen externen Dienstleister. Derzeit arbeiten wir mit folgendem Dienstleister zusammen:</p>
+          <p>{{ staticTexts.newsletterIntro }}</p>
           
           <div class="bg-tttGray-900 p-4 rounded-lg mt-4">
             <p class="ttt-small-text">

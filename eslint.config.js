@@ -16,6 +16,14 @@ module.exports = tseslint.config(
         ],
         processor: angular.processInlineTemplates,
         rules: {
+            // Security rules
+            'no-eval': 'error',
+            'no-implied-eval': 'error',
+            'no-new-func': 'error',
+            'no-script-url': 'error',
+            'no-unsafe-innerHTML': 'off', // We handle this with sanitization service
+            '@typescript-eslint/no-explicit-any': 'warn',
+            
             '@angular-eslint/directive-selector': [
                 'error',
                 {

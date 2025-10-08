@@ -4,7 +4,7 @@
     <!-- Header -->
     <div class="mb-8 ttt-text-center">
       <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
-      <p class="ttt-hero-text text-tttGray-200 mb-4">Rechtliche Informationen</p>
+      <p class="ttt-hero-text text-tttGray-200 mb-4">{{ pageSubtitle }}</p>
     </div>
 
     <!-- Content -->
@@ -35,9 +35,9 @@
           
           <!-- Source Link -->
           <div>
-            <h3 class="ttt-subsection-title">Quelle</h3>
+            <h3 class="ttt-subsection-title">{{ sourceTitle }}</h3>
             <p class="ttt-small-text">
-              Quelle: 
+              {{ sourceLabel }} 
               <a 
                 [href]="sourceLink.url" 
                 target="_blank" 

@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 
+import { PageTitleService } from '../../../core/services/page-title.service';
+import { SanitizationService } from '../../../core/services/sanitization.service';
+
 // Interfaces for type safety
 interface BannerSlide {
     image: string;
@@ -41,6 +44,18 @@ interface Requirement {
     icon: string;
 }
 
+interface JoinStep {
+    number: number;
+    title: string;
+    description: string;
+    icon: string;
+    iconColor: string;
+    link?: {
+        url: string;
+        label: string;
+    };
+}
+
 @Component({
     selector: 'ttt-home',
     imports: [CommonModule, RouterLink, ButtonDirective],
@@ -52,6 +67,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     currentImageIndex = 0;
     private sliderInterval?: ReturnType<typeof setInterval>;
     private readonly slideInterval = 8000; // 8 seconds
+
+    constructor(
+        private pageTitleService: PageTitleService,
+        private sanitizationService: SanitizationService
+    ) {}
 
     // Banner slides with content
     readonly bannerSlides: BannerSlide[] = [
@@ -84,6 +104,69 @@ export class HomeComponent implements OnInit, OnDestroy {
         '/img/home-gallery/gallery-img8.webp'
     ];
 
+    // Static content strings
+    readonly content = {
+        features: {
+            title: 'Deine MilSim-Community für <span class="ttt-accent-text">Rookies</span> und taktische <span class="ttt-accent-text">Profis</span>',
+            subtitle: 'Von Waffenkunde über Funken bis zu Taktik, Missionsbau und TvT - erlebe authentische MilSim-Missionen mit uns.'
+        },
+        join: {
+            badge: 'Werde Teil der Community',
+            title: 'Bereit für das<span class="text-tttRed">TTT</span>?',
+            subtitle: 'Von der Anmeldung bis zum ersten Event - dein Weg in die <span class="ttt-accent-text font-semibold">TTT-Familie</span>',
+            processTitle: 'Wie mitmachen?',
+            processSubtitle: '4 einfache Schritte zur TTT-Mitgliedschaft',
+            requirements: {
+                title: 'Voraussetzungen',
+                subtitle: 'Was du für TTT brauchst'
+            }
+        },
+        gallery: {
+            caption: 'Einblicke aus unseren <span class="ttt-accent-text font-semibold">Events</span>'
+        },
+        orbat: {
+            badge: 'Chain of Command',
+            title: 'Unsere Struktur',
+            subtitle: 'Schau dir unsere <span class="font-bold">verschiedenen Aufgaben</span> an und finde heraus, wo du dich am wohlsten fühlst.',
+            ctaButton: 'VOLLSTÄNDIGE AUFSTELLUNG'
+        }
+    } as const;
+
+    // Join process steps
+    readonly joinSteps: JoinStep[] = [
+        {
+            number: 1,
+            title: 'Discord beitreten',
+            description: 'Tritt unserem Discord-Server bei und stelle dich der Community vor',
+            icon: 'pi pi-discord',
+            iconColor: 'text-tttRed',
+            link: {
+                url: 'https://discord.tacticalteam.de',
+                label: 'discord.tacticalteam.de'
+            }
+        },
+        {
+            number: 2,
+            title: 'Arma3Sync Setup',
+            description: 'Richte Arma3Sync für Arma 3 ein und lade die erforderlichen Mods herunter',
+            icon: 'pi pi-download',
+            iconColor: 'text-tttGreen'
+        },
+        {
+            number: 3,
+            title: 'Einsteiger-Event oder Fast-Path',
+            description: 'Nimm an deinem ersten Event teil und lerne die Community kennen',
+            icon: 'pi pi-calendar',
+            iconColor: 'text-tttRed'
+        },
+        {
+            number: 4,
+            title: 'Willkommen bei TTT!',
+            description: 'Du bist jetzt Teil der TTT-Familie und kannst an allen Events teilnehmen',
+            icon: 'pi pi-star-fill',
+            iconColor: 'text-tttGreen'
+        }
+    ];
 
     // Community statistics
     readonly communityStats: CommunityStats[] = [
@@ -150,6 +233,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     ];
 
     ngOnInit(): void {
+        this.pageTitleService.setBaseTitle(); // Set base title for home page
         this.startSlider();
     }
 
@@ -195,6 +279,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     // Helper methods for cleaner HTML
+    getGalleryImagesForLoop(): readonly string[] {
+        return [...this.galleryImages, ...this.galleryImages];
+    }
+
     getFeatureIconClasses(icon: string): string {
         return `${icon} text-lg text-tttWhite`;
     }

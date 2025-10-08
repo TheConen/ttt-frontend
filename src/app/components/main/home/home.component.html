@@ -66,10 +66,10 @@
 <section class="bg-tttBlack py-12">
     <div class="ttt-wide-container">
         <div class="mb-10 ttt-text-center">
-            <h2 class="ttt-section-title-large">Deine MilSim-Community für <span class="ttt-accent-text">Rookies</span> und taktische <span class="ttt-accent-text">Profis</span></h2>
+            <h2 class="ttt-section-title-large" [innerHTML]="content.features.title"></h2>
             <div class="mx-auto mb-4 h-1 w-20 bg-gradient-to-r from-tttRed to-tttRed-600 rounded-full"></div>
             <p class="ttt-description-text">
-                Von Waffenkunde über Funken bis zu Taktik, Missionsbau und TvT - erlebe authentische MilSim-Missionen mit uns.
+                {{ content.features.subtitle }}
             </p>
         </div>
         
@@ -112,20 +112,18 @@
             <!-- Simple Badge -->
             <div class="ttt-badge">
                 <i class="pi pi-users text-tttRed"></i>
-                <span>Werde Teil der Community</span>
+                <span>{{ content.join.badge }}</span>
             </div>
             
             <!-- Main Title -->
-            <h2 class="ttt-section-title-large">
-                Bereit für das<span class="text-tttRed">TTT</span>?
+            <h2 class="ttt-section-title-large" [innerHTML]="content.join.title">
             </h2>
             
             <!-- Simple Divider -->
             <div class="mx-auto mb-6 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-tttRed to-transparent"></div>
             
             <!-- Subtitle -->
-            <p class="ttt-description-text">
-                Von der Anmeldung bis zum ersten Event - dein Weg in die <span class="ttt-accent-text font-semibold">TTT-Familie</span>
+            <p class="ttt-description-text" [innerHTML]="content.join.subtitle">
             </p>
         </div>
 
@@ -137,9 +135,9 @@
                 <div class="text-left">
                     <h3 class="mb-3 text-2xl font-bold text-tttWhite">
                         <i class="pi pi-map text-tttRed mr-2"></i>
-                        Wie mitmachen?
+                        {{ content.join.processTitle }}
                     </h3>
-                    <p class="text-base text-tttGray-400">4 einfache Schritte zur TTT-Mitgliedschaft</p>
+                    <p class="text-base text-tttGray-400">{{ content.join.processSubtitle }}</p>
                 </div>
 
                 <!-- Simple Timeline -->
@@ -147,65 +145,36 @@
                     <!-- Timeline Line -->
                     <div class="absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-tttRed to-tttRed/30"></div>
                     
-                    <!-- Step 1 -->
-                    <div class="group relative flex items-start gap-4">
-                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-tttRed to-tttRed-600 text-lg font-bold text-tttWhite shadow-lg transition-transform duration-300 group-hover:scale-110">
-                            1
+                    <!-- Dynamic Steps -->
+                    <div *ngFor="let step of joinSteps; let i = index" class="group relative flex items-start gap-4">
+                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold shadow-lg transition-transform duration-300 group-hover:scale-110"
+                             [class]="step.number < 4 
+                                 ? 'bg-gradient-to-br from-tttRed to-tttRed-600 text-tttWhite' 
+                                 : 'bg-gradient-to-br from-tttGreen to-tttGreen text-tttBlack'">
+                            {{ step.number < 4 ? step.number : '✓' }}
                         </div>
-                        <div class="flex-1 rounded-lg border border-tttGray-700/50 bg-tttGray-800/30 p-4 backdrop-blur-sm transition-all duration-300 group-hover:border-tttRed/40 group-hover:bg-tttRed/5">
-                            <h4 class="ttt-card-title">
-                                <i class="pi pi-discord text-tttRed mr-2"></i>
-                                Discord beitreten
+                        <div class="flex-1 rounded-lg p-4 backdrop-blur-sm transition-all duration-300"
+                             [class]="step.number < 4 
+                                 ? 'border border-tttGray-700/50 bg-tttGray-800/30 group-hover:border-tttRed/40 group-hover:bg-tttRed/5' 
+                                 : 'border border-tttGreen/30 bg-tttGreen/5 group-hover:border-tttGreen/40 group-hover:bg-tttGreen/10'">
+                            <h4 class="mb-1 text-lg font-bold transition-colors duration-300"
+                                [class]="step.number < 4 
+                                    ? 'text-tttWhite group-hover:text-tttRed ttt-card-title' 
+                                    : 'text-tttGreen'">
+                                <i [class]="step.icon + ' ' + step.iconColor + ' mr-2'"></i>
+                                {{ step.title }}
                             </h4>
-                            <p class="mb-2 text-sm text-tttGray-400 leading-relaxed">Tritt unserem Discord-Server bei und stelle dich der Community vor</p>
-                            <a href="https://discord.tacticalteam.de" 
+                            <p class="text-sm text-tttGray-400 leading-relaxed"
+                               [class]="step.number < 4 ? 'mb-2' : ''">
+                                {{ step.description }}
+                            </p>
+                            <a *ngIf="step.link" 
+                               [href]="step.link.url" 
                                target="_blank"
                                class="ttt-step-link">
                                 <i class="pi pi-external-link"></i>
-                                discord.tacticalteam.de
+                                {{ step.link.label }}
                             </a>
-                        </div>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="group relative flex items-start gap-4">
-                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-tttRed to-tttRed-600 text-lg font-bold text-tttWhite shadow-lg transition-transform duration-300 group-hover:scale-110">
-                            2
-                        </div>
-                        <div class="flex-1 rounded-lg border border-tttGray-700/50 bg-tttGray-800/30 p-4 backdrop-blur-sm transition-all duration-300 group-hover:border-tttRed/40 group-hover:bg-tttRed/5">
-                            <h4 class="mb-1 text-lg font-bold text-tttWhite group-hover:text-tttRed transition-colors duration-300">
-                                <i class="pi pi-download text-tttGreen mr-2"></i>
-                                Arma3Sync Setup
-                            </h4>
-                            <p class="text-sm text-tttGray-400 leading-relaxed">Richte Arma3Sync für Arma 3 ein und lade die erforderlichen Mods herunter</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="group relative flex items-start gap-4">
-                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-tttRed to-tttRed-600 text-lg font-bold text-tttWhite shadow-lg transition-transform duration-300 group-hover:scale-110">
-                            3
-                        </div>
-                        <div class="flex-1 rounded-lg border border-tttGray-700/50 bg-tttGray-800/30 p-4 backdrop-blur-sm transition-all duration-300 group-hover:border-tttRed/40 group-hover:bg-tttRed/5">
-                            <h4 class="mb-1 text-lg font-bold text-tttWhite group-hover:text-tttRed transition-colors duration-300">
-                                <i class="pi pi-calendar text-tttRed mr-2"></i>
-                                Einsteiger-Event oder Fast-Path
-                            </h4>
-                            <p class="text-sm text-tttGray-400 leading-relaxed">Nimm an deinem ersten Event teil und lerne die Community kennen</p>
-                        </div>
-                    </div>
-
-                    <!-- Step 4 - Success -->
-                    <div class="group relative flex items-start gap-4">
-                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-tttGreen to-tttGreen text-lg font-bold text-tttBlack shadow-lg transition-transform duration-300 group-hover:scale-110">
-                            ✓
-                        </div>
-                        <div class="flex-1 rounded-lg border border-tttGreen/30 bg-tttGreen/5 p-4 backdrop-blur-sm transition-all duration-300 group-hover:border-tttGreen/40 group-hover:bg-tttGreen/10">
-                            <h4 class="mb-1 text-lg font-bold text-tttGreen">
-                                <i class="pi pi-star-fill text-tttGreen mr-2"></i>
-                                Willkommen bei TTT!
-                            </h4>
-                            <p class="text-sm text-tttGray-400 leading-relaxed">Du bist jetzt Teil der TTT-Familie und kannst an allen Events teilnehmen</p>
                         </div>
                     </div>
                 </div>
@@ -218,9 +187,9 @@
                     <div class="mb-6">
                         <h3 class="ttt-step-title">
                             <i class="pi pi-check-circle text-tttGreen mr-2"></i>
-                            Voraussetzungen
+                            {{ content.join.requirements.title }}
                         </h3>
-                        <p class="text-base text-tttGray-400">Was du für TTT brauchst</p>
+                        <p class="text-base text-tttGray-400">{{ content.join.requirements.subtitle }}</p>
                     </div>
 
                     <div class="space-y-3">
@@ -254,27 +223,12 @@
                 <div class="col-span-3 flex gap-4">
                     <!-- CTA Buttons -->
                     <ng-container *ngFor="let button of ctaButtons">
-                        <a *ngIf="button.routerLink" 
-                           [routerLink]="button.routerLink"
+                        <a [routerLink]="button.routerLink || null"
+                           [href]="button.href || null"
+                           [target]="button.href ? '_blank' : undefined"
                            pButton 
                            size="large" 
-                           [class]="button.primary 
-                               ? 'flex-1 bg-gradient-to-r from-tttRed to-tttRed-600 px-8 py-4 font-heading font-bold text-base text-tttWhite shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-tttRed/30 hover:scale-105'
-                               : 'flex-1 border-2 border-tttWhite/30 bg-tttWhite/10 px-8 py-4 font-heading font-bold text-base text-tttWhite backdrop-blur-sm transition-all duration-300 hover:border-tttWhite hover:bg-tttWhite/20'"
-                           [severity]="button.primary ? 'primary' : 'secondary'">
-                            <span class="flex items-center justify-center gap-2 w-full">
-                                <i [class]="button.icon"></i>
-                                {{ button.label }}
-                            </span>
-                        </a>
-                        <a *ngIf="button.href" 
-                           [href]="button.href"
-                           target="_blank"
-                           pButton 
-                           size="large" 
-                           [class]="button.primary 
-                               ? 'flex-1 bg-gradient-to-r from-tttRed to-tttRed-600 px-8 py-4 font-heading font-bold text-base text-tttWhite shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-tttRed/30 hover:scale-105'
-                               : 'flex-1 border-2 border-tttWhite/30 bg-tttWhite/10 px-8 py-4 font-heading font-bold text-base text-tttWhite backdrop-blur-sm transition-all duration-300 hover:border-tttWhite hover:bg-tttWhite/20'"
+                           [class]="getButtonClasses(button.primary)"
                            [severity]="button.primary ? 'primary' : 'secondary'">
                             <span class="flex items-center justify-center gap-2 w-full">
                                 <i [class]="button.icon"></i>
@@ -296,18 +250,11 @@
             <!-- Gallery Container with horizontal scroll -->
             <div class="gallery-container overflow-hidden">
                 <div class="gallery-track flex gap-6">
-                    <!-- First set of images -->
-                    <div *ngFor="let image of galleryImages" 
+                    <!-- Seamless loop gallery images -->
+                    <div *ngFor="let image of getGalleryImagesForLoop(); let i = index" 
                          class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
                         <img [src]="image" 
-                             [alt]="'TTT Gallery Image'"
-                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                    </div>
-                    <!-- Duplicate set for seamless loop -->
-                    <div *ngFor="let image of galleryImages" 
-                         class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
-                        <img [src]="image" 
-                             [alt]="'TTT Gallery Image'"
+                             [alt]="'TTT Gallery Image ' + ((i % galleryImages.length) + 1)"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                 </div>
@@ -320,8 +267,7 @@
 
         <!-- Caption below images -->
         <div class="mt-8 text-center">
-            <p class="ttt-constrained-text ttt-feature-description md:text-lg">
-                Einblicke aus unseren <span class="ttt-accent-text font-semibold">Events</span>
+            <p class="ttt-constrained-text ttt-feature-description md:text-lg" [innerHTML]="content.gallery.caption">
             </p>
         </div>
     </div>
@@ -338,12 +284,11 @@
     <div class="relative ttt-page-container ttt-text-center">
         <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-tttWhite/20 bg-tttWhite/10 px-3 py-1.5 text-xs font-medium backdrop-blur-sm">
             <i class="pi pi-sitemap text-tttWhite"></i>
-            Chain of Command
+            {{ content.orbat.badge }}
         </div>
         
-        <h2 class="ttt-section-title-large mb-3">Unsere Struktur</h2>
-        <p class="ttt-hero-text">
-            Schau dir unsere <span class="font-bold">verschiedenen Aufgaben</span> an und finde heraus, wo du dich am wohlsten fühlst.
+        <h2 class="ttt-section-title-large mb-3">{{ content.orbat.title }}</h2>
+        <p class="ttt-hero-text" [innerHTML]="content.orbat.subtitle">
         </p>
         
         <!-- ORBAT Grid -->
@@ -370,7 +315,7 @@
                class="group relative overflow-hidden bg-tttWhite px-8 py-4 font-heading font-bold text-base text-tttRed shadow-xl transition-all duration-300 hover:bg-tttGray-100 hover:shadow-2xl hover:scale-105">
                 <span class="relative z-10 flex items-center gap-2">
                     <i class="pi pi-list transition-transform duration-300 group-hover:translate-x-1"></i>
-                    VOLLSTÄNDIGE AUFSTELLUNG
+                    {{ content.orbat.ctaButton }}
                 </span>
             </a>
         </div>
