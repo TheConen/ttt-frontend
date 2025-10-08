@@ -140,4 +140,13 @@ export class ChronikComponent implements OnInit {
   getCleanTitle(title: string): string {
     return this.sanitizationService.stripHtml(title);
   }
+
+  // Button styling methods to eliminate duplication
+  getPrimaryButtonClasses(): string {
+    return 'inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30';
+  }
+
+  getSecondaryButtonClasses(): string {
+    return 'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20';
+  }
 }

@@ -13,7 +13,7 @@
                      class="w-full h-full object-cover" />
             </div>
             <!-- Dark overlay for better text readability -->
-            <div class="absolute inset-0 bg-gradient-to-r from-tttBlack/70 via-tttBlack/50 to-tttBlack/70"></div>
+            <div class="absolute inset-0 ttt-gradient-overlay"></div>
         </div>
 
         <!-- Navigation Arrows -->
@@ -67,9 +67,9 @@
 <section class="bg-tttBlack py-12">
     <div class="ttt-wide-container">
         <div class="mb-10 ttt-text-center">
-            <h2 class="ttt-section-title-large" 
-                [innerHTML]="content.features.title"
-                [attr.aria-label]="getCleanTitle(content.features.title)"></h2>
+            <h2 class="ttt-section-title-large">
+                Deine MilSim-Community für <span class="ttt-accent-text">Rookies</span> und taktische <span class="ttt-accent-text">Profis</span>
+            </h2>
             <div class="mx-auto mb-4 h-1 w-20 bg-gradient-to-r from-tttRed to-tttRed-600 rounded-full"></div>
             <p class="ttt-description-text">
                 {{ content.features.subtitle }}
@@ -119,16 +119,16 @@
             </div>
             
             <!-- Main Title -->
-            <h2 class="ttt-section-title-large" 
-                [innerHTML]="content.join.title"
-                [attr.aria-label]="getCleanTitle(content.join.title)">
+            <h2 class="ttt-section-title-large">
+                Bereit für das<span class="text-tttRed">TTT</span>?
             </h2>
             
             <!-- Simple Divider -->
             <div class="mx-auto mb-6 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-tttRed to-transparent"></div>
             
             <!-- Subtitle -->
-            <p class="ttt-description-text" [innerHTML]="content.join.subtitle">
+            <p class="ttt-description-text">
+                Von der Anmeldung bis zum ersten Event - dein Weg in die <span class="ttt-accent-text font-semibold">TTT-Familie</span>
             </p>
         </div>
 
@@ -287,7 +287,8 @@
 
         <!-- Caption below images -->
         <div class="mt-8 text-center">
-            <p class="ttt-constrained-text ttt-feature-description md:text-lg" [innerHTML]="content.gallery.caption">
+            <p class="ttt-constrained-text ttt-feature-description md:text-lg">
+                Einblicke aus unseren <span class="ttt-accent-text font-semibold">Events</span>
             </p>
         </div>
     </div>
@@ -308,7 +309,8 @@
         </div>
         
         <h2 class="ttt-section-title-large mb-3">{{ content.orbat.title }}</h2>
-        <p class="ttt-hero-text" [innerHTML]="content.orbat.subtitle">
+        <p class="ttt-hero-text">
+            Schau dir unsere <span class="font-bold">verschiedenen Aufgaben</span> an und finde heraus, wo du dich am wohlsten fühlst.
         </p>
         
         <!-- ORBAT Grid -->

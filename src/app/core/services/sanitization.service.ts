@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 /**
@@ -20,7 +20,7 @@ export class SanitizationService {
   sanitizeHtml(html: string): SafeHtml {
     // Angular's DomSanitizer automatically removes dangerous content
     // like <script> tags, javascript: URLs, and event handlers
-    return this.sanitizer.sanitize(1, html) || '';
+    return this.sanitizer.sanitize(SecurityContext.HTML, html) || '';
   }
 
   /**
