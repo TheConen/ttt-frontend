@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
@@ -67,11 +67,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     currentImageIndex = 0;
     private sliderInterval?: ReturnType<typeof setInterval>;
     private readonly slideInterval = 8000; // 8 seconds
-
-    constructor(
-        private pageTitleService: PageTitleService,
-        private sanitizationService: SanitizationService
-    ) {}
+    private readonly pageTitleService = inject(PageTitleService);
+    private readonly sanitizationService = inject(SanitizationService);
 
     // Banner slides with content
     readonly bannerSlides: BannerSlide[] = [
@@ -241,6 +238,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.stopSlider();
     }
 
+    // Helper method to strip HTML tags for accessibility
+    getCleanTitle(title: string): string {
+        return this.sanitizationService.stripHtml(title);
+    }
+
     private startSlider(): void {
         this.stopSlider(); // Prevent multiple intervals
         this.sliderInterval = setInterval(() => {
@@ -287,10 +289,12 @@ export class HomeComponent implements OnInit, OnDestroy {
         return `${icon} text-lg text-tttWhite`;
     }
 
-    getButtonClasses(primary: boolean): string {
-        return primary 
-            ? 'flex-1 bg-gradient-to-r from-tttRed to-tttRed-600 px-8 py-4 font-heading font-bold text-base text-tttWhite shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-tttRed/30 hover:scale-105'
-            : 'flex-1 border-2 border-tttWhite/30 bg-tttWhite/10 px-8 py-4 font-heading font-bold text-base text-tttWhite backdrop-blur-sm transition-all duration-300 hover:border-tttWhite hover:bg-tttWhite/20';
+    getPrimaryButtonClasses(): string {
+        return 'flex-1 bg-gradient-to-r from-tttRed to-tttRed-600 px-8 py-4 font-heading font-bold text-base text-tttWhite shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-tttRed/30 hover:scale-105';
+    }
+
+    getSecondaryButtonClasses(): string {
+        return 'flex-1 border-2 border-tttWhite/30 bg-tttWhite/10 px-8 py-4 font-heading font-bold text-base text-tttWhite backdrop-blur-sm transition-all duration-300 hover:border-tttWhite hover:bg-tttWhite/20';
     }
 
     getRequirementIconClasses(icon: string): string {

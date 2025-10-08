@@ -45,7 +45,8 @@
     <div class="relative z-10 flex h-full items-center">
         <div class="ttt-hero-container">
             <h1 class="ttt-hero-title" 
-                [innerHTML]="bannerSlides[currentImageIndex].title">
+                [innerHTML]="bannerSlides[currentImageIndex].title"
+                [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title)">
             </h1>
             
             <p class="ttt-hero-text">
@@ -66,7 +67,9 @@
 <section class="bg-tttBlack py-12">
     <div class="ttt-wide-container">
         <div class="mb-10 ttt-text-center">
-            <h2 class="ttt-section-title-large" [innerHTML]="content.features.title"></h2>
+            <h2 class="ttt-section-title-large" 
+                [innerHTML]="content.features.title"
+                [attr.aria-label]="getCleanTitle(content.features.title)"></h2>
             <div class="mx-auto mb-4 h-1 w-20 bg-gradient-to-r from-tttRed to-tttRed-600 rounded-full"></div>
             <p class="ttt-description-text">
                 {{ content.features.subtitle }}
@@ -116,7 +119,9 @@
             </div>
             
             <!-- Main Title -->
-            <h2 class="ttt-section-title-large" [innerHTML]="content.join.title">
+            <h2 class="ttt-section-title-large" 
+                [innerHTML]="content.join.title"
+                [attr.aria-label]="getCleanTitle(content.join.title)">
             </h2>
             
             <!-- Simple Divider -->
@@ -223,12 +228,27 @@
                 <div class="col-span-3 flex gap-4">
                     <!-- CTA Buttons -->
                     <ng-container *ngFor="let button of ctaButtons">
-                        <a [routerLink]="button.routerLink || null"
-                           [href]="button.href || null"
-                           [target]="button.href ? '_blank' : undefined"
+                        <!-- Internal Router Link -->
+                        <a *ngIf="button.routerLink && !button.href"
+                           [routerLink]="button.routerLink"
                            pButton 
                            size="large" 
-                           [class]="getButtonClasses(button.primary)"
+                           [class]="button.primary ? getPrimaryButtonClasses() : getSecondaryButtonClasses()"
+                           [severity]="button.primary ? 'primary' : 'secondary'">
+                            <span class="flex items-center justify-center gap-2 w-full">
+                                <i [class]="button.icon"></i>
+                                {{ button.label }}
+                            </span>
+                        </a>
+                        
+                        <!-- External Link -->
+                        <a *ngIf="button.href && !button.routerLink"
+                           [href]="button.href"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           pButton 
+                           size="large" 
+                           [class]="button.primary ? getPrimaryButtonClasses() : getSecondaryButtonClasses()"
                            [severity]="button.primary ? 'primary' : 'secondary'">
                             <span class="flex items-center justify-center gap-2 w-full">
                                 <i [class]="button.icon"></i>
@@ -254,7 +274,7 @@
                     <div *ngFor="let image of getGalleryImagesForLoop(); let i = index" 
                          class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
                         <img [src]="image" 
-                             [alt]="'TTT Gallery Image ' + ((i % galleryImages.length) + 1)"
+                             [alt]="'TTT Gallery ' + ((i % galleryImages.length) + 1)"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                 </div>

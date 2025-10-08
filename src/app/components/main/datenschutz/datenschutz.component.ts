@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrackByUtils } from '../../../shared/utils/trackby.utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
+import { SanitizationService } from '../../../core/services/sanitization.service';
 
 interface DatenschutzSection {
   id: string;
@@ -67,13 +68,8 @@ interface ServiceProvider {
   privacyUrl: string;
 }
 
-interface ExternalLink {
-  url: string;
-  label: string;
-}
-
 @Component({
-  selector: 'app-datenschutz',
+  selector: 'ttt-datenschutz',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './datenschutz.component.html',
@@ -81,8 +77,8 @@ interface ExternalLink {
 })
 export class DatenschutzComponent implements OnInit {
   readonly pageTitle = 'Datenschutzerklärung';
-
-  constructor(private pageTitleService: PageTitleService) {}
+  private readonly pageTitleService = inject(PageTitleService);
+  private readonly sanitizationService = inject(SanitizationService);
 
   ngOnInit(): void {
     this.pageTitleService.setTitle(this.pageTitle);
@@ -309,35 +305,35 @@ export class DatenschutzComponent implements OnInit {
   // Type guard methods for safe template access
   getTextContent(section: DatenschutzSection): TextSection {
     if (section.content.type === 'text') {
-      return section.content as TextSection;
+      return section.content;
     }
     throw new Error('Expected text section');
   }
 
   getDefinitionsContent(section: DatenschutzSection): DefinitionSection {
     if (section.content.type === 'definitions') {
-      return section.content as DefinitionSection;
+      return section.content;
     }
     throw new Error('Expected definitions section');
   }
 
   getCookiesContent(section: DatenschutzSection): CookieSection {
     if (section.content.type === 'cookies') {
-      return section.content as CookieSection;
+      return section.content;
     }
     throw new Error('Expected cookies section');
   }
 
   getNewsletterContent(section: DatenschutzSection): NewsletterSection {
     if (section.content.type === 'newsletter') {
-      return section.content as NewsletterSection;
+      return section.content;
     }
     throw new Error('Expected newsletter section');
   }
 
   getRightsContent(section: DatenschutzSection): RightsSection {
     if (section.content.type === 'rights') {
-      return section.content as RightsSection;
+      return section.content;
     }
     throw new Error('Expected rights section');
   }
@@ -366,6 +362,11 @@ export class DatenschutzComponent implements OnInit {
 
   trackByCookie(index: number, cookie: CookieDetail): string {
     return cookie.title;
+  }
+
+  // Helper method to strip HTML tags for accessibility
+  getCleanTitle(title: string): string {
+    return this.sanitizationService.stripHtml(title);
   }
 
   readonly trackByIndex = TrackByUtils.trackByIndex;
