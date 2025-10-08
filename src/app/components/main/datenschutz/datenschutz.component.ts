@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { PageTitleService } from '../../../core/services/page-title.service';
 
 interface DatenschutzSection {
   id: string;
@@ -77,9 +79,21 @@ interface ExternalLink {
   templateUrl: './datenschutz.component.html',
   styleUrl: './datenschutz.component.css'
 })
-export class DatenschutzComponent {
+export class DatenschutzComponent implements OnInit {
   readonly pageTitle = 'Datenschutzerklärung';
+
+  constructor(private pageTitleService: PageTitleService) {}
+
+  ngOnInit(): void {
+    this.pageTitleService.setTitle(this.pageTitle);
+  }
+  readonly pageSubtitle = 'Datenschutzbestimmungen';
   readonly lastUpdated = 'Oktober 2025';
+  
+  readonly staticTexts = {
+    cookiesIntro: 'Diese Website nutzt folgende Arten von Cookies, deren Umfang und Funktionsweise im Folgenden erläutert werden:',
+    newsletterIntro: 'Für den Versand von Newslettern verwenden wir einen externen Dienstleister. Derzeit arbeiten wir mit folgendem Dienstleister zusammen:'
+  } as const;
   
   readonly tttContactInfo = {
     name: 'Tactical Training Team (TTT)',
@@ -354,7 +368,5 @@ export class DatenschutzComponent {
     return cookie.title;
   }
 
-  trackByIndex(index: number): number {
-    return index;
-  }
+  readonly trackByIndex = TrackByUtils.trackByIndex;
 }

@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { PageTitleService } from '../../../core/services/page-title.service';
 
 interface ImpressumSection {
   id: string;
@@ -35,8 +37,17 @@ interface ExternalLink {
   templateUrl: './impressum.component.html',
   styleUrl: './impressum.component.css'
 })
-export class ImpressumComponent {
+export class ImpressumComponent implements OnInit {
   readonly pageTitle = 'Impressum';
+
+  constructor(private pageTitleService: PageTitleService) {}
+
+  ngOnInit(): void {
+    this.pageTitleService.setTitle(this.pageTitle);
+  }
+  readonly pageSubtitle = 'Rechtliche Informationen';
+  readonly sourceLabel = 'Quelle:';
+  readonly sourceTitle = 'Quelle';
   
   readonly contactInfo: ContactInfo = {
     name: 'Carsten Kummer',
@@ -121,15 +132,13 @@ export class ImpressumComponent {
   }
 
   // TrackBy functions for performance optimization
+  readonly trackByIndex = TrackByUtils.trackByIndex;
+  
   trackBySection(index: number, section: ImpressumSection): string {
     return section.id;
   }
 
   trackByDisclaimer(index: number, disclaimer: DisclaimerSection): string {
     return disclaimer.subtitle;
-  }
-
-  trackByIndex(index: number): number {
-    return index;
   }
 }

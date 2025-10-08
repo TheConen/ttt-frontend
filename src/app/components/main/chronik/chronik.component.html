@@ -28,8 +28,7 @@
           
           <p class="text-tttWhite font-medium">
             <i class="pi pi-user text-tttRed mr-2"></i>
-            Gegründet wurde das TTT von <strong>{{ founderInfo.name }}</strong>, der im {{ founderInfo.retirementDate }} von seiner 
-            Leitungsposition zurückgetreten ist.
+            {{ founderInfo.foundingText }} <strong>{{ founderInfo.name }}</strong>, {{ founderInfo.retirementText }} {{ founderInfo.retirementDate }} {{ founderInfo.retirementAction }}
           </p>
         </div>
       </div>
@@ -38,8 +37,8 @@
     <!-- Timeline Section -->
     <div class="mb-8">
       <div class="mb-6 ttt-text-center">
-        <h2 class="ttt-section-title mb-2">TTT Timeline</h2>
-        <p class="ttt-description-text">Meilensteine des Tactical Training Teams</p>
+        <h2 class="ttt-section-title mb-2">{{ timelineSection.title }}</h2>
+        <p class="ttt-description-text">{{ timelineSection.subtitle }}</p>
       </div>
 
       <!-- Timeline Container - Sehr kompakte Karten mit Ausklapp-Effekt -->
@@ -78,7 +77,7 @@
             
             <!-- Details Liste -->
             <div class="space-y-1 pt-1">
-              <h4 class="text-sm font-semibold text-tttWhite uppercase tracking-wide">Weitere Details:</h4>
+              <h4 class="text-sm font-semibold text-tttWhite uppercase tracking-wide">{{ timelineSection.detailsLabel }}</h4>
               <ul class="space-y-1">
                 <li *ngFor="let detail of event.details; trackBy: trackByIndex" 
                     class="flex items-start gap-2 text-sm text-tttGray-400">
@@ -123,7 +122,7 @@
                target="_blank"
                class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-3 py-1 text-xs font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
               <i class="pi pi-external-link"></i>
-              Vollständige Dokumentation
+              {{ fictionSection.documentationLabel }}
             </a>
           </div>
         </div>

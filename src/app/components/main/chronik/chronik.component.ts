@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { PageTitleService } from '../../../core/services/page-title.service';
 
 interface TimelineEvent {
   id: string;
@@ -25,9 +27,21 @@ interface HistorySection {
   templateUrl: './chronik.component.html',
   styleUrl: './chronik.component.css'
 })
-export class ChronikComponent {
+export class ChronikComponent implements OnInit {
   readonly pageTitle = 'TTT-Chronik';
+
+  constructor(private pageTitleService: PageTitleService) {}
+
+  ngOnInit(): void {
+    this.pageTitleService.setTitle(this.pageTitle);
+  }
   readonly pageSubtitle = 'Geschichte des Tactical Training Teams';
+  
+  readonly timelineSection = {
+    title: 'TTT Timeline',
+    subtitle: 'Meilensteine des Tactical Training Teams',
+    detailsLabel: 'Weitere Details:'
+  } as const;
   
   readonly historySection: HistorySection = {
     title: 'Warum gibt es ein TTT?',
@@ -43,13 +57,17 @@ export class ChronikComponent {
   
   readonly founderInfo = {
     name: 'relain',
-    retirementDate: 'April 2015'
+    retirementDate: 'April 2015',
+    foundingText: 'Gegründet wurde das TTT von',
+    retirementText: 'der im',
+    retirementAction: 'von seiner Leitungsposition zurückgetreten ist.'
   };
   
   readonly fictionSection = {
     title: 'Fiktive Geschichte des TTT',
     subtitle: 'Abteilung 22 - Operative Geschichtsschreibung',
-    documentationLink: 'https://drive.google.com/file/d/1QpkevojoID6-HfPsp5GIW3OUmUjnfOSd/view'
+    documentationLink: 'https://drive.google.com/file/d/1QpkevojoID6-HfPsp5GIW3OUmUjnfOSd/view',
+    documentationLabel: 'Vollständige Dokumentation'
   };
   
   readonly callToAction = {
@@ -71,175 +89,44 @@ export class ChronikComponent {
     ]
   };
 
-  readonly timelineEvents: TimelineEvent[] = [
-    {
-      id: 'founding',
-      date: '11. November 2013',
-      title: 'Operation Genesis',
-      description: 'Offizielle Gründung des Tactical Training Teams',
-      type: 'anniversary',
-      icon: 'pi-flag',
-      details: [
-        'Nachfolger des GT-Kommando-Projekts',
-        'Marktanalyse der Arma3-Community durchgeführt',
-        'Kombination aus Training, Teamspiel und offener Community'
-      ]
-    },
-    {
-      id: 'newsletter-2014',
-      date: 'März 2014',
-      title: 'Operation Intel',
-      description: 'Veröffentlichung des ersten TTT-Newsletters',
-      type: 'milestone',
-      icon: 'pi-file-edit',
-      details: [
-        'Erste offizielle Kommunikation an die Mitglieder',
-        'Etablierung regelmäßiger Informationskanäle'
-      ]
-    },
-    {
-      id: 'rookie-events',
-      date: 'Mai 2015',
-      title: 'Operation Rookie',
-      description: 'Einführung von Einsteiger-Events und Managementposten',
-      type: 'system',
-      icon: 'pi-users',
-      details: [
-        'Strukturierte Ausbildungsprogramme entwickelt',
-        'Managementposten zur besseren Organisation',
-        'Fokus auf Einsteiger-freundliche Events'
-      ]
-    },
-    {
-      id: 'server-handover',
-      date: 'Juni 2016',
-      title: 'Operation Handover',
-      description: 'Beendigung des TTT-Public-Servers und Übertragung an ArmaWorld',
-      type: 'system',
-      icon: 'pi-server',
-      details: [
-        'Strategische Neuausrichtung der Community',
-        'Fokus auf Events statt Public Gaming',
-        'Partnerschaft mit ArmaWorld etabliert'
-      ]
-    },
-    {
-      id: 'tvt-era',
-      date: 'September 2018',
-      title: 'Operation Gladiator',
-      description: 'Neue Sparte im TTT: TVT-Team und E-Sport-Ära',
-      type: 'milestone',
-      icon: 'pi-trophy',
-      details: [
-        'Start der Electronic Sports Masters™ (ESM)',
-        'Wettkampforientierte Missionsformate',
-        'Professionelle E-Sport-Aktivitäten'
-      ]
-    },
-    {
-      id: 'corporate-design',
-      date: 'Januar 2019',
-      title: 'Operation Rebrand',
-      description: 'Das neue Corporate-Design wird eingeführt',
-      type: 'milestone',
-      icon: 'pi-palette',
-      details: [
-        'Moderne visuelle Identität entwickelt',
-        'Einheitliches Branding für alle Plattformen',
-        'Professioneller Auftritt etabliert'
-      ]
-    },
-    {
-      id: 'rank-structure',
-      date: 'März 2019',
-      title: 'Operation Hierarchy',
-      description: 'TTT-Rangneustrukturierung zu Soldat, Veteran und Gast',
-      type: 'system',
-      icon: 'pi-sitemap',
-      details: [
-        'Vereinfachte Rangstruktur eingeführt',
-        'Etablierung von Offiziersposten',
-        'Klare Hierarchien und Verantwortlichkeiten'
-      ]
-    },
-    {
-      id: 'website-relaunch',
-      date: 'September 2020',
-      title: 'Operation Digital',
-      description: 'Neuer TTT-Webauftritt mit modernem Design',
-      type: 'milestone',
-      icon: 'pi-globe',
-      details: [
-        'Responsive Design für alle Geräte',
-        'Verbesserte Navigation und Benutzerfreundlichkeit',
-        'Integration moderner Webtechnologien'
-      ]
-    },
-    {
-      id: 'wiki-launch',
-      date: 'Oktober 2021',
-      title: 'Operation Knowledge',
-      description: 'TTT-Wiki mit über 150 Informationsseiten veröffentlicht',
-      type: 'milestone',
-      icon: 'pi-book',
-      details: [
-        'Umfassende Wissensdatenbank erstellt',
-        'Taktische Handbücher und Guides',
-        'Ablösung der alten Taktik-Fibel',
-        'Community-basierte Inhaltserstellung'
-      ]
-    },
-    {
-      id: 'anniversary-10',
-      date: '11. November 2023',
-      title: 'Operation Decade',
-      description: '10 Jahre TTT - Eine erfolgreiche Dekade der taktischen Exzellenz',
-      type: 'anniversary',
-      icon: 'pi-star',
-      details: [
-        'Eine der ältesten deutschsprachigen Arma3-Communities',
-        'Über 1000 durchgeführte Events und Missionen',
-        'Hunderte ausgebildete Community-Mitglieder',
-        'Kontinuierliches Wachstum und Innovation'
-      ]
-    }
-  ];
+  readonly timelineEvents: TimelineEvent[] = this.createTimelineEvents();
+
+  private createTimelineEvents(): TimelineEvent[] {
+    const eventData: Array<Omit<TimelineEvent, 'id'> & { id: string }> = [
+      { id: 'founding', date: '11. November 2013', title: 'Operation Genesis', description: 'Offizielle Gründung des Tactical Training Teams', type: 'anniversary', icon: 'pi-flag', details: ['Nachfolger des GT-Kommando-Projekts', 'Marktanalyse der Arma3-Community durchgeführt', 'Kombination aus Training, Teamspiel und offener Community'] },
+      { id: 'newsletter-2014', date: 'März 2014', title: 'Operation Intel', description: 'Veröffentlichung des ersten TTT-Newsletters', type: 'milestone', icon: 'pi-file-edit', details: ['Erste offizielle Kommunikation an die Mitglieder', 'Etablierung regelmäßiger Informationskanäle'] },
+      { id: 'rookie-events', date: 'Mai 2015', title: 'Operation Rookie', description: 'Einführung von Einsteiger-Events und Managementposten', type: 'system', icon: 'pi-users', details: ['Strukturierte Ausbildungsprogramme entwickelt', 'Managementposten zur besseren Organisation', 'Fokus auf Einsteiger-freundliche Events'] },
+      { id: 'server-handover', date: 'Juni 2016', title: 'Operation Handover', description: 'Beendigung des TTT-Public-Servers und Übertragung an ArmaWorld', type: 'system', icon: 'pi-server', details: ['Strategische Neuausrichtung der Community', 'Fokus auf Events statt Public Gaming', 'Partnerschaft mit ArmaWorld etabliert'] },
+      { id: 'tvt-era', date: 'September 2018', title: 'Operation Gladiator', description: 'Neue Sparte im TTT: TVT-Team und E-Sport-Ära', type: 'milestone', icon: 'pi-trophy', details: ['Start der Electronic Sports Masters™ (ESM)', 'Wettkampforientierte Missionsformate', 'Professionelle E-Sport-Aktivitäten'] },
+      { id: 'corporate-design', date: 'Januar 2019', title: 'Operation Rebrand', description: 'Das neue Corporate-Design wird eingeführt', type: 'milestone', icon: 'pi-palette', details: ['Moderne visuelle Identität entwickelt', 'Einheitliches Branding für alle Plattformen', 'Professioneller Auftritt etabliert'] },
+      { id: 'rank-structure', date: 'März 2019', title: 'Operation Hierarchy', description: 'TTT-Rangneustrukturierung zu Soldat, Veteran und Gast', type: 'system', icon: 'pi-sitemap', details: ['Vereinfachte Rangstruktur eingeführt', 'Etablierung von Offiziersposten', 'Klare Hierarchien und Verantwortlichkeiten'] },
+      { id: 'website-relaunch', date: 'September 2020', title: 'Operation Digital', description: 'Neuer TTT-Webauftritt mit modernem Design', type: 'milestone', icon: 'pi-globe', details: ['Responsive Design für alle Geräte', 'Verbesserte Navigation und Benutzerfreundlichkeit', 'Integration moderner Webtechnologien'] },
+      { id: 'wiki-launch', date: 'Oktober 2021', title: 'Operation Knowledge', description: 'TTT-Wiki mit über 150 Informationsseiten veröffentlicht', type: 'milestone', icon: 'pi-book', details: ['Umfassende Wissensdatenbank erstellt', 'Taktische Handbücher und Guides', 'Ablösung der alten Taktik-Fibel', 'Community-basierte Inhaltserstellung'] },
+      { id: 'anniversary-10', date: '11. November 2023', title: 'Operation Decade', description: '10 Jahre TTT - Eine erfolgreiche Dekade der taktischen Exzellenz', type: 'anniversary', icon: 'pi-star', details: ['Eine der ältesten deutschsprachigen Arma3-Communities', 'Über 1000 durchgeführte Events und Missionen', 'Hunderte ausgebildete Community-Mitglieder', 'Kontinuierliches Wachstum und Innovation'] }
+    ];
+    return eventData;
+  }
 
   // Template helper methods
   trackByEvent(index: number, event: TimelineEvent): string {
     return event.id;
   }
 
+  readonly trackByIndex = TrackByUtils.trackByIndex;
 
-
-  trackByIndex(index: number): number {
-    return index;
-  }
+  private readonly eventTypeConfig = {
+    anniversary: { color: 'border-tttRed bg-tttRed text-tttWhite', label: 'Jubiläum' },
+    milestone: { color: 'border-blue-500 bg-blue-500/20 text-blue-300', label: 'Meilenstein' },
+    system: { color: 'border-orange-500 bg-orange-500/20 text-orange-300', label: 'System' },
+    default: { color: 'border-tttGray-500 bg-tttGray-500/20 text-tttGray-300', label: 'Event' }
+  };
 
   getEventTypeColor(type: string): string {
-    switch (type) {
-      case 'anniversary':
-        return 'border-tttRed bg-tttRed text-tttWhite';
-      case 'milestone':
-        return 'border-blue-500 bg-blue-500/20 text-blue-300';
-      case 'system':
-        return 'border-orange-500 bg-orange-500/20 text-orange-300';
-      default:
-        return 'border-tttGray-500 bg-tttGray-500/20 text-tttGray-300';
-    }
+    return this.eventTypeConfig[type as keyof typeof this.eventTypeConfig]?.color || this.eventTypeConfig.default.color;
   }
 
   getEventTypeLabel(type: string): string {
-    switch (type) {
-      case 'anniversary':
-        return 'Jubiläum';
-      case 'milestone':
-        return 'Meilenstein';
-      case 'system':
-        return 'System';
-      default:
-        return 'Event';
-    }
+    return this.eventTypeConfig[type as keyof typeof this.eventTypeConfig]?.label || this.eventTypeConfig.default.label;
   }
 
   getEventIconClasses(icon: string): string {
