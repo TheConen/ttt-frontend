@@ -11,7 +11,7 @@ const MITMACHEN_CONFIG = {
   SECURITY: {
     MIN_LINK_INTERVAL: 1000, // Minimum milliseconds between link clicks
     RADIX: 10, // Base for parseInt operations
-    WINDOW_FEATURES: 'noopener,noreferrer,nofollow' // Secure window features
+    WINDOW_FEATURES: 'noopener,noreferrer' // Secure window features for window.open()
   },
   EXTERNAL_LINKS: {
     DISCORD: 'https://discord.tacticalteam.de',
@@ -25,8 +25,33 @@ const MITMACHEN_CONFIG = {
     ICON_CONTAINER_SMALL: 'w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0',
     BUTTON_BASE: 'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold transition-all duration-300',
     FEATURE_LIST_ITEM: 'flex items-start gap-2'
+  },
+  COLORS: {
+    ICON_RED: 'bg-tttRed',
+    ICON_GREEN: 'bg-tttGreen',
+    ICON_WHITE: 'bg-tttGray-600', // White-styled icon background
+    ICON_GRAY: 'bg-tttGray-600',
+    ICON_DISCORD: 'bg-[#5865F2]',
+    TEXT_RED: 'text-tttRed',
+    TEXT_GREEN: 'text-tttGreen',
+    TEXT_WHITE: 'text-tttWhite'
   }
 } as const;
+
+// Helper functions for creating consistent objects
+const createIconItem = (icon: string, iconColor: string, text: string) => ({
+  icon,
+  iconColor,
+  text
+});
+
+const createRequirement = (id: string, title: string, description: string, icon: string, iconColor: string): Requirement => ({
+  id,
+  title,
+  description,
+  icon,
+  iconColor
+});
 
 // Base interfaces for reusability
 interface BaseItem {
@@ -180,8 +205,8 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       subtitle: 'Der Standard-Weg ins TTT',
       description: 'Als Rekrut wirst du fester Bestandteil unserer Community und kannst an allen Events teilnehmen. Du durchläufst eine kurze Einführungsphase und lernst unsere Spielweise kennen.',
       icon: 'pi-user-plus',
-      iconColor: 'bg-tttRed',
-      textColor: 'text-tttRed',
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_RED,
+      textColor: MITMACHEN_CONFIG.COLORS.TEXT_RED,
       features: [
         'Vollwertige Community-Mitgliedschaft',
         'Teilnahme an allen Events',
@@ -197,8 +222,8 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       subtitle: 'Flexibel und unverbindlich',
       description: 'Der Rang "Gast" eignet sich für Spieler, die gelegentlich bei uns teilnehmen möchten, ohne Verpflichtungen zu übernehmen. Dieser Rang ist auch für Spieler aus anderen Arma 3 Communities gedacht.',
       icon: 'pi-users',
-      iconColor: 'bg-tttGreen',
-      textColor: 'text-tttGreen',
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_WHITE,
+      textColor: MITMACHEN_CONFIG.COLORS.TEXT_WHITE,
       features: [
         'Keine Verpflichtungen oder Probezeit',
         'Ideal für andere Community-Mitglieder',
@@ -216,61 +241,49 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       title: 'Ab 18 Jahre',
       description: 'Wir sind der Meinung, dass Arma 3 und Reforger reife Persönlichkeiten brauchen, die die Geduld aufbringen, taktisch zu spielen.',
       icon: 'pi-id-card',
-      iconColor: 'bg-tttRed'
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_RED
     },
     {
       id: 'communication',
       title: 'Headset für TS3 & Discord',
       description: 'Für den Spielbetrieb und zur Kommunikation innerhalb der Community zwingend notwendig.',
       icon: 'pi-microphone',
-      iconColor: 'bg-[#5865F2]'
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_DISCORD
     },
     {
       id: 'discipline',
       title: 'Disziplin während Events',
       description: 'Motivation die das taktische Spielen erfordert und die Geduld, den Feind auch mal nur zu beobachten.',
       icon: 'pi-shield',
-      iconColor: 'bg-tttGreen'
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_GREEN
     },
     {
       id: 'hardware',
       title: 'Geeigneter Computer',
       description: 'PC der auch bei anspruchsvollen Missionen mit bis zu 60+ Spielern in beiden Arma-Titeln flüssig läuft.',
       icon: 'pi-cog',
-      iconColor: 'bg-tttGray-600'
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_GRAY
     },
     {
       id: 'learning',
       title: 'Bereitschaft um Neues zu lernen',
       description: 'Sich innerhalb des Spiels in ein Team einzugliedern und sich an die Spielgewohnheiten des TTT anzupassen.',
       icon: 'pi-book',
-      iconColor: 'bg-tttGreen'
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_GREEN
     },
     {
       id: 'reliability',
       title: 'Zuverlässigkeit & Pünktlichkeit',
       description: 'Regelmäßige und pünktliche Teilnahme an Events. Bei Verhinderung rechtzeitige Abmeldung.',
       icon: 'pi-clock',
-      iconColor: 'bg-tttRed'
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_RED
     }
   ];
 
   readonly hints = [
-    {
-      icon: 'pi-check',
-      iconColor: 'text-tttGreen',
-      text: 'Solltest du Fragen oder Probleme haben, stehen dir unsere Technikchecker zur Verfügung'
-    },
-    {
-      icon: 'pi-check',
-      iconColor: 'text-tttGreen',
-      text: 'Erreiche sie über das Hammer-Symbol im TeamSpeak (ts3.tacticalteam.de)'
-    },
-    {
-      icon: 'pi-exclamation-triangle',
-      iconColor: 'text-tttRed',
-      text: '<strong>Überprüfe vor dem Event bitte, ob alles funktioniert - spätestens bis 18 Uhr am Event-Tag!</strong>'
-    }
+    createIconItem('pi-check', MITMACHEN_CONFIG.COLORS.TEXT_GREEN, 'Solltest du Fragen oder Probleme haben, stehen dir unsere Technikchecker zur Verfügung'),
+    createIconItem('pi-check', MITMACHEN_CONFIG.COLORS.TEXT_GREEN, 'Erreiche sie über das Hammer-Symbol im TeamSpeak (ts3.tacticalteam.de)'),
+    createIconItem('pi-exclamation-triangle', MITMACHEN_CONFIG.COLORS.TEXT_RED, '<strong>Überprüfe vor dem Event bitte, ob alles funktioniert - spätestens bis 18 Uhr am Event-Tag!</strong>')
   ];
 
   readonly gameRequirements: GameRequirement[] = [
@@ -278,13 +291,13 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       game: 'Arma 3',
       requirements: 'Apex & Contact DLCs erforderlich',
       icon: 'pi-desktop',
-      iconColor: 'text-tttRed'
+      iconColor: MITMACHEN_CONFIG.COLORS.TEXT_RED
     },
     {
       game: 'Arma Reforger',
       requirements: 'Nur Base Game erforderlich',
       icon: 'pi-play',
-      iconColor: 'text-tttGreen'
+      iconColor: MITMACHEN_CONFIG.COLORS.TEXT_GREEN
     }
   ];
 
@@ -328,9 +341,9 @@ export class MitmachenComponent implements OnInit, OnDestroy {
         'Regelmäßige Termine verfügbar'
       ],
       buttonLabel: 'Nächstes Einsteiger-Event finden',
-      buttonColor: 'bg-tttGreen hover:bg-tttGreen-600 text-tttBlack',
+      buttonColor: 'border border-tttWhite/30 bg-tttWhite/10 text-tttWhite hover:bg-tttWhite/20',
       icon: 'pi-graduation-cap',
-      iconColor: 'bg-tttGreen',
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_WHITE,
       action: () => this.openExternalLink(MITMACHEN_CONFIG.EXTERNAL_LINKS.EVENTS)
     },
     {
@@ -345,9 +358,9 @@ export class MitmachenComponent implements OnInit, OnDestroy {
         'Termin mit Personal-Abteilung'
       ],
       buttonLabel: 'Personal-Abteilung kontaktieren',
-      buttonColor: 'bg-tttRed hover:bg-tttRed-600 text-white',
+      buttonColor: 'bg-gradient-to-r from-tttRed to-tttRed-600 text-tttWhite shadow-lg hover:shadow-xl hover:shadow-tttRed/30',
       icon: 'pi-star',
-      iconColor: 'bg-tttRed',
+      iconColor: MITMACHEN_CONFIG.COLORS.ICON_RED,
       action: () => this.openExternalLink(MITMACHEN_CONFIG.EXTERNAL_LINKS.DISCORD)
     }
   ];
@@ -375,21 +388,39 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       const now = Date.now();
       const lastLinkAccess = localStorage.getItem('lastLinkAccess');
       
-      if (lastLinkAccess && (now - Number.parseInt(lastLinkAccess, MITMACHEN_CONFIG.SECURITY.RADIX)) < MITMACHEN_CONFIG.SECURITY.MIN_LINK_INTERVAL) {
+      if (lastLinkAccess && (now - +lastLinkAccess) < MITMACHEN_CONFIG.SECURITY.MIN_LINK_INTERVAL) {
         console.warn('Too many rapid link access attempts');
         return;
       }
 
       localStorage.setItem('lastLinkAccess', now.toString());
 
-      // Secure window opening with additional security measures
-      const newWindow = window.open('', '_blank', MITMACHEN_CONFIG.SECURITY.WINDOW_FEATURES);
-      
-      if (newWindow) {
-        newWindow.opener = null; // Additional security measure
-        newWindow.location.href = url;
-      } else {
-        console.error('Failed to open new window - popup blocked?');
+      // Try secure window opening first  
+      try {
+        const newWindow = window.open(url, '_blank', MITMACHEN_CONFIG.SECURITY.WINDOW_FEATURES);
+        
+        if (newWindow) {
+          newWindow.opener = null; // Additional security measure
+        } else {
+          // Fallback: Create invisible link and click it
+          const link = document.createElement('a');
+          link.href = url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+        }
+      } catch (popupError) {
+        console.error('Window.open failed, using link fallback:', popupError);
+        // Fallback: Create invisible link and click it
+        const link = document.createElement('a');
+        link.href = url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
       }
     } catch (error) {
       console.error('Failed to open external link:', error);
@@ -412,4 +443,13 @@ export class MitmachenComponent implements OnInit, OnDestroy {
   openArma3SyncGuide = this.externalLinks.arma3SyncGuide;
   openArma3SyncVideo = this.externalLinks.arma3SyncVideo;
   openArma3SyncTipps = this.externalLinks.arma3SyncTips;
+
+  // Button styling methods (consistent with other components)
+  getPrimaryButtonClasses(): string {
+    return 'bg-gradient-to-r from-tttRed to-tttRed-600 text-tttWhite shadow-lg hover:shadow-xl hover:shadow-tttRed/30';
+  }
+
+  getSecondaryButtonClasses(): string {
+    return 'border border-tttWhite/30 bg-tttWhite/10 text-tttWhite hover:bg-tttWhite/20';
+  }
 }

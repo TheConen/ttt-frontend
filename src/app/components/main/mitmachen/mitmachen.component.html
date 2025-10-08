@@ -76,7 +76,7 @@
           <button 
             pButton 
             (click)="path.buttonAction()"
-            class="w-full {{ path.iconColor }} hover:{{ path.iconColor }}-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-300">
+            class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 {{ path.id === 'recruit' ? getPrimaryButtonClasses() : getSecondaryButtonClasses() }}">
             {{ path.buttonLabel }}
           </button>
         </div>
@@ -246,7 +246,7 @@
           
           <div class="flex items-center gap-3 mb-4">
             <div class="w-12 h-12 {{ path.iconColor }} rounded-lg flex items-center justify-center">
-              <i class="pi {{ path.icon }} text-lg" [class]="path.icon === 'pi-graduation-cap' ? 'text-tttBlack' : 'text-white'"></i>
+              <i class="pi {{ path.icon }} text-lg text-white"></i>
             </div>
             <div>
               <h3 class="ttt-feature-title">{{ path.title }}</h3>
@@ -264,13 +264,13 @@
             <div 
               *ngFor="let feature of path.features; trackBy: trackByIndex"
               class="flex items-start gap-2">
-              <i class="pi {{ path.icon }} {{ path.iconColor === 'bg-tttGreen' ? 'text-tttGreen' : 'text-tttRed' }} text-xs mt-1"></i>
+              <i class="pi pi-check {{ path.iconColor === 'bg-tttGray-600' ? 'text-tttWhite' : 'text-tttRed' }} text-xs mt-1"></i>
               <span class="text-sm text-tttGray-300">{{ feature }}</span>
             </div>
           </div>
 
           <button pButton (click)="path.action()" 
-                  class="w-full {{ path.buttonColor }} text-sm font-semibold mt-auto">
+                  class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 mt-auto {{ path.title.includes('Einsteiger') ? getSecondaryButtonClasses() : getPrimaryButtonClasses() }}">
             {{ path.buttonLabel }}
           </button>
         </div>
