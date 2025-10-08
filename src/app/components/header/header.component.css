@@ -9,7 +9,16 @@
     position: relative;
     z-index: 1000;
     background-color: black !important;
+}
+
+/* White icons in normal state, red on hover (preserves existing behavior) */
+::ng-deep .p-menubar .p-menuitem-icon {
     color: #f5f3f2 !important;
+}
+
+::ng-deep .p-menubar .p-menuitem-link:hover .p-menuitem-icon,
+::ng-deep .p-menubar .p-menuitem-link:focus .p-menuitem-icon {
+    color: #a10f2b !important;
 }
 
 ::ng-deep .p-menubar .p-submenu-list {
