@@ -8,6 +8,8 @@
 ::ng-deep .p-menubar {
     position: relative;
     z-index: 1000;
+    background-color: black !important;
+    color: #f5f3f2 !important;
 }
 
 ::ng-deep .p-menubar .p-submenu-list {
