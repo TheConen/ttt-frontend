@@ -60,6 +60,14 @@
               {{ event.title }}
             </h3>
             <p class="text-sm text-tttRed font-medium mt-1">{{ event.date }}</p>
+            
+            <!-- Type Badge - Integriert in Header -->
+            <div class="mt-1">
+              <span class="inline-block rounded-full px-2 py-0.5 text-xs font-medium opacity-70 group-hover:opacity-100 transition-all duration-300"
+                    [class]="getEventTypeColor(event.type)">
+                {{ getEventTypeLabel(event.type) }}
+              </span>
+            </div>
           </div>
           
           <!-- Grundlegende Info - Immer sichtbar -->
@@ -86,14 +94,6 @@
                 </li>
               </ul>
             </div>
-          </div>
-          
-          <!-- Type Badge - Klein und dezent -->
-          <div class="absolute top-2 right-2">
-            <span class="inline-block rounded px-2 py-1 text-xs font-medium border opacity-50"
-                  [class]="getEventTypeColor(event.type)">
-              {{ getEventTypeLabel(event.type) }}
-            </span>
           </div>
           
           <!-- Hover Glow Effect -->
@@ -141,9 +141,7 @@
             <!-- Internal Router Link -->
             <a *ngIf="link.routerLink && !link.url"
                [routerLink]="link.routerLink"
-               [class]="link.isPrimary ? 
-                 'inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30' : 
-                 'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20'">
+               [class]="link.isPrimary ? getPrimaryButtonClasses() : getSecondaryButtonClasses()">
               <i [class]="'pi ' + link.icon"></i>
               {{ link.label }}
             </a>
@@ -153,9 +151,7 @@
                [href]="link.url"
                target="_blank"
                rel="noopener noreferrer"
-               [class]="link.isPrimary ? 
-                 'inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30' : 
-                 'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20'">
+               [class]="link.isPrimary ? getPrimaryButtonClasses() : getSecondaryButtonClasses()">
               <i [class]="'pi ' + link.icon"></i>
               {{ link.label }}
             </a>

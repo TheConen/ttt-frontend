@@ -20,7 +20,9 @@
         <div *ngIf="section.content.type === 'contact'" class="ttt-content-text-compact">
           <p><strong class="ttt-highlight-text">{{ getContactInfo(section).name }}</strong></p>
           <p><strong class="ttt-highlight-text">{{ section.id === 'tmg-info' ? 'Kontakt:' : 'E-Mail:' }}</strong> 
-            {{ getContactInfo(section).email.replace('@', '&#64;') }}
+            <a href="mailto:{{ getContactInfo(section).email }}" class="ttt-link">
+              {{ getContactInfo(section).email }}
+            </a>
           </p>
         </div>
 

@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -20,19 +19,11 @@ interface DiscordConfig {
     styleUrl: './app.component.css',
 })
 export class AppComponent {
-  private readonly sanitizer = inject(DomSanitizer);
-
-  // Trusted domains for iframe sources
-  private readonly trustedDomains = [
-    'discord.com',
-    'discordapp.com'
-  ] as const;
-
   // Sidebar content configuration
   readonly sidebarContent = {
     left: {
       title: 'Left Sidebar',
-      description: 'Zukünftig: Eventliste anzeigen, darunter TTT-Login. Nach dem Login erscheinen weitere Links für Missions-Upload, SquadXML usw.'
+      description: 'Features coming soon. Event list, TTT login and post-login links for Missions-Upload, SquadXML, etc.'
     },
     right: {
       title: 'Live Discord',
@@ -43,42 +34,15 @@ export class AppComponent {
     }
   } as const;
 
-  // Discord widget configuration
+  // Discord widget configuration - using trusted static URL
   readonly discordConfig: DiscordConfig = {
     serverId: '121399943393968128',
     theme: 'dark',
+    // Static trusted URL - no dynamic sanitization needed
     widgetUrl: 'https://discord.com/widget?id=121399943393968128&theme=dark',
     directUrl: 'https://discord.tacticalteam.de',
     widgetTitle: 'TTT Discord Server'
   };
-
-  // Safely sanitized Discord widget URL with domain validation
-  readonly sanitizedDiscordUrl: SafeResourceUrl = this.getSafeResourceUrl(this.discordConfig.widgetUrl);
-
-  /**
-   * Safely sanitize a URL for iframe usage with domain validation
-   * Only allows URLs from trusted domains to prevent XSS attacks
-   */
-  private getSafeResourceUrl(url: string): SafeResourceUrl {
-    try {
-      const urlObj = new URL(url);
-      const isValidDomain = this.trustedDomains.some(domain => 
-        urlObj.hostname === domain || urlObj.hostname.endsWith(`.${domain}`)
-      );
-      
-      if (!isValidDomain) {
-        console.error(`Untrusted domain for iframe: ${urlObj.hostname}`);
-        throw new Error(`Domain ${urlObj.hostname} is not in trusted domains list`);
-      }
-
-      // Only bypass security for validated trusted domains
-      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-    } catch (error) {
-      console.error('Invalid URL for iframe:', url, error);
-      // Return empty safe URL as fallback
-      return this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
-    }
-  }
 
   // Discord icon configuration
   readonly discordIcon = {

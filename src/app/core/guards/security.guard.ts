@@ -1,6 +1,12 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
+// Security configuration constants
+const SECURITY_CONFIG = {
+  MIN_ROUTE_INTERVAL: 100, // Minimum milliseconds between route changes
+  RADIX: 10 // Base for parseInt operations
+} as const;
+
 /**
  * Security guard to prevent unauthorized access
  * This can be extended to include authentication and authorization logic
@@ -32,9 +38,8 @@ export const securityGuard: CanActivateFn = (route) => {
   // 2. Rate limiting check (simple implementation)
   const now = Date.now();
   const lastAccess = localStorage.getItem('lastRouteAccess');
-  const minInterval = 100; // Minimum 100ms between route changes
 
-  if (lastAccess && (now - Number.parseInt(lastAccess)) < minInterval) {
+  if (lastAccess && (now - Number.parseInt(lastAccess, SECURITY_CONFIG.RADIX)) < SECURITY_CONFIG.MIN_ROUTE_INTERVAL) {
     console.warn('Too many rapid route changes detected');
     return false;
   }

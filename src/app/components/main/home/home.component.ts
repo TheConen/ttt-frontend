@@ -6,6 +6,11 @@ import { ButtonDirective } from 'primeng/button';
 import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
+// Component configuration constants
+const HOME_CONFIG = {
+  SLIDE_INTERVAL: 8000, // Slide change interval in milliseconds
+} as const;
+
 // Interfaces for type safety
 interface BannerSlide {
     image: string;
@@ -66,7 +71,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Component state
     currentImageIndex = 0;
     private sliderInterval?: ReturnType<typeof setInterval>;
-    private readonly slideInterval = 8000; // 8 seconds
+    private readonly slideInterval = HOME_CONFIG.SLIDE_INTERVAL;
     private readonly pageTitleService = inject(PageTitleService);
     private readonly sanitizationService = inject(SanitizationService);
 
@@ -243,14 +248,21 @@ export class HomeComponent implements OnInit, OnDestroy {
         return this.sanitizationService.stripHtml(title);
     }
 
-    private startSlider(): void {
-        this.stopSlider(); // Prevent multiple intervals
-        this.sliderInterval = setInterval(() => {
-            this.nextImage();
-        }, this.slideInterval);
+  private startSlider(): void {
+    this.stopSlider(); // Prevent multiple intervals
+    
+    // Additional safety check to ensure component is still active
+    if (this.bannerSlides.length > 1) {
+      this.sliderInterval = setInterval(() => {
+        // Check if component is still active before proceeding
+        if (this.bannerSlides && this.bannerSlides.length > 1) {
+          this.nextImage();
+        } else {
+          this.stopSlider();
+        }
+      }, this.slideInterval);
     }
-
-    private stopSlider(): void {
+  }    private stopSlider(): void {
         if (this.sliderInterval) {
             clearInterval(this.sliderInterval);
             this.sliderInterval = undefined;
