@@ -137,16 +137,29 @@
           {{ callToAction.subtitle }}
         </p>
         <div class="flex flex-col sm:flex-row gap-3 justify-center">
-          <a *ngFor="let link of callToAction.links; trackBy: trackByIndex"
-             [href]="link.url || null"
-             [routerLink]="link.routerLink || null"
-             [attr.target]="link.url ? '_blank' : null"
-             [class]="link.isPrimary ? 
-               'inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30' : 
-               'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20'">
-            <i [class]="'pi ' + link.icon"></i>
-            {{ link.label }}
-          </a>
+          <ng-container *ngFor="let link of callToAction.links; trackBy: trackByIndex">
+            <!-- Internal Router Link -->
+            <a *ngIf="link.routerLink && !link.url"
+               [routerLink]="link.routerLink"
+               [class]="link.isPrimary ? 
+                 'inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30' : 
+                 'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20'">
+              <i [class]="'pi ' + link.icon"></i>
+              {{ link.label }}
+            </a>
+            
+            <!-- External Link -->
+            <a *ngIf="link.url && !link.routerLink"
+               [href]="link.url"
+               target="_blank"
+               rel="noopener noreferrer"
+               [class]="link.isPrimary ? 
+                 'inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30' : 
+                 'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20'">
+              <i [class]="'pi ' + link.icon"></i>
+              {{ link.label }}
+            </a>
+          </ng-container>
         </div>
       </div>
     </div>
