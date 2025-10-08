@@ -1,0 +1,9 @@
+/* Mitmachen Component Styles */
+
+/* 
+ * This component uses global TTT styles from styles.css and Tailwind utilities.
+ * All styling is handled through:
+ * - ttt-* classes (defined in styles.css)
+ * - Standard Tailwind CSS utilities
+ * - No component-specific CSS needed
+ */

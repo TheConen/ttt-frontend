@@ -1,0 +1,319 @@
+<!-- Mitmachen Page -->
+<div class="min-h-screen bg-tttBlack">
+  <!-- Hero Section mit Background -->
+  <section class="relative py-20 overflow-hidden">
+    <!-- Background Image -->
+    <div class="absolute inset-0">
+      <img src="/img/home-banner/home-banner1.webp" 
+           alt="TTT Mitmachen Background" 
+           class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-r from-tttBlack/95 via-tttBlack/85 to-tttBlack/75"></div>
+    </div>
+    
+    <!-- Content -->
+    <div class="relative z-10 flex h-full items-center">
+      <div class="max-w-3xl mx-auto px-6 ttt-text-center">
+        <div class="ttt-badge mb-6">
+          <i class="pi {{ heroData.badge.icon }}"></i>
+          <span>{{ heroData.badge.text }}</span>
+        </div>
+        
+        <h1 class="ttt-hero-title">
+          MITMACHEN BEIM <span class="text-tttRed">TTT</span>
+        </h1>
+        
+        <p class="ttt-hero-text">
+          {{ pageSubtitle }}
+          Unsere Treffen sind <strong class="text-tttRed">{{ eventSchedule }}</strong>. 
+          {{ heroData.additionalText }}
+        </p>
+
+        <div class="flex justify-center mt-8">
+          <img src="/img/logo-hex-black.webp" 
+               [alt]="heroData.logoAlt" 
+               class="h-20 w-auto">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Deine Wege in das TTT -->
+  <section class="py-12">
+    <div class="ttt-page-container">
+      <div class="ttt-text-center mb-8">
+        <h2 class="ttt-section-title-large">{{ sections.joinPaths.title }}</h2>
+        <p class="ttt-description-text">{{ sections.joinPaths.description }}</p>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div 
+          *ngFor="let path of joinPaths; trackBy: trackById"
+          class="ttt-content-card">
+          
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 {{ path.iconColor }} rounded-lg flex items-center justify-center">
+              <i class="pi {{ path.icon }} text-lg text-white"></i>
+            </div>
+            <div>
+              <h3 class="ttt-feature-title">{{ path.title }}</h3>
+              <p class="text-sm text-tttGray-300">{{ path.subtitle }}</p>
+            </div>
+          </div>
+          
+          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            {{ path.description }}
+          </p>
+          
+          <div class="space-y-2 mb-4">
+            <div 
+              *ngFor="let feature of path.features; trackBy: trackByIndex"
+              class="flex items-start gap-2">
+              <i class="pi pi-check {{ path.textColor }} text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">{{ feature }}</span>
+            </div>
+          </div>
+
+          <button 
+            pButton 
+            (click)="path.buttonAction()"
+            class="w-full {{ path.iconColor }} hover:{{ path.iconColor }}-600 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors duration-300">
+            {{ path.buttonLabel }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- Die Voraussetzungen -->
+    <section class="py-12">
+      <div class="ttt-page-container">
+        <div class="ttt-text-center mb-8">
+          <h2 class="ttt-section-title-large">{{ sections.requirements.title }}</h2>
+          <p class="ttt-description-text">{{ sections.requirements.description }}</p>
+        </div>
+
+        <div class="ttt-content-card">
+          <!-- Spiel-Anforderungen -->
+          <div class="mb-6 p-4 bg-tttGray-800 rounded-lg">
+            <h3 class="text-lg font-semibold text-tttWhite mb-4 flex items-center gap-2">
+              <i class="pi pi-desktop text-tttRed"></i>
+              {{ sections.requirements.gameRequirementsTitle }}
+            </h3>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <div 
+                *ngFor="let gameReq of gameRequirements; trackBy: trackByGameReq"
+                class="flex items-center gap-3 p-3 bg-tttBlack/30 rounded-lg">
+                <i class="pi {{ gameReq.icon }} {{ gameReq.iconColor }} text-lg"></i>
+                <div>
+                  <p class="text-sm font-medium text-tttWhite">{{ gameReq.game }}</p>
+                  <p class="text-xs text-tttGray-300">{{ gameReq.requirements }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Weitere Voraussetzungen -->
+          <div>
+            <h3 class="text-lg font-semibold text-tttWhite mb-4 flex items-center gap-2">
+              <i class="pi pi-check-circle text-tttGreen"></i>
+              {{ sections.requirements.additionalRequirementsTitle }}
+            </h3>
+            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              <div 
+                *ngFor="let requirement of requirements; trackBy: trackById"
+                class="p-4 bg-tttGray-800 rounded-lg text-center">
+                <div class="w-10 h-10 {{ requirement.iconColor }} rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <i class="pi {{ requirement.icon }} text-sm text-white"></i>
+                </div>
+                <h4 class="text-sm font-semibold text-tttWhite mb-2">{{ requirement.title }}</h4>
+                <p class="text-xs text-tttGray-300 leading-relaxed">{{ requirement.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  <!-- Arma3Sync und Tech-Check -->
+  <section class="py-12">
+    <div class="ttt-page-container">
+      <div class="ttt-text-center mb-8">
+        <h2 class="ttt-section-title-large">{{ sections.arma3Sync.title }}</h2>
+        <p class="ttt-description-text">
+          {{ sections.arma3Sync.description }}
+        </p>
+      </div>
+
+      <div class="max-w-6xl mx-auto">
+        <!-- Arma3Sync Tutorial -->
+        <div class="relative mb-8 rounded-xl overflow-hidden border-2 border-tttRed/30">
+          <!-- Background Image -->
+          <div class="absolute inset-0">
+            <img src="/img/mitmachen/mitmachen-arma3sync.webp" 
+                 alt="Arma3Sync Background" 
+                 class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-gradient-to-r from-tttBlack/90 via-tttBlack/80 to-tttBlack/70"></div>
+          </div>
+          
+          <!-- Content -->
+          <div class="relative z-10 p-6">
+            <div class="flex items-start gap-4 mb-6">
+              <div class="w-12 h-12 bg-tttRed rounded-lg flex items-center justify-center flex-shrink-0 shadow-lg">
+                <i class="pi pi-download text-lg text-white"></i>
+              </div>
+              <div class="flex-1">
+                <!-- Header with better background -->
+                <div class="bg-tttBlack/80 backdrop-blur-sm rounded-lg p-4 mb-6 border border-tttRed/20">
+                  <h3 class="ttt-feature-title mb-2 text-tttWhite drop-shadow-lg">{{ sections.arma3Sync.cardTitle }}</h3>
+                  <p class="text-sm text-tttWhite mb-0 leading-relaxed drop-shadow-md">
+                    {{ sections.arma3Sync.cardDescription }}
+                  </p>
+                </div>
+                
+                <!-- Tutorial Options -->
+                <div class="grid gap-4 md:grid-cols-3">
+                  <div 
+                    *ngFor="let tutorial of arma3SyncOptions; trackBy: trackById"
+                    class="flex flex-col gap-3 p-4 bg-tttBlack/60 backdrop-blur-sm rounded-lg border border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 transition-all duration-300">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-tttRed/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="pi {{ tutorial.icon }} text-tttRed text-sm"></i>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-semibold text-tttWhite">{{ tutorial.title }}</h4>
+                        <p class="text-xs text-tttGray-300">{{ tutorial.description }}</p>
+                      </div>
+                    </div>
+                    <button pButton (click)="tutorial.action()" 
+                            class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30">
+                      <i class="pi {{ tutorial.icon }} text-xs"></i>
+                      {{ tutorial.buttonLabel }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tech-Check -->
+        <div class="ttt-content-card">
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-12 h-12 bg-tttGreen rounded-lg flex items-center justify-center flex-shrink-0">
+              <i class="pi pi-cog text-lg text-tttBlack"></i>
+            </div>
+            <div class="flex-1">
+              <h3 class="ttt-feature-title mb-2">{{ sections.techCheck.title }}</h3>
+              <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+                {{ sections.techCheck.description }}
+              </p>
+            </div>
+          </div>
+          
+          <div class="bg-gradient-to-r from-tttGray-800 to-tttGray-700 p-4 rounded-lg">
+            <h4 class="text-base font-semibold text-tttWhite mb-3">
+              <i class="pi pi-info-circle text-tttGreen mr-2 text-sm"></i>
+              {{ sections.techCheck.hintsTitle }}
+            </h4>
+            <ul class="space-y-2">
+              <li 
+                *ngFor="let hint of hints; trackBy: trackByIndex"
+                class="flex items-start gap-2">
+                <i class="pi {{ hint.icon }} {{ hint.iconColor }} text-xs mt-1"></i>
+                <span class="text-sm text-tttGray-300" [innerHTML]="securityUtils.sanitizeHtml(hint.text)"></span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dein Event in das TTT -->
+  <section class="py-12 bg-gradient-to-br from-tttGray-900 via-tttRed/10 to-tttGray-800">
+    <div class="ttt-page-container">
+      <div class="ttt-text-center mb-8">
+        <h2 class="ttt-section-title-large">{{ sections.eventPaths.title }}</h2>
+        <p class="ttt-description-text">
+          {{ sections.eventPaths.description }}
+        </p>
+      </div>
+
+      <div class="grid gap-8 lg:grid-cols-2">
+        <div 
+          *ngFor="let path of eventPaths; trackBy: trackByTitle"
+          class="ttt-content-card flex flex-col">
+          
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 {{ path.iconColor }} rounded-lg flex items-center justify-center">
+              <i class="pi {{ path.icon }} text-lg" [class]="path.icon === 'pi-graduation-cap' ? 'text-tttBlack' : 'text-white'"></i>
+            </div>
+            <div>
+              <h3 class="ttt-feature-title">{{ path.title }}</h3>
+              <p class="text-sm text-tttGray-300">{{ path.subtitle }}</p>
+            </div>
+          </div>
+          
+          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed" [innerHTML]="securityUtils.sanitizeHtml(path.description)"></p>
+          
+          <div *ngIf="path.highlight" class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            {{ path.highlight }}
+          </div>
+
+          <div class="space-y-2 mb-6 flex-grow">
+            <div 
+              *ngFor="let feature of path.features; trackBy: trackByIndex"
+              class="flex items-start gap-2">
+              <i class="pi {{ path.icon }} {{ path.iconColor === 'bg-tttGreen' ? 'text-tttGreen' : 'text-tttRed' }} text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">{{ feature }}</span>
+            </div>
+          </div>
+
+          <button pButton (click)="path.action()" 
+                  class="w-full {{ path.buttonColor }} text-sm font-semibold mt-auto">
+            {{ path.buttonLabel }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Das nächste Einsteiger Event finden -->
+  <section class="py-16 bg-gradient-to-r from-tttRed via-tttRed-600 to-tttRed-700">
+    <div class="ttt-hero-container ttt-text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+        {{ sections.finalCta.title }}
+      </h2>
+      <p class="text-lg text-tttRed-100 mb-6 ttt-constrained-text">
+        <strong>{{ sections.finalCta.description }}</strong>
+      </p>
+      
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+        <button pButton (click)="openEvents()" 
+                class="inline-flex items-center gap-2 bg-white text-tttRed hover:bg-tttGray-100 px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+          <i class="pi pi-calendar"></i>
+          {{ sections.finalCta.buttons.events }}
+        </button>
+        
+        <button pButton (click)="openDiscord()" 
+                class="inline-flex items-center gap-2 bg-transparent border-2 border-white text-white hover:bg-white hover:text-tttRed px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300">
+          <i class="pi pi-discord"></i>
+          {{ sections.finalCta.buttons.discord }}
+        </button>
+      </div>
+
+      <div class="flex flex-wrap justify-center items-center gap-6 text-white mb-8">
+        <ng-container *ngFor="let stat of sections.finalCta.stats; trackBy: trackByIndex; let last = last">
+          <div class="ttt-text-center">
+            <div class="text-2xl font-bold">{{ stat.value }}</div>
+            <div class="text-tttRed-200 text-sm">{{ stat.label }}</div>
+          </div>
+          <div *ngIf="!last" class="w-px h-8 bg-tttRed-400 hidden sm:block"></div>
+        </ng-container>
+      </div>
+
+
+    </div>
+  </section>
+
+</div>
