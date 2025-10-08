@@ -47,7 +47,7 @@ export const securityGuard: CanActivateFn = (route) => {
   localStorage.setItem('lastRouteAccess', now.toString());
 
   // 3. Check for valid routes only
-  const validRoutes = ['', 'impressum', 'datenschutz', 'chronik'];
+  const validRoutes = ['', 'impressum', 'datenschutz', 'chronik', 'mitmachen'];
   const currentRoute = route.routeConfig?.path || '';
   
   if (!validRoutes.includes(currentRoute)) {
