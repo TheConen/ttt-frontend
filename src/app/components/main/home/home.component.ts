@@ -224,7 +224,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     readonly requirements: Requirement[] = [
         { label: 'Ab 18 Jahre', icon: 'pi pi-id-card' },
         { label: 'Headset für TeamSpeak 3 & Discord', icon: 'pi pi-microphone' },
-        { label: 'Apex- & Contact Expansion (Arma 3)', icon: 'pi pi-download' },
+        { label: 'Apex & Contact Expansion (Arma 3)', icon: 'pi pi-download' },
         { label: 'Keine Erfahrung notwendig', icon: 'pi pi-check' },
         { label: 'Spieltage: Dienstag & Freitag', icon: 'pi pi-calendar' }
     ];
