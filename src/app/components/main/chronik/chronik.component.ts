@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TrackByUtils } from '../../../shared/utils/trackby.utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
+import { SanitizationService } from '../../../core/services/sanitization.service';
 
 interface TimelineEvent {
   id: string;
@@ -21,7 +22,7 @@ interface HistorySection {
 }
 
 @Component({
-  selector: 'app-chronik',
+  selector: 'ttt-chronik',
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './chronik.component.html',
@@ -29,8 +30,8 @@ interface HistorySection {
 })
 export class ChronikComponent implements OnInit {
   readonly pageTitle = 'TTT-Chronik';
-
-  constructor(private pageTitleService: PageTitleService) {}
+  private readonly pageTitleService = inject(PageTitleService);
+  private readonly sanitizationService = inject(SanitizationService);
 
   ngOnInit(): void {
     this.pageTitleService.setTitle(this.pageTitle);
@@ -92,7 +93,7 @@ export class ChronikComponent implements OnInit {
   readonly timelineEvents: TimelineEvent[] = this.createTimelineEvents();
 
   private createTimelineEvents(): TimelineEvent[] {
-    const eventData: Array<Omit<TimelineEvent, 'id'> & { id: string }> = [
+    const eventData: (Omit<TimelineEvent, 'id'> & { id: string })[] = [
       { id: 'founding', date: '11. November 2013', title: 'Operation Genesis', description: 'Offizielle Gründung des Tactical Training Teams', type: 'anniversary', icon: 'pi-flag', details: ['Nachfolger des GT-Kommando-Projekts', 'Marktanalyse der Arma3-Community durchgeführt', 'Kombination aus Training, Teamspiel und offener Community'] },
       { id: 'newsletter-2014', date: 'März 2014', title: 'Operation Intel', description: 'Veröffentlichung des ersten TTT-Newsletters', type: 'milestone', icon: 'pi-file-edit', details: ['Erste offizielle Kommunikation an die Mitglieder', 'Etablierung regelmäßiger Informationskanäle'] },
       { id: 'rookie-events', date: 'Mai 2015', title: 'Operation Rookie', description: 'Einführung von Einsteiger-Events und Managementposten', type: 'system', icon: 'pi-users', details: ['Strukturierte Ausbildungsprogramme entwickelt', 'Managementposten zur besseren Organisation', 'Fokus auf Einsteiger-freundliche Events'] },
@@ -122,14 +123,21 @@ export class ChronikComponent implements OnInit {
   };
 
   getEventTypeColor(type: string): string {
-    return this.eventTypeConfig[type as keyof typeof this.eventTypeConfig]?.color || this.eventTypeConfig.default.color;
+    const config = this.eventTypeConfig[type as keyof typeof this.eventTypeConfig];
+    return config?.color || this.eventTypeConfig.default.color;
   }
 
   getEventTypeLabel(type: string): string {
-    return this.eventTypeConfig[type as keyof typeof this.eventTypeConfig]?.label || this.eventTypeConfig.default.label;
+    const config = this.eventTypeConfig[type as keyof typeof this.eventTypeConfig];
+    return config?.label || this.eventTypeConfig.default.label;
   }
 
   getEventIconClasses(icon: string): string {
     return `pi ${icon} text-inherit`;
+  }
+
+  // Helper method to strip HTML tags for accessibility
+  getCleanTitle(title: string): string {
+    return this.sanitizationService.stripHtml(title);
   }
 }

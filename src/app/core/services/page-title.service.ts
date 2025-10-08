@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 
 @Injectable({
@@ -6,8 +6,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class PageTitleService {
   private readonly baseTitle = 'Tactical Training Team';
-
-  constructor(private titleService: Title) {}
+  private readonly titleService = inject(Title);
 
   /**
    * Sets the page title with the base title

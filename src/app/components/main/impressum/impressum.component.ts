@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrackByUtils } from '../../../shared/utils/trackby.utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
+import { SanitizationService } from '../../../core/services/sanitization.service';
 
 interface ImpressumSection {
   id: string;
@@ -31,7 +32,7 @@ interface ExternalLink {
 }
 
 @Component({
-  selector: 'app-impressum',
+  selector: 'ttt-impressum',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './impressum.component.html',
@@ -39,8 +40,8 @@ interface ExternalLink {
 })
 export class ImpressumComponent implements OnInit {
   readonly pageTitle = 'Impressum';
-
-  constructor(private pageTitleService: PageTitleService) {}
+  private readonly pageTitleService = inject(PageTitleService);
+  private readonly sanitizationService = inject(SanitizationService);
 
   ngOnInit(): void {
     this.pageTitleService.setTitle(this.pageTitle);
@@ -140,5 +141,10 @@ export class ImpressumComponent implements OnInit {
 
   trackByDisclaimer(index: number, disclaimer: DisclaimerSection): string {
     return disclaimer.subtitle;
+  }
+
+  // Helper method to strip HTML tags for accessibility
+  getCleanTitle(title: string): string {
+    return this.sanitizationService.stripHtml(title);
   }
 }

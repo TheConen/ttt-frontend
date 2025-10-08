@@ -34,7 +34,7 @@ export const securityGuard: CanActivateFn = (route) => {
   const lastAccess = localStorage.getItem('lastRouteAccess');
   const minInterval = 100; // Minimum 100ms between route changes
 
-  if (lastAccess && (now - parseInt(lastAccess)) < minInterval) {
+  if (lastAccess && (now - Number.parseInt(lastAccess)) < minInterval) {
     console.warn('Too many rapid route changes detected');
     return false;
   }

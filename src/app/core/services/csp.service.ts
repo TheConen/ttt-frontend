@@ -1,6 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
-import { inject } from '@angular/core';
 import { CSP_CONFIG, PRODUCTION_CSP_CONFIG, generateCSPString, CSPConfig } from '../config/csp.config';
 
 /**
@@ -11,7 +10,7 @@ import { CSP_CONFIG, PRODUCTION_CSP_CONFIG, generateCSPString, CSPConfig } from 
   providedIn: 'root'
 })
 export class CSPService {
-  private document = inject(DOCUMENT);
+  private readonly document = inject(DOCUMENT);
   private currentConfig: CSPConfig = CSP_CONFIG;
 
   /**
@@ -73,13 +72,13 @@ export class CSPService {
    * @param domain Domain to remove
    */
   removeTrustedDomain(domain: string): void {
-    Object.keys(this.currentConfig).forEach(key => {
-      const directive = this.currentConfig[key as keyof CSPConfig] as string[];
+    for (const key of Object.keys(this.currentConfig)) {
+      const directive = this.currentConfig[key as keyof CSPConfig];
       const index = directive.indexOf(domain);
       if (index > -1) {
         directive.splice(index, 1);
       }
-    });
+    }
     this.updateCSP();
     console.log(`Removed trusted domain: ${domain}`);
   }
