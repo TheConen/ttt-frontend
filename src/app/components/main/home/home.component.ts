@@ -262,7 +262,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       }, this.slideInterval);
     }
-  }    private stopSlider(): void {
+  }
+
+  private stopSlider(): void {
         if (this.sliderInterval) {
             clearInterval(this.sliderInterval);
             this.sliderInterval = undefined;

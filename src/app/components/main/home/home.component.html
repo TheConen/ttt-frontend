@@ -9,7 +9,7 @@
                  [class.opacity-100]="i === currentImageIndex"
                  [class.opacity-0]="i !== currentImageIndex">
                 <img [src]="slide.image" 
-                     [alt]="'TTT Banner ' + (i + 1)" 
+                     [alt]="slide.title + ' - ' + slide.subtitle" 
                      class="w-full h-full object-cover" />
             </div>
             <!-- Dark overlay for better text readability -->
@@ -45,8 +45,10 @@
     <div class="relative z-10 flex h-full items-center">
         <div class="ttt-hero-container">
             <h1 class="ttt-hero-title" 
-                [innerHTML]="bannerSlides[currentImageIndex].title"
-                [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title)">
+                [innerHTML]="bannerSlides[currentImageIndex].title || 'Tactical Training Team'"
+                [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title || 'Tactical Training Team')"
+                role="heading"
+                aria-level="1">
             </h1>
             
             <p class="ttt-hero-text">
@@ -274,7 +276,7 @@
                     <div *ngFor="let image of getGalleryImagesForLoop(); let i = index" 
                          class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
                         <img [src]="image" 
-                             [alt]="'TTT Gallery ' + ((i % galleryImages.length) + 1)"
+                             [alt]="'Tactical Training Team Community Moment ' + ((i % galleryImages.length) + 1)"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                 </div>
