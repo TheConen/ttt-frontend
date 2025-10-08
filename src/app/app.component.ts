@@ -22,6 +22,12 @@ interface DiscordConfig {
 export class AppComponent {
   private readonly sanitizer = inject(DomSanitizer);
 
+  // Trusted domains for iframe sources
+  private readonly trustedDomains = [
+    'discord.com',
+    'discordapp.com'
+  ] as const;
+
   // Sidebar content configuration
   readonly sidebarContent = {
     left: {
@@ -46,8 +52,33 @@ export class AppComponent {
     widgetTitle: 'TTT Discord Server'
   };
 
-  // Pre-sanitized Discord widget URL (only created once)
-  readonly sanitizedDiscordUrl: SafeResourceUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.discordConfig.widgetUrl);
+  // Safely sanitized Discord widget URL with domain validation
+  readonly sanitizedDiscordUrl: SafeResourceUrl = this.getSafeResourceUrl(this.discordConfig.widgetUrl);
+
+  /**
+   * Safely sanitize a URL for iframe usage with domain validation
+   * Only allows URLs from trusted domains to prevent XSS attacks
+   */
+  private getSafeResourceUrl(url: string): SafeResourceUrl {
+    try {
+      const urlObj = new URL(url);
+      const isValidDomain = this.trustedDomains.some(domain => 
+        urlObj.hostname === domain || urlObj.hostname.endsWith(`.${domain}`)
+      );
+      
+      if (!isValidDomain) {
+        console.error(`Untrusted domain for iframe: ${urlObj.hostname}`);
+        throw new Error(`Domain ${urlObj.hostname} is not in trusted domains list`);
+      }
+
+      // Only bypass security for validated trusted domains
+      return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    } catch (error) {
+      console.error('Invalid URL for iframe:', url, error);
+      // Return empty safe URL as fallback
+      return this.sanitizer.bypassSecurityTrustResourceUrl('about:blank');
+    }
+  }
 
   // Discord icon configuration
   readonly discordIcon = {
