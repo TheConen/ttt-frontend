@@ -159,7 +159,6 @@ export const tttPrimeNgTheme: ThemeType = {
                             activeColor: '{primary.500}',
                         },
                     },
-
                 },
             },
         },

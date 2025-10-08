@@ -19,21 +19,25 @@
         <!-- Navigation Arrows -->
         <button 
             (click)="previousImage()" 
+            aria-label="Vorheriges Banner-Bild"
             class="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-tttBlack/30 text-tttWhite backdrop-blur-sm transition-all duration-300 hover:bg-tttRed/80 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-tttRed">
-            <i class="pi pi-chevron-left text-lg"></i>
+            <i class="pi pi-chevron-left text-lg" aria-hidden="true"></i>
         </button>
         <button 
             (click)="nextImage()" 
+            aria-label="Nächstes Banner-Bild"
             class="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-tttBlack/30 text-tttWhite backdrop-blur-sm transition-all duration-300 hover:bg-tttRed/80 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-tttRed">
-            <i class="pi pi-chevron-right text-lg"></i>
+            <i class="pi pi-chevron-right text-lg" aria-hidden="true"></i>
         </button>
 
         <!-- Slide Indicators -->
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2">
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2" role="group" aria-label="Banner-Navigation">
             <button 
                 *ngFor="let slide of bannerSlides; let i = index"
                 (click)="goToImage(i)"
-                class="h-3 w-3 rounded-full transition-all duration-300 focus:outline-none"
+                [attr.aria-label]="'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)"
+                [attr.aria-current]="i === currentImageIndex ? 'true' : 'false'"
+                class="h-3 w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-tttRed focus:ring-offset-2"
                 [class.bg-tttRed]="i === currentImageIndex"
                 [class.bg-tttWhite/40]="i !== currentImageIndex"
                 [class.scale-125]="i === currentImageIndex">
@@ -46,9 +50,7 @@
         <div class="ttt-hero-container">
             <h1 class="ttt-hero-title" 
                 [innerHTML]="bannerSlides[currentImageIndex].title || 'Tactical Training Team'"
-                [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title || 'Tactical Training Team')"
-                role="heading"
-                aria-level="1">
+                [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title || 'Tactical Training Team')">
             </h1>
             
             <p class="ttt-hero-text">
