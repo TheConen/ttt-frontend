@@ -137,33 +137,12 @@
                         [alt]="member.name + ' Avatar'"
                         class="w-full h-full object-cover"
                         loading="lazy" />
-                      <!-- Rank Badge for officers -->
-                      <div 
-                        class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border border-tttBlack flex items-center justify-center"
-                        [class]="'bg-' + getRankInfo(member.rank).color.split('-')[1] + '-400/20'">
-                        <img 
-                          *ngIf="getRankInfo(member.rank).icon.startsWith('/img'); else iconTemplate"
-                          [src]="getRankInfo(member.rank).icon" 
-                          [alt]="getRankInfo(member.rank).name"
-                          class="w-2.5 h-2.5 object-contain" />
-                        <ng-template #iconTemplate>
-                          <i [class]="getRankInfo(member.rank).icon + ' ' + getRankInfo(member.rank).color + ' text-xs'" aria-hidden="true"></i>
-                        </ng-template>
-                      </div>
                     </div>
                     
                     <!-- Fallback for officers without avatar -->
                     <ng-template #noAvatarTemplate>
-                      <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-                           [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50 bg-' + getRankInfo(member.rank).color.split('-')[1] + '-400/10'">
-                        <img 
-                          *ngIf="getRankInfo(member.rank).icon.startsWith('/img'); else memberIconTemplate"
-                          [src]="getRankInfo(member.rank).icon" 
-                          [alt]="getRankInfo(member.rank).name"
-                          class="w-4 h-4 object-contain" />
-                        <ng-template #memberIconTemplate>
-                          <i [class]="getRankInfo(member.rank).icon + ' ' + getRankInfo(member.rank).color + ' text-xs'" aria-hidden="true"></i>
-                        </ng-template>
+                      <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border-yellow-400/50 bg-yellow-400/10">
+                        <i class="pi pi-user text-yellow-400 text-lg" aria-hidden="true"></i>
                       </div>
                     </ng-template>
                   </div>
@@ -232,15 +211,8 @@
                   
                   <!-- Fallback for Non-Officers in Expanded View -->
                   <ng-template #expandedNoAvatarTemplate>
-                    <div class="w-16 h-16 rounded-full border-2 flex items-center justify-center"
-                         [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50 bg-' + getRankInfo(member.rank).color.split('-')[1] + '-400/10'">
-                      <img *ngIf="getRankInfo(member.rank).icon.startsWith('/img'); else expandedFallbackIconTemplate"
-                           [src]="getRankInfo(member.rank).icon" 
-                           [alt]="getRankInfo(member.rank).name"
-                           class="w-8 h-8 object-contain" />
-                      <ng-template #expandedFallbackIconTemplate>
-                        <i [class]="getRankInfo(member.rank).icon + ' ' + getRankInfo(member.rank).color + ' text-2xl'" aria-hidden="true"></i>
-                      </ng-template>
+                    <div class="w-16 h-16 rounded-full border-2 flex items-center justify-center border-yellow-400/50 bg-yellow-400/10">
+                      <i class="pi pi-user text-yellow-400 text-2xl" aria-hidden="true"></i>
                     </div>
                   </ng-template>
                 </div>
@@ -291,7 +263,7 @@
                     Kampagnen-Teilnahmen
                   </h5>
                   <div class="space-y-2">
-                    <div *ngFor="let ribbon of member.campaignRibbons; trackBy: trackByCampaignRibbon"
+                    <div *ngFor="let ribbon of getSortedCampaignRibbons(member.campaignRibbons); trackBy: trackByCampaignRibbon"
                          class="flex items-center gap-2 p-2 rounded-lg bg-tttGray-800/50 border border-tttGray-600/30">
                       <img [src]="ribbon.image" 
                              [alt]="ribbon.name"

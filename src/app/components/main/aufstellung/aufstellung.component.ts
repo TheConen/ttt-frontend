@@ -77,7 +77,7 @@ const AUFSTELLUNG_CONFIG = {
     },
     GROUPS: {
       BASE_PATH: '/img/aufstellung/group/',
-      AUSBILDUNG: 'group-missionsbau-icon.png',
+      MISSIONSBAU: 'group-missionsbau-icon.png',
       MEDIEN: 'group-pr-icon.png', 
       TECHNIK: 'group-technik-icon.png'
     },
@@ -181,47 +181,45 @@ export class AufstellungComponent implements OnInit {
       name: 'Offizier',
       shortName: 'Off.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.OFFIZIER}`,
-      color: 'text-yellow-500',  // Gold wie das Logo
+      color: 'text-yellow-400',  // Centralized in getRankColorClasses
       priority: 1
     },
     unteroffizier: {
       name: 'Unteroffizier',
       shortName: 'Uffz.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.UNTEROFFIZIER}`,
-      color: 'text-gray-400',    // Silber/grau wie das Logo
+      color: 'text-gray-400',    // Centralized in getRankColorClasses
       priority: 2
     },
     veteran: {
       name: 'Veteran',
       shortName: 'Vet.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.VETERAN}`,
-      color: 'text-green-500',   // grün
+      color: 'text-green-400',   // Centralized in getRankColorClasses
       priority: 3
     },
     soldat: {
       name: 'Soldat',
       shortName: 'Sdt.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.SOLDAT}`,
-      color: 'text-blue-900',    // dunkelblau
+      color: 'text-blue-600',    // Centralized in getRankColorClasses
       priority: 4
     },
     rekrut: {
       name: 'Rekrut',
       shortName: 'Rekr.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.REKRUT}`,
-      color: 'text-blue-300',    // hellblau
+      color: 'text-blue-300',    // Centralized in getRankColorClasses
       priority: 5
     },
     gast: {
       name: 'Gast',
       shortName: 'Gast',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.GAST}`,
-      color: 'text-gray-300',    // hellgrau
+      color: 'text-gray-300',    // Centralized in getRankColorClasses
       priority: 6
     }
   } as const;
-
-  // Section configuration removed - already defined above
 
   // Rank order for iteration (maintains military hierarchy)
   readonly rankOrder: RankType[] = ['offizier', 'unteroffizier', 'veteran', 'soldat', 'rekrut', 'gast'] as const;
@@ -229,72 +227,139 @@ export class AufstellungComponent implements OnInit {
   // Members data (will be loaded from backend)
   members: Member[] = [];
 
-  // Computed properties
-  get membersByRank(): Record<RankType, Member[]> {
-    const grouped: Record<RankType, Member[]> = {
-      offizier: [],
-      unteroffizier: [],
-      veteran: [],
-      soldat: [],
-      rekrut: [],
-      gast: []
-    };
+  // Computed properties - cached for performance (Angular 20 Best Practice)
+  membersByRank: Record<RankType, Member[]> = {
+    offizier: [],
+    unteroffizier: [],
+    veteran: [],
+    soldat: [],
+    rekrut: [],
+    gast: []
+  };
 
-    this.members.forEach(member => {
-      grouped[member.rank].push(member);
-    });
+  memberStats: Record<RankType, number> = {
+    offizier: 0,
+    unteroffizier: 0,
+    veteran: 0,
+    soldat: 0,
+    rekrut: 0,
+    gast: 0
+  };
 
-    // Sort members within each rank by name
-    Object.keys(grouped).forEach(rank => {
-      grouped[rank as RankType].sort((a, b) => a.name.localeCompare(b.name));
-    });
+  totalMembers = 0;
 
-    return grouped;
+  // Utility methods for reducing code duplication (Angular 20 Best Practice)
+  private createEmptyRankRecord<T>(factory: () => T): Record<RankType, T> {
+    return this.rankOrder.reduce((acc, rank) => {
+      acc[rank] = factory();
+      return acc;
+    }, {} as Record<RankType, T>);
   }
 
-  get memberStats(): Record<RankType, number> {
-    const stats: Record<RankType, number> = {
-      offizier: 0,
-      unteroffizier: 0,
-      veteran: 0,
-      soldat: 0,
-      rekrut: 0,
-      gast: 0
-    };
-
-    this.members.forEach(member => {
-      stats[member.rank]++;
-    });
-
-    return stats;
+  private getRankColorClasses(rank: RankType): { text: string; bg: string } {
+    switch (rank) {
+      case 'offizier':
+        return { text: 'text-yellow-400', bg: 'bg-yellow-400/10' };
+      case 'unteroffizier':
+        return { text: 'text-gray-400', bg: 'bg-gray-400/10' };
+      case 'veteran':
+        return { text: 'text-green-400', bg: 'bg-green-400/10' };
+      case 'soldat':
+        return { text: 'text-blue-600', bg: 'bg-blue-600/10' };
+      case 'rekrut':
+        return { text: 'text-blue-300', bg: 'bg-blue-300/10' };
+      case 'gast':
+        return { text: 'text-gray-300', bg: 'bg-gray-300/10' };
+      default:
+        return { text: 'text-gray-400', bg: 'bg-gray-400/10' };
+    }
   }
 
-  get totalMembers(): number {
-    return this.members.length;
-  }
+  // Static configurations (consolidated from dummy data methods)
+  private readonly allDepartments: Abteilung[] = [
+    { 
+      id: 'abt-1', 
+      name: 'Missionsbau', 
+      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MISSIONSBAU}`, 
+      description: 'Wissensvermittlung & Multiplikation im Missionsbau' 
+    },
+    { 
+      id: 'abt-2', 
+      name: 'Medien & PR', 
+      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MEDIEN}`, 
+      description: 'Social Media und Öffentlichkeitsarbeit' 
+    },
+    { 
+      id: 'abt-3', 
+      name: 'Technik', 
+      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.TECHNIK}`, 
+      description: 'Server-Administration und technische Wartung' 
+    }
+  ];
 
+  private readonly availableMedals: Omit<Medal, 'id'>[] = [
+    {
+      name: 'Medal of Honor',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.HONOR}`,
+      description: 'Wird für besondere Verdienste im TTT verliehen'
+    }
+  ];
 
+  private readonly availableRibbons: Omit<CampaignRibbon, 'id'>[] = [
+    {
+      name: 'Aspis Kampagne',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.ASPIS}`,
+      campaign: 'Operation Aspis',
+      year: '2020'
+    },
+    {
+      name: 'Beth Nahrin Kampagne',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BETH_NAHRIN}`,
+      campaign: 'Operation Beth Nahrin',
+      year: '2021'
+    },
+    {
+      name: 'Entzug Kampagne',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.ENTZUG}`,
+      campaign: 'Operation Entzug',
+      year: '2015'
+    },
+    {
+      name: 'Paradiso Kampagne',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.PARADISO}`,
+      campaign: 'Operation Paradiso',
+      year: '2023'
+    },
+    {
+      name: 'Phoenix Kampagne',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.PHOENIX}`,
+      campaign: 'Operation Phoenix',
+      year: '2016'
+    },
+    {
+      name: 'Themis Kampagne Q1',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.THEMIS_Q1}`,
+      campaign: 'Operation Themis Q1',
+      year: '2015'
+    },
+    {
+      name: 'Themis Kampagne Q2',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.THEMIS_Q2}`,
+      campaign: 'Operation Themis Q2',
+      year: '2015'
+    }
+  ];
 
   // Get arbeitsgruppen based on member role - according to organigramm
   private getRandomAbteilungen(index: number, name: string): Abteilung[] {
     if (name === 'SpecOp0') {
       // SpecOp0 bekommt alle Abteilungen als Demonstration
-      return [
-        { id: 'abt-1', name: 'Ausbildung', icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.AUSBILDUNG}`, description: 'Verantwortlich für die Ausbildung neuer Rekruten' },
-        { id: 'abt-2', name: 'Medien & PR', icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MEDIEN}`, description: 'Social Media und Öffentlichkeitsarbeit' },
-        { id: 'abt-3', name: 'Technik', icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.TECHNIK}`, description: 'Server-Administration und technische Wartung' }
-      ];
+      return [...this.allDepartments];
     }
-
-    const allGroups: Abteilung[] = [
-      { id: 'abt-1', name: 'Ausbildung', icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.AUSBILDUNG}`, description: 'Verantwortlich für die Ausbildung neuer Rekruten' },
-      { id: 'abt-2', name: 'Medien & PR', icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MEDIEN}`, description: 'Social Media und Öffentlichkeitsarbeit' },
-      { id: 'abt-3', name: 'Technik', icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.TECHNIK}`, description: 'Server-Administration und technische Wartung' }
-    ];
 
     // Zufällige Anzahl von Gruppen (1-2)
     const numGroups = Math.floor(Math.random() * 2) + 1;
-    const shuffled = [...allGroups].sort(() => Math.random() - 0.5);
+    const shuffled = [...this.allDepartments].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, numGroups);
   }
 
@@ -313,6 +378,7 @@ export class AufstellungComponent implements OnInit {
       // this.memberService.getAllMembers().subscribe({
       //   next: (members: Member[]) => {
       //     this.members = members;
+      //     this.computeMemberData();
       //     this.isLoading = false;
       //   },
       //   error: (error) => {
@@ -324,12 +390,33 @@ export class AufstellungComponent implements OnInit {
 
       // DUMMY DATA - Remove when backend is ready
       this.loadDummyMembers();
+      this.computeMemberData();
       this.isLoading = false;
     } catch (error) {
       this.loadingError = 'Fehler beim Laden der Mitgliederdaten';
       this.isLoading = false;
       console.error('Error loading members:', error);
     }
+  }
+
+  // Compute and cache member data for performance (Angular 20 Best Practice)
+  private computeMemberData(): void {
+    // Reset data using utility method
+    this.membersByRank = this.createEmptyRankRecord<Member[]>(() => []);
+    this.memberStats = this.createEmptyRankRecord<number>(() => 0);
+
+    // Group members by rank and calculate stats
+    this.members.forEach(member => {
+      this.membersByRank[member.rank].push(member);
+      this.memberStats[member.rank]++;
+    });
+
+    // Sort members within each rank by name
+    Object.keys(this.membersByRank).forEach(rank => {
+      this.membersByRank[rank as RankType].sort((a, b) => a.name.localeCompare(b.name));
+    });
+
+    this.totalMembers = this.members.length;
   }
 
   // TODO: Remove this method when backend integration is complete
@@ -416,7 +503,7 @@ export class AufstellungComponent implements OnInit {
            member.abteilungen.length > 0;
   }
 
-  // Sort campaign ribbons by year (newest first)
+  // Sort campaign ribbons by year (newest first) - Essential for proper display
   getSortedCampaignRibbons(ribbons: CampaignRibbon[]): CampaignRibbon[] {
     return [...ribbons].sort((a, b) => {
       const yearA = parseInt(a.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
@@ -425,33 +512,25 @@ export class AufstellungComponent implements OnInit {
     });
   }
 
+
+
   private getMedalsForMember(name: string, hasDetails: boolean, index: number): Medal[] {
     if (!hasDetails) return [];
     
     if (name === 'SpecOp0') {
       // SpecOp0 bekommt alle verfügbaren Medaillen als Demonstration
-      return [
-        {
-          id: 'medal-honor',
-          name: 'Medal of Honor',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.HONOR}`,
-          description: 'Wird für besondere Verdienste im TTT verliehen'
-        }
-      ] as const;
+      return this.availableMedals.map(medal => ({
+        ...medal,
+        id: `medal-${index}-${medal.name.replace(/\s+/g, '-').toLowerCase()}`
+      }));
     }
 
     // Andere Mitglieder bekommen zufällig 0-1 Medaillen
-    const availableMedals = [
-      {
-        id: `medal-honor-${index}`,
-        name: 'Medal of Honor',
-        image: `${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.HONOR}`,
-        description: 'Wird für besondere Verdienste im TTT verliehen'
-      }
-    ];
-
     const numMedals = Math.floor(Math.random() * 2); // 0-1 Medaillen
-    return availableMedals.slice(0, numMedals);
+    return this.availableMedals.slice(0, numMedals).map(medal => ({
+      ...medal,
+      id: `medal-${index}-${medal.name.replace(/\s+/g, '-').toLowerCase()}`
+    }));
   }
 
   private getCampaignRibbonsForMember(name: string, hasDetails: boolean, index: number, year: number): CampaignRibbon[] {
@@ -459,130 +538,37 @@ export class AufstellungComponent implements OnInit {
     
     if (name === 'SpecOp0') {
       // SpecOp0 bekommt alle verfügbaren Campaign Ribbons als Demonstration
-      return [
-        {
-          id: 'ribbon-aspis',
-          name: 'Aspis Kampagne',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.ASPIS}`,
-          campaign: 'Operation Aspis',
-          year: '2020'
-        },
-        {
-          id: 'ribbon-bethnahrin',
-          name: 'Beth Nahrin Kampagne',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BETH_NAHRIN}`,
-          campaign: 'Operation Beth Nahrin',
-          year: '2021'
-        },
-        {
-          id: 'ribbon-entzug',
-          name: 'Entzug Kampagne',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.ENTZUG}`,
-          campaign: 'Operation Entzug',
-          year: '2015'
-        },
-        {
-          id: 'ribbon-paradiso',
-          name: 'Paradiso Kampagne',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.PARADISO}`,
-          campaign: 'Operation Paradiso',
-          year: '2023'
-        },
-        {
-          id: 'ribbon-phoenix',
-          name: 'Phoenix Kampagne',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.PHOENIX}`,
-          campaign: 'Operation Phoenix',
-          year: '2016'
-        },
-        {
-          id: 'ribbon-themis1',
-          name: 'Themis Kampagne Q1',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.THEMIS_Q1}`,
-          campaign: 'Operation Themis Q1',
-          year: '2015'
-        },
-        {
-          id: 'ribbon-themis2',
-          name: 'Themis Kampagne Q2',
-          image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.THEMIS_Q2}`,
-          campaign: 'Operation Themis Q2',
-          year: '2015'
-        }
-      ] as const;
+      return this.availableRibbons.map(ribbon => ({
+        ...ribbon,
+        id: `ribbon-${index}-${ribbon.name.replace(/\s+/g, '-').toLowerCase()}`
+      }));
     }
 
-    // Andere Mitglieder bekommen zufällig 0-3 Campaign Ribbons
-    const availableRibbons = [
-      {
-        id: `ribbon-aspis-${index}`,
-        name: 'Aspis Kampagne',
-        image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.ASPIS}`,
-        campaign: 'Operation Aspis',
-        year: Math.max(2020, year).toString()
-      },
-      {
-        id: `ribbon-bethnahrin-${index}`,
-        name: 'Beth Nahrin Kampagne',
-        image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BETH_NAHRIN}`,
-        campaign: 'Operation Beth Nahrin',
-        year: Math.max(2021, year).toString()
-      },
-      {
-        id: `ribbon-phoenix-${index}`,
-        name: 'Phoenix Kampagne',
-        image: `${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RIBBONS.PHOENIX}`,
-        campaign: 'Operation Phoenix',
-        year: Math.max(2016, year).toString()
-      }
-    ];
+    // Andere Mitglieder bekommen zufällig 0-3 Campaign Ribbons (nur passende nach Jahr)
+    const eligibleRibbons = this.availableRibbons
+      .filter(ribbon => parseInt(ribbon.year) >= year)
+      .slice(0, 3); // Limit to first 3 for variety
 
     const numRibbons = Math.floor(Math.random() * 4); // 0-3 Ribbons
-    return availableRibbons.slice(0, numRibbons);
+    return eligibleRibbons.slice(0, numRibbons).map(ribbon => ({
+      ...ribbon,
+      id: `ribbon-${index}-${ribbon.name.replace(/\s+/g, '-').toLowerCase()}`,
+      year: Math.max(parseInt(ribbon.year), year).toString()
+    }));
   }
 
-  // Get rank badge classes with correct color mapping
+  // Get rank badge classes with correct color mapping (consolidated method)
+  private getRankBadgeClassesBase(rank: RankType, baseClasses: string): string {
+    const colors = this.getRankColorClasses(rank);
+    return `${baseClasses} ${colors.text} ${colors.bg}`;
+  }
+
   getRankBadgeClasses(rank: RankType): string {
-    const baseClasses = 'text-xs px-1.5 py-0.5 rounded font-medium block mb-1';
-    
-    switch (rank) {
-      case 'offizier':
-        return `${baseClasses} text-yellow-400 bg-yellow-400/10`;
-      case 'unteroffizier':
-        return `${baseClasses} text-gray-400 bg-gray-400/10`;
-      case 'veteran':
-        return `${baseClasses} text-green-400 bg-green-400/10`;
-      case 'soldat':
-        return `${baseClasses} text-blue-900 bg-blue-900/10`;
-      case 'rekrut':
-        return `${baseClasses} text-blue-300 bg-blue-300/10`;
-      case 'gast':
-        return `${baseClasses} text-gray-300 bg-gray-300/10`;
-      default:
-        return `${baseClasses} text-gray-400 bg-gray-400/10`;
-    }
+    return this.getRankBadgeClassesBase(rank, 'text-xs px-1.5 py-0.5 rounded font-medium block mb-1');
   }
 
-  // Get rank badge classes for expanded view
   getRankBadgeExpandedClasses(rank: RankType): string {
-    const baseClasses = 'text-sm px-2 py-1 rounded font-medium';
-    
-    switch (rank) {
-      case 'offizier':
-        return `${baseClasses} text-yellow-400 bg-yellow-400/10`;
-      case 'unteroffizier':
-        return `${baseClasses} text-gray-400 bg-gray-400/10`;
-      case 'veteran':
-        return `${baseClasses} text-green-400 bg-green-400/10`;
-      case 'soldat':
-        return `${baseClasses} text-blue-900 bg-blue-900/10`;
-      case 'rekrut':
-        return `${baseClasses} text-blue-300 bg-blue-300/10`;
-      case 'gast':
-        return `${baseClasses} text-gray-300 bg-gray-300/10`;
-      default:
-        return `${baseClasses} text-gray-400 bg-gray-400/10`;
-    }
+    return this.getRankBadgeClassesBase(rank, 'text-sm px-2 py-1 rounded font-medium');
   }
 
   // Button styling methods (consistent with other components)
