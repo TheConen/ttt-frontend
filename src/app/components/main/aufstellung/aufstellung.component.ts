@@ -355,7 +355,9 @@ export class AufstellungComponent implements OnInit {
       return [...this.allDepartments];
     }
 
+    // NOSONAR - Using Math.random() for mock data generation only, not cryptographic purposes
     const numGroups = Math.floor(Math.random() * 2) + 1;
+    // NOSONAR - Using Math.random() for mock data shuffling only, not cryptographic purposes  
     const shuffled = [...this.allDepartments].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, numGroups);
   }
@@ -438,6 +440,7 @@ export class AufstellungComponent implements OnInit {
       name: base.name,
       rank: base.rank,
       avatar: base.rank === 'offizier' ? AUFSTELLUNG_CONFIG.ASSETS.AVATARS.OFFIZIER : '',
+      // NOSONAR - Using Math.random() for mock date generation only, not cryptographic purposes
       memberSince: `${base.year}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
       medals: this.getMedalsForMember(base.name, base.hasDetails, index),
       campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, parseInt(base.year)),
@@ -496,6 +499,7 @@ export class AufstellungComponent implements OnInit {
       }));
     }
 
+    // NOSONAR - Using Math.random() for mock medal assignment only, not cryptographic purposes
     const numMedals = Math.floor(Math.random() * 2);
     return this.availableMedals.slice(0, numMedals).map(medal => ({
       ...medal,
@@ -517,6 +521,7 @@ export class AufstellungComponent implements OnInit {
       .filter(ribbon => parseInt(ribbon.year) >= year)
       .slice(0, 3);
 
+    // NOSONAR - Using Math.random() for mock ribbon assignment only, not cryptographic purposes
     const numRibbons = Math.floor(Math.random() * 4);
     return eligibleRibbons.slice(0, numRibbons).map(ribbon => ({
       ...ribbon,

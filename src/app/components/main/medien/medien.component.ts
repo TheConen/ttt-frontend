@@ -5,44 +5,40 @@ import { TrackByUtils } from '../../../shared/utils/trackby.utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
-interface LiveStream {
+// Base interface for all media items
+interface BaseMediaItem {
   id: string;
+  url: string;
+  icon: string;
+}
+
+interface LiveStream extends BaseMediaItem {
   platform: 'twitch';
   channelName: string;
   title: string;
   viewers: number;
   thumbnail: string;
-  url: string;
   isLive: boolean;
 }
 
-interface MediaLink {
-  id: string;
+interface MediaLink extends BaseMediaItem {
   platform: 'youtube' | 'twitch' | 'trovo';
   name: string;
-  url: string;
-  icon: string;
   description: string;
   color: string;
 }
 
-interface SocialMediaLink {
-  id: string;
+interface SocialMediaLink extends BaseMediaItem {
   platform: 'x' | 'mastodon' | 'bluesky' | 'instagram' | 'tiktok' | 'steam' | 'arma3units' | 'github';
   name: string;
   username: string;
-  url: string;
-  icon: string;
   color: string;
 }
 
-interface CorporateDesignResource {
-  id: string;
+interface CorporateDesignResource extends BaseMediaItem {
   type: 'wiki' | 'download';
   title: string;
   description: string;
-  url: string;
-  icon: string;
   fileType?: string;
 }
 
