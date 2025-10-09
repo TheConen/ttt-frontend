@@ -100,6 +100,7 @@ describe('MedienComponent', () => {
     spyOn(window, 'open');
     mockSanitizationService.isSafeUrl.and.returnValue(false);
 
+    // NOSONAR - This is a security test to verify XSS prevention
     const unsafeUrl = 'javascript:alert("xss")';
     component.openExternalLink(unsafeUrl, mockEvent);
 
