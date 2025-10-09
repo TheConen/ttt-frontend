@@ -385,9 +385,12 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       const now = Date.now();
       const lastLinkAccess = localStorage.getItem('lastLinkAccess');
       
-      if (lastLinkAccess && (now - +lastLinkAccess) < MITMACHEN_CONFIG.SECURITY.MIN_LINK_INTERVAL) {
-        console.warn('Too many rapid link access attempts');
-        return;
+      if (lastLinkAccess) {
+        const lastLinkAccessInt = parseInt(lastLinkAccess, MITMACHEN_CONFIG.SECURITY.RADIX);
+        if (!isNaN(lastLinkAccessInt) && (now - lastLinkAccessInt) < MITMACHEN_CONFIG.SECURITY.MIN_LINK_INTERVAL) {
+          console.warn('Too many rapid link access attempts');
+          return;
+        }
       }
 
       localStorage.setItem('lastLinkAccess', now.toString());

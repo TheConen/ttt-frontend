@@ -74,9 +74,11 @@ export class CSPService {
   removeTrustedDomain(domain: string): void {
     for (const key of Object.keys(this.currentConfig)) {
       const directive = this.currentConfig[key as keyof CSPConfig];
-      const index = directive.indexOf(domain);
-      if (index > -1) {
-        directive.splice(index, 1);
+      if (Array.isArray(directive)) {
+        const index = directive.indexOf(domain);
+        if (index > -1) {
+          directive.splice(index, 1);
+        }
       }
     }
     this.updateCSP();
