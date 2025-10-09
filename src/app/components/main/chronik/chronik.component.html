@@ -37,7 +37,10 @@
     <!-- Timeline Section -->
     <div class="mb-8">
       <div class="mb-6 ttt-text-center">
-        <h2 class="ttt-section-title mb-2">{{ timelineSection.title }}</h2>
+        <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
+          <i class="pi pi-clock text-tttRed"></i>
+          {{ timelineSection.title }}
+        </h2>
         <p class="ttt-description-text">{{ timelineSection.subtitle }}</p>
       </div>
 
@@ -104,28 +107,31 @@
 
     <!-- Mission Briefing - Fiktive Geschichte -->
     <div class="mb-8">
-      <div class="ttt-content-card py-4 px-5">
+      <div class="ttt-content-card py-4 px-5 group relative hover:border-tttRed/50 hover:bg-tttRed/5 transition-all duration-300">
         
         <!-- Section Header -->
-        <div class="mb-3 border-b border-tttRed/30 pb-2">
+        <div class="mb-3 border-b border-tttRed/30 pb-2 group-hover:border-tttRed/50 transition-colors duration-300">
           <div class="flex items-center gap-2 mb-2">
-            <i class="pi pi-shield text-tttRed"></i>
-            <h2 class="text-xl font-bold text-tttWhite">{{ fictionSection.title }}</h2>
+            <i class="pi pi-shield text-tttRed group-hover:scale-110 transition-transform duration-300"></i>
+            <h2 class="text-xl font-bold text-tttWhite group-hover:text-tttRed transition-colors duration-300">{{ fictionSection.title }}</h2>
           </div>
-          <p class="text-sm text-tttRed">{{ fictionSection.subtitle }}</p>
+          <p class="text-sm text-tttRed group-hover:text-tttRed-300 transition-colors duration-300">{{ fictionSection.subtitle }}</p>
         </div>
         
         <!-- Fiktive Geschichte Content -->
-        <div class="text-sm text-tttGray-300 space-y-3">
+        <div class="text-sm text-tttGray-300 space-y-3 group-hover:text-tttGray-200 transition-colors duration-300">
           <div class="mt-4 flex items-center gap-2">
             <a [href]="fictionSection.documentationLink" 
                target="_blank"
-               class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-3 py-1 text-xs font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
-              <i class="pi pi-external-link"></i>
+               class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-3 py-1 text-xs font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20 group-hover:border-tttRed/40 group-hover:bg-tttRed/10">
+              <i class="pi pi-external-link group-hover:scale-105 transition-transform duration-300"></i>
               {{ fictionSection.documentationLabel }}
             </a>
           </div>
         </div>
+
+        <!-- Hover Glow Effect -->
+        <div class="absolute inset-0 rounded-xl bg-gradient-to-br from-tttRed/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
       </div>
     </div>
 
