@@ -23,7 +23,7 @@ export class AppComponent {
   readonly sidebarContent = {
     left: {
       title: 'Left Sidebar',
-      description: 'Features coming soon. Event list, TTT login and post-login links for Missions-Upload, SquadXML'
+      description: 'Features coming soon. Event list, TTT login and post-login links for Missionsupload, SquadXML'
     },
     right: {
       title: 'Live Discord',
