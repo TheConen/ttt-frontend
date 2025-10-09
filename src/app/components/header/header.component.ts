@@ -49,6 +49,7 @@ export class HeaderComponent implements OnInit {
                 label: 'Medien',
                 icon: 'pi pi-images',
                 styleClass: 'font-heading',
+                routerLink: ['/medien']
             },
             {
                 label: 'Über uns',
