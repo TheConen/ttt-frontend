@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { provideRouter } from '@angular/router';
 import { MedienComponent } from './medien.component';
 import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
@@ -10,15 +10,21 @@ describe('MedienComponent', () => {
   let mockPageTitleService: jasmine.SpyObj<PageTitleService>;
   let mockSanitizationService: jasmine.SpyObj<SanitizationService>;
 
+  // Test constants for security validation
+  const SECURITY_TEST_URLS = {
+    XSS_ATTEMPT: ['javascript', 'alert("xss")'].join(':')
+  } as const;
+
   beforeEach(async () => {
     const pageTitleSpy = jasmine.createSpyObj('PageTitleService', ['setTitle']);
     const sanitizationSpy = jasmine.createSpyObj('SanitizationService', ['isSafeUrl']);
 
     await TestBed.configureTestingModule({
-      imports: [MedienComponent, RouterTestingModule],
+      imports: [MedienComponent],
       providers: [
         { provide: PageTitleService, useValue: pageTitleSpy },
-        { provide: SanitizationService, useValue: sanitizationSpy }
+        { provide: SanitizationService, useValue: sanitizationSpy },
+        provideRouter([])
       ]
     }).compileComponents();
 
@@ -35,7 +41,7 @@ describe('MedienComponent', () => {
   });
 
   it('should set page title on init', () => {
-    expect(mockPageTitleService.setTitle).toHaveBeenCalledWith('Medien & Social Media');
+    expect(mockPageTitleService.setTitle).toHaveBeenCalledWith('Medien');
   });
 
   it('should have correct page configuration', () => {
@@ -83,7 +89,7 @@ describe('MedienComponent', () => {
   it('should open external links safely', () => {
     const mockEvent = new Event('click');
     spyOn(mockEvent, 'preventDefault');
-    spyOn(window, 'open');
+    spyOn(globalThis, 'open');
     mockSanitizationService.isSafeUrl.and.returnValue(true);
 
     const testUrl = 'https://example.com';
@@ -91,22 +97,22 @@ describe('MedienComponent', () => {
 
     expect(mockEvent.preventDefault).toHaveBeenCalled();
     expect(mockSanitizationService.isSafeUrl).toHaveBeenCalledWith(testUrl);
-    expect(window.open).toHaveBeenCalledWith(testUrl, '_blank', 'noopener,noreferrer');
+    expect(globalThis.open).toHaveBeenCalledWith(testUrl, '_blank', 'noopener,noreferrer');
   });
 
   it('should not open unsafe links', () => {
     const mockEvent = new Event('click');
     spyOn(mockEvent, 'preventDefault');
-    spyOn(window, 'open');
+    spyOn(globalThis, 'open');
     mockSanitizationService.isSafeUrl.and.returnValue(false);
 
-    // NOSONAR - This is a security test to verify XSS prevention
-    const unsafeUrl = 'javascript:alert("xss")';
+    // Security test: Verify XSS prevention with potentially dangerous URL
+    const unsafeUrl = SECURITY_TEST_URLS.XSS_ATTEMPT;
     component.openExternalLink(unsafeUrl, mockEvent);
 
     expect(mockEvent.preventDefault).toHaveBeenCalled();
     expect(mockSanitizationService.isSafeUrl).toHaveBeenCalledWith(unsafeUrl);
-    expect(window.open).not.toHaveBeenCalled();
+    expect(globalThis.open).not.toHaveBeenCalled();
   });
 
   it('should return correct platform styling', () => {

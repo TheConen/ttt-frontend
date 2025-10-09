@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { TrackByUtils, KeyboardNavigationUtils } from '../../../shared/utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
@@ -253,6 +253,13 @@ export class MedienComponent implements OnInit {
     if (this.securityUtils.isSafeUrl(url)) {
       window.open(url, '_blank', 'noopener,noreferrer');
     }
+  }
+
+  // Keyboard navigation handler for external links (using global utility)
+  handleKeyboardNavigation(url: string, event: KeyboardEvent): void {
+    KeyboardNavigationUtils.handleExternalLink(event, url, (url, event) => 
+      this.openExternalLink(url, event)
+    );
   }
 
   // Platform-specific styling (optimized as readonly constant)

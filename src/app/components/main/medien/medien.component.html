@@ -24,7 +24,11 @@
         <div 
           *ngFor="let stream of liveStreams; trackBy: trackByLiveStream"
           class="ttt-content-card group hover:border-tttRed/50 transition-all duration-300 cursor-pointer"
-          (click)="openExternalLink(stream.url, $event)">
+          (click)="openExternalLink(stream.url, $event)"
+          (keydown)="handleKeyboardNavigation(stream.url, $event)"
+          [attr.tabindex]="0"
+          [attr.role]="'button'"
+          [attr.aria-label]="'Stream öffnen: ' + stream.title">
           
           <!-- Stream Thumbnail -->
           <div class="relative mb-4 overflow-hidden rounded-lg">
@@ -84,7 +88,11 @@
           *ngFor="let media of mediaLinks; trackBy: trackByMediaLink"
           class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full"
           [class]="getPlatformStyling(media.platform)"
-          (click)="openExternalLink(media.url, $event)">
+          (click)="openExternalLink(media.url, $event)"
+          (keydown)="handleKeyboardNavigation(media.url, $event)"
+          [attr.tabindex]="0"
+          [attr.role]="'button'"
+          [attr.aria-label]="'Medien öffnen: ' + media.name + ' auf ' + media.platform">
           
           <!-- Media Icon and Title -->
           <div class="flex items-center mb-4">
@@ -128,7 +136,11 @@
           *ngFor="let social of socialMediaLinks; trackBy: trackBySocialLink"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full"
           [class]="getPlatformStyling(social.platform)"
-          (click)="openExternalLink(social.url, $event)">
+          (click)="openExternalLink(social.url, $event)"
+          (keydown)="handleKeyboardNavigation(social.url, $event)"
+          [attr.tabindex]="0"
+          [attr.role]="'button'"
+          [attr.aria-label]="'Social Media öffnen: ' + social.name + ' auf ' + social.platform">
           
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
@@ -163,7 +175,11 @@
         <div 
           *ngFor="let resource of corporateResources; trackBy: trackByCorporateResource"
           class="ttt-content-card group cursor-pointer transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 flex flex-col h-full"
-          (click)="openExternalLink(resource.url, $event)">
+          (click)="openExternalLink(resource.url, $event)"
+          (keydown)="handleKeyboardNavigation(resource.url, $event)"
+          [attr.tabindex]="0"
+          [attr.role]="'button'"
+          [attr.aria-label]="'Ressource öffnen: ' + resource.title">
           
           <!-- Resource Header -->
           <div class="flex items-start mb-4 flex-grow">

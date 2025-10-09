@@ -121,8 +121,11 @@
                 [class.bg-tttRed/5]="member.isExpanded"
                 [class.border-tttRed/50]="member.isExpanded"
                 (click)="hasExpandableContent(member) ? toggleMemberDetails(member) : null"
+                (keydown)="handleMemberKeyboardNavigation(member, $event)"
                 [attr.aria-label]="hasExpandableContent(member) ? 'Details für ' + member.name + (member.isExpanded ? ' ausblenden' : ' anzeigen') : null"
                 [attr.aria-expanded]="member.isExpanded"
+                [attr.tabindex]="hasExpandableContent(member) ? 0 : -1"
+                [attr.role]="hasExpandableContent(member) ? 'button' : null"
                 class="group ttt-content-card p-3 text-center transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 relative min-h-[140px] flex flex-col justify-between">
                 
                 <div>

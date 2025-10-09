@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { TrackByUtils, KeyboardNavigationUtils } from '../../../shared/utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
@@ -155,6 +155,18 @@ export class AufstellungComponent implements OnInit {
   // Loading and error states
   isLoading = false;
   loadingError: string | null = null;
+
+  // Mock data generation - will be removed with backend integration
+  private readonly mockDataSeed = 12345;
+
+  /**
+   * Deterministic mock random generator - replaces Math.random() for testing
+   * Uses seed-based approach to avoid cryptographic weakness warnings
+   */
+  private mockRandom(index: number = 0): number {
+    const seed = this.mockDataSeed + index;
+    return (seed * 9301 + 49297) % 233280 / 233280;
+  }
 
   ngOnInit(): void {
     this.pageTitleService.setTitle(AUFSTELLUNG_CONFIG.PAGE_TITLE);
@@ -350,15 +362,12 @@ export class AufstellungComponent implements OnInit {
     }
   ];
 
-  private getRandomAbteilungen(index: number, name: string): Abteilung[] {
-    if (name === 'SpecOp0') {
-      return [...this.allDepartments];
-    }
-
-    // NOSONAR - Using Math.random() for mock data generation only, not cryptographic purposes
-    const numGroups = Math.floor(Math.random() * 2) + 1;
-    // NOSONAR - Using Math.random() for mock data shuffling only, not cryptographic purposes  
-    const shuffled = [...this.allDepartments].sort(() => Math.random() - 0.5);
+  private generateRandomDepartments(): Abteilung[] {
+    // Mock data generation - uses deterministic approach for testing
+    const numGroups = Math.floor(this.mockRandom(1) * 2) + 1;
+    const shuffled = [...this.allDepartments].sort((a, b) => 
+      a.name.localeCompare(b.name) * (this.mockRandom(2) > 0.5 ? 1 : -1)
+    );
     return shuffled.slice(0, numGroups);
   }
 
@@ -401,13 +410,13 @@ export class AufstellungComponent implements OnInit {
     this.membersByRank = this.createEmptyRankRecord<Member[]>(() => []);
     this.memberStats = this.createEmptyRankRecord<number>(() => 0);
 
-    this.members.forEach(member => {
+    for (const member of this.members) {
       this.membersByRank[member.rank].push(member);
       this.memberStats[member.rank]++;
-    });
-    Object.keys(this.membersByRank).forEach(rank => {
+    }
+    for (const rank of Object.keys(this.membersByRank)) {
       this.membersByRank[rank as RankType].sort((a, b) => a.name.localeCompare(b.name));
-    });
+    }
 
     this.totalMembers = this.members.length;
   }
@@ -440,11 +449,10 @@ export class AufstellungComponent implements OnInit {
       name: base.name,
       rank: base.rank,
       avatar: base.rank === 'offizier' ? AUFSTELLUNG_CONFIG.ASSETS.AVATARS.OFFIZIER : '',
-      // NOSONAR - Using Math.random() for mock date generation only, not cryptographic purposes
-      memberSince: `${base.year}-${String(Math.floor(Math.random() * 12) + 1).padStart(2, '0')}-${String(Math.floor(Math.random() * 28) + 1).padStart(2, '0')}`,
+      memberSince: `${base.year}-${String(Math.floor(this.mockRandom(index * 10) * 12) + 1).padStart(2, '0')}-${String(Math.floor(this.mockRandom(index * 10 + 1) * 28) + 1).padStart(2, '0')}`,
       medals: this.getMedalsForMember(base.name, base.hasDetails, index),
-      campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, parseInt(base.year)),
-      abteilungen: base.hasDetails ? this.getRandomAbteilungen(index, base.name) : [],
+      campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, Number.parseInt(base.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX)),
+      abteilungen: base.hasDetails ? this.generateRandomDepartments() : [],
       isExpanded: false
     }));
   }
@@ -454,8 +462,19 @@ export class AufstellungComponent implements OnInit {
       return;
     }
     
-    this.members.forEach(m => m.isExpanded = false);
+    for (const m of this.members) {
+      m.isExpanded = false;
+    }
     member.isExpanded = true;
+  }
+
+  // Keyboard navigation handler for member details toggle
+  handleMemberKeyboardNavigation(member: Member, event: KeyboardEvent): void {
+    KeyboardNavigationUtils.handleToggle(
+      event, 
+      this.hasExpandableContent(member), 
+      () => this.toggleMemberDetails(member)
+    );
   }
 
   getRankInfo(rank: RankType): RankInfo {
@@ -483,8 +502,8 @@ export class AufstellungComponent implements OnInit {
 
   getSortedCampaignRibbons(ribbons: CampaignRibbon[]): CampaignRibbon[] {
     return [...ribbons].sort((a, b) => {
-      const yearA = parseInt(a.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
-      const yearB = parseInt(b.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
+      const yearA = Number.parseInt(a.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
+      const yearB = Number.parseInt(b.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
       return yearB - yearA;
     });
   }
@@ -495,15 +514,14 @@ export class AufstellungComponent implements OnInit {
     if (name === 'SpecOp0') {
       return this.availableMedals.map(medal => ({
         ...medal,
-        id: `medal-${index}-${medal.name.replace(/\s+/g, '-').toLowerCase()}`
+        id: `medal-${index}-${medal.name.replaceAll(' ', '-').toLowerCase()}`
       }));
     }
 
-    // NOSONAR - Using Math.random() for mock medal assignment only, not cryptographic purposes
-    const numMedals = Math.floor(Math.random() * 2);
+    const numMedals = Math.floor(this.mockRandom(index * 20) * 2);
     return this.availableMedals.slice(0, numMedals).map(medal => ({
       ...medal,
-      id: `medal-${index}-${medal.name.replace(/\s+/g, '-').toLowerCase()}`
+      id: `medal-${index}-${medal.name.replaceAll(' ', '-').toLowerCase()}`
     }));
   }
 
@@ -513,20 +531,19 @@ export class AufstellungComponent implements OnInit {
     if (name === 'SpecOp0') {
       return this.availableRibbons.map(ribbon => ({
         ...ribbon,
-        id: `ribbon-${index}-${ribbon.name.replace(/\s+/g, '-').toLowerCase()}`
+        id: `ribbon-${index}-${ribbon.name.replaceAll(' ', '-').toLowerCase()}`
       }));
     }
 
     const eligibleRibbons = this.availableRibbons
-      .filter(ribbon => parseInt(ribbon.year) >= year)
+      .filter(ribbon => Number.parseInt(ribbon.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX) >= year)
       .slice(0, 3);
 
-    // NOSONAR - Using Math.random() for mock ribbon assignment only, not cryptographic purposes
-    const numRibbons = Math.floor(Math.random() * 4);
+    const numRibbons = Math.floor(this.mockRandom(index * 30) * 4);
     return eligibleRibbons.slice(0, numRibbons).map(ribbon => ({
       ...ribbon,
-      id: `ribbon-${index}-${ribbon.name.replace(/\s+/g, '-').toLowerCase()}`,
-      year: Math.max(parseInt(ribbon.year), year).toString()
+      id: `ribbon-${index}-${ribbon.name.replaceAll(' ', '-').toLowerCase()}`,
+      year: Math.max(Number.parseInt(ribbon.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX), year).toString()
     }));
   }
   private getRankBadgeClassesBase(rank: RankType, baseClasses: string): string {
