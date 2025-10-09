@@ -254,12 +254,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // Additional safety check to ensure component is still active
     if (this.bannerSlides.length > 1) {
       this.sliderInterval = setInterval(() => {
-        // Check if component is still active before proceeding
-        if (this.bannerSlides && this.bannerSlides.length > 1) {
-          this.nextImage();
-        } else {
-          this.stopSlider();
-        }
+        this.nextImage();
       }, this.slideInterval);
     }
   }

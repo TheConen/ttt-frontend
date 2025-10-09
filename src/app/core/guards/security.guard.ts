@@ -34,13 +34,16 @@ export const securityGuard: CanActivateFn = (route) => {
     return false;
   }
 
-  // 2. Rate limiting check
+    // 2. Rate limiting check (simple implementation)
   const now = Date.now();
   const lastAccess = localStorage.getItem('lastRouteAccess');
 
-  if (lastAccess && (now - +lastAccess) < SECURITY_CONFIG.MIN_ROUTE_INTERVAL) {
-    console.warn('Too many rapid route changes detected');
-    return false;
+  if (lastAccess) {
+    const lastAccessInt = parseInt(lastAccess, SECURITY_CONFIG.RADIX);
+    if (!isNaN(lastAccessInt) && (now - lastAccessInt) < SECURITY_CONFIG.MIN_ROUTE_INTERVAL) {
+      console.warn('Too many rapid route changes detected');
+      return false;
+    }
   }
 
   localStorage.setItem('lastRouteAccess', now.toString());
