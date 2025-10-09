@@ -31,7 +31,8 @@
         </button>
 
         <!-- Slide Indicators -->
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2" role="group" aria-label="Banner-Navigation">
+        <fieldset class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2 border-0 p-0 m-0">
+            <legend class="sr-only">Banner-Navigation</legend>
             <button 
                 *ngFor="let slide of bannerSlides; let i = index"
                 (click)="goToImage(i)"
@@ -42,15 +43,16 @@
                 [class.bg-tttWhite/40]="i !== currentImageIndex"
                 [class.scale-125]="i === currentImageIndex">
             </button>
-        </div>
+        </fieldset>
     </div>
 
     <!-- Content Overlay -->
     <div class="relative z-10 flex h-full items-center">
         <div class="ttt-hero-container">
             <h1 class="ttt-hero-title" 
-                [innerHTML]="bannerSlides[currentImageIndex].title || 'Tactical Training Team'"
                 [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title || 'Tactical Training Team')">
+                <span [innerHTML]="bannerSlides[currentImageIndex].title || 'Tactical Training Team'"></span>
+                <span class="sr-only" *ngIf="!bannerSlides[currentImageIndex].title">Tactical Training Team</span>
             </h1>
             
             <p class="ttt-hero-text">
@@ -275,10 +277,10 @@
             <div class="gallery-container overflow-hidden">
                 <div class="gallery-track flex gap-6">
                     <!-- Seamless loop gallery images -->
-                    <div *ngFor="let image of getGalleryImagesForLoop(); let i = index" 
+                    <div *ngFor="let galleryItem of getGalleryImagesForLoop(); let i = index" 
                          class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
-                        <img [src]="image" 
-                             [alt]="'Tactical Training Team Community Moment ' + ((i % galleryImages.length) + 1)"
+                        <img [src]="galleryItem" 
+                             [alt]="'TTT Community Moment ' + (i + 1)"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                 </div>

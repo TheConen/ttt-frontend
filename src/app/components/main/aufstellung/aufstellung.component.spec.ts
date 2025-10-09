@@ -7,7 +7,6 @@ describe('AufstellungComponent', () => {
   let component: AufstellungComponent;
   let fixture: ComponentFixture<AufstellungComponent>;
   let mockPageTitleService: jasmine.SpyObj<PageTitleService>;
-  let mockSanitizationService: jasmine.SpyObj<SanitizationService>;
 
   beforeEach(async () => {
     const pageServiceSpy = jasmine.createSpyObj('PageTitleService', ['setTitle']);
@@ -24,7 +23,6 @@ describe('AufstellungComponent', () => {
     fixture = TestBed.createComponent(AufstellungComponent);
     component = fixture.componentInstance;
     mockPageTitleService = TestBed.inject(PageTitleService) as jasmine.SpyObj<PageTitleService>;
-    mockSanitizationService = TestBed.inject(SanitizationService) as jasmine.SpyObj<SanitizationService>;
   });
 
   it('should create', () => {
@@ -77,10 +75,10 @@ describe('AufstellungComponent', () => {
   it('should detect expandable content correctly', () => {
     component.ngOnInit();
     const memberWithContent = component.members.find(m => 
-      m.medals.length > 0 || m.campaignRibbons.length > 0 || m.arbeitsgruppen.length > 0
+      m.medals.length > 0 || m.campaignRibbons.length > 0 || m.abteilungen.length > 0
     );
     const memberWithoutContent = component.members.find(m => 
-      m.medals.length === 0 && m.campaignRibbons.length === 0 && m.arbeitsgruppen.length === 0
+      m.medals.length === 0 && m.campaignRibbons.length === 0 && m.abteilungen.length === 0
     );
 
     if (memberWithContent) {

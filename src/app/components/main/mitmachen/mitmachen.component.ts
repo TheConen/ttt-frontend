@@ -386,8 +386,8 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       const lastLinkAccess = localStorage.getItem('lastLinkAccess');
       
       if (lastLinkAccess) {
-        const lastLinkAccessInt = parseInt(lastLinkAccess, MITMACHEN_CONFIG.SECURITY.RADIX);
-        if (!isNaN(lastLinkAccessInt) && (now - lastLinkAccessInt) < MITMACHEN_CONFIG.SECURITY.MIN_LINK_INTERVAL) {
+        const lastLinkAccessInt = Number.parseInt(lastLinkAccess, MITMACHEN_CONFIG.SECURITY.RADIX);
+        if (!Number.isNaN(lastLinkAccessInt) && (now - lastLinkAccessInt) < MITMACHEN_CONFIG.SECURITY.MIN_LINK_INTERVAL) {
           console.warn('Too many rapid link access attempts');
           return;
         }
@@ -408,7 +408,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
           link.rel = 'noopener noreferrer';
           document.body.appendChild(link);
           link.click();
-          document.body.removeChild(link);
+          link.remove();
         }
       } catch (popupError) {
         console.error('Window.open failed, using link fallback:', popupError);
@@ -419,7 +419,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
         link.rel = 'noopener noreferrer';
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+        link.remove();
       }
     } catch (error) {
       console.error('Failed to open external link:', error);
@@ -440,7 +440,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
   openEvents = this.externalLinks.events;
   openArma3SyncGuide = this.externalLinks.arma3SyncGuide;
   openArma3SyncVideo = this.externalLinks.arma3SyncVideo;
-  openArma3SyncTipps = this.externalLinks.arma3SyncTips;
+  openArma3SyncTips = this.externalLinks.arma3SyncTips;
 
   // Button styling methods
   getPrimaryButtonClasses(): string {

@@ -39,8 +39,8 @@ export const securityGuard: CanActivateFn = (route) => {
   const lastAccess = localStorage.getItem('lastRouteAccess');
 
   if (lastAccess) {
-    const lastAccessInt = parseInt(lastAccess, SECURITY_CONFIG.RADIX);
-    if (!isNaN(lastAccessInt) && (now - lastAccessInt) < SECURITY_CONFIG.MIN_ROUTE_INTERVAL) {
+    const lastAccessInt = Number.parseInt(lastAccess, SECURITY_CONFIG.RADIX);
+    if (!Number.isNaN(lastAccessInt) && (now - lastAccessInt) < SECURITY_CONFIG.MIN_ROUTE_INTERVAL) {
       console.warn('Too many rapid route changes detected');
       return false;
     }
