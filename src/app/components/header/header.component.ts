@@ -60,6 +60,7 @@ export class HeaderComponent implements OnInit {
                         label: 'Aufstellung',
                         icon: 'pi pi-sitemap',
                         styleClass: 'font-heading',
+                        routerLink: ['/aufstellung']
                     },
                     {
                         label: 'Event-Replay',

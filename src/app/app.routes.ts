@@ -5,6 +5,7 @@ import { DatenschutzComponent } from './components/main/datenschutz/datenschutz.
 import { ChronikComponent } from './components/main/chronik/chronik.component';
 import { MitmachenComponent } from './components/main/mitmachen/mitmachen.component';
 import { MedienComponent } from './components/main/medien/medien.component';
+import { AufstellungComponent } from './components/main/aufstellung/aufstellung.component';
 import { securityGuard } from './core/guards/security.guard';
 
 export const routes: Routes = [
@@ -37,6 +38,11 @@ export const routes: Routes = [
   { 
     path: 'medien', 
     component: MedienComponent,
+    canActivate: [securityGuard]
+  },
+  { 
+    path: 'aufstellung', 
+    component: AufstellungComponent,
     canActivate: [securityGuard]
   },
   // Wildcard route - redirect unknown routes to home
