@@ -3,13 +3,12 @@ import { CanActivateFn, Router } from '@angular/router';
 
 // Security configuration constants
 const SECURITY_CONFIG = {
-  MIN_ROUTE_INTERVAL: 100, // Minimum milliseconds between route changes
-  RADIX: 10 // Base for parseInt operations
+  MIN_ROUTE_INTERVAL: 100,
+  RADIX: 10
 } as const;
 
 /**
  * Security guard to prevent unauthorized access
- * This can be extended to include authentication and authorization logic
  */
 export const securityGuard: CanActivateFn = (route) => {
   const router = inject(Router);
@@ -35,7 +34,7 @@ export const securityGuard: CanActivateFn = (route) => {
     return false;
   }
 
-  // 2. Rate limiting check (simple implementation)
+  // 2. Rate limiting check
   const now = Date.now();
   const lastAccess = localStorage.getItem('lastRouteAccess');
 

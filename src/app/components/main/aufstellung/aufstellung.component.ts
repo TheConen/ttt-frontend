@@ -4,22 +4,22 @@ import { TrackByUtils } from '../../../shared/utils/trackby.utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
-// Component configuration constants (Angular 20 Best Practice)
+// Configuration constants
 const AUFSTELLUNG_CONFIG = {
   PAGE_TITLE: 'Aufstellung',
   PAGE_SUBTITLE: 'Mitglieder und Struktur des Tactical Training Teams',
   SECURITY: {
-    MIN_ACTION_INTERVAL: 100, // Minimum milliseconds between member actions
-    RADIX: 10 // Base for parseInt operations
+    MIN_ACTION_INTERVAL: 100,
+    RADIX: 10
   },
   SECTIONS: {
     OVERVIEW: {
       TITLE: 'Mitgliederübersicht',
-      SUBTITLE: 'Aktuelle Personalstärke nach Dienstgraden'
+      SUBTITLE: 'Aktuelle Personalstärke nach Rängen'
     },
     ROSTER: {
       TITLE: 'Personalaufstellung', 
-      SUBTITLE: 'Vollständige Mitgliederliste mit Details'
+      SUBTITLE: 'Unsere Mitglieder'
     }
   },
   UI: {
@@ -139,20 +139,20 @@ interface RankInfo {
   styleUrl: './aufstellung.component.css'
 })
 export class AufstellungComponent implements OnInit {
-  // Dependency injection (Angular 20 Best Practice)
+  // Services
   private readonly pageTitleService = inject(PageTitleService);
   private readonly sanitizationService = inject(SanitizationService);
   // TODO: Inject member service when available
   // private readonly memberService = inject(MemberService);
 
-  // Component data properties
+  // Component data
   readonly pageTitle = AUFSTELLUNG_CONFIG.PAGE_TITLE;
   readonly pageSubtitle = AUFSTELLUNG_CONFIG.PAGE_SUBTITLE;
   readonly sections = AUFSTELLUNG_CONFIG.SECTIONS;
   readonly ui = AUFSTELLUNG_CONFIG.UI;
   readonly loadingMessages = AUFSTELLUNG_CONFIG.UI.LOADING_MESSAGES;
 
-  // Loading and error states (Backend-Ready)
+  // Loading and error states
   isLoading = false;
   loadingError: string | null = null;
 
@@ -161,73 +161,73 @@ export class AufstellungComponent implements OnInit {
     this.loadMembers();
   }
 
-  // TrackBy functions - consolidated for reusability (following mitmachen pattern)  
+  // TrackBy functions  
   readonly trackByRank = TrackByUtils.trackByIndex;
   readonly trackByMember = TrackByUtils.trackByProperty<Member>('id');
   readonly trackByMedal = TrackByUtils.trackByProperty<Medal>('id');
   readonly trackByCampaignRibbon = TrackByUtils.trackByProperty<CampaignRibbon>('id');
   readonly trackByAbteilung = TrackByUtils.trackByProperty<Abteilung>('id');
 
-  // Security utility functions for template usage (consistent with other components)
+  // Security utility functions
   readonly securityUtils = {
     sanitizeHtml: (html: string) => this.sanitizationService.sanitizeHtml(html),
     stripHtml: (html: string) => this.sanitizationService.stripHtml(html),
     isSafeUrl: (url: string) => this.sanitizationService.isSafeUrl(url)
   };
 
-  // Rank configuration (militärische Hierarchie) - using configuration constants
+  // Rank configuration
   readonly rankInfo: Record<RankType, RankInfo> = {
     offizier: {
       name: 'Offizier',
       shortName: 'Off.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.OFFIZIER}`,
-      color: 'text-yellow-400',  // Centralized in getRankColorClasses
+      color: 'text-yellow-400',
       priority: 1
     },
     unteroffizier: {
       name: 'Unteroffizier',
       shortName: 'Uffz.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.UNTEROFFIZIER}`,
-      color: 'text-gray-400',    // Centralized in getRankColorClasses
+      color: 'text-gray-400',
       priority: 2
     },
     veteran: {
       name: 'Veteran',
       shortName: 'Vet.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.VETERAN}`,
-      color: 'text-green-400',   // Centralized in getRankColorClasses
+      color: 'text-green-400',
       priority: 3
     },
     soldat: {
       name: 'Soldat',
       shortName: 'Sdt.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.SOLDAT}`,
-      color: 'text-blue-600',    // Centralized in getRankColorClasses
+      color: 'text-blue-600',
       priority: 4
     },
     rekrut: {
       name: 'Rekrut',
       shortName: 'Rekr.',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.REKRUT}`,
-      color: 'text-blue-300',    // Centralized in getRankColorClasses
+      color: 'text-blue-300',
       priority: 5
     },
     gast: {
       name: 'Gast',
       shortName: 'Gast',
       icon: `${AUFSTELLUNG_CONFIG.ASSETS.RANKS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.RANKS.GAST}`,
-      color: 'text-gray-300',    // Centralized in getRankColorClasses
+      color: 'text-gray-300',
       priority: 6
     }
   } as const;
 
-  // Rank order for iteration (maintains military hierarchy)
+  // Rank order for iteration
   readonly rankOrder: RankType[] = ['offizier', 'unteroffizier', 'veteran', 'soldat', 'rekrut', 'gast'] as const;
 
-  // Members data (will be loaded from backend)
+  // Members data
   members: Member[] = [];
 
-  // Computed properties - cached for performance (Angular 20 Best Practice)
+  // Computed properties
   membersByRank: Record<RankType, Member[]> = {
     offizier: [],
     unteroffizier: [],
@@ -248,7 +248,7 @@ export class AufstellungComponent implements OnInit {
 
   totalMembers = 0;
 
-  // Utility methods for reducing code duplication (Angular 20 Best Practice)
+  // Utility methods
   private createEmptyRankRecord<T>(factory: () => T): Record<RankType, T> {
     return this.rankOrder.reduce((acc, rank) => {
       acc[rank] = factory();
@@ -275,7 +275,7 @@ export class AufstellungComponent implements OnInit {
     }
   }
 
-  // Static configurations (consolidated from dummy data methods)
+  // Departments configuration
   private readonly allDepartments: Abteilung[] = [
     { 
       id: 'abt-1', 
@@ -350,21 +350,17 @@ export class AufstellungComponent implements OnInit {
     }
   ];
 
-  // Get arbeitsgruppen based on member role - according to organigramm
   private getRandomAbteilungen(index: number, name: string): Abteilung[] {
     if (name === 'SpecOp0') {
-      // SpecOp0 bekommt alle Abteilungen als Demonstration
       return [...this.allDepartments];
     }
 
-    // Zufällige Anzahl von Gruppen (1-2)
     const numGroups = Math.floor(Math.random() * 2) + 1;
     const shuffled = [...this.allDepartments].sort(() => Math.random() - 0.5);
     return shuffled.slice(0, numGroups);
   }
 
   // Load members (dummy data - will be replaced with backend call)
-  // Public method for retry functionality
   retryLoading(): void {
     this.loadMembers();
   }
@@ -388,7 +384,7 @@ export class AufstellungComponent implements OnInit {
       //   }
       // });
 
-      // DUMMY DATA - Remove when backend is ready
+      // TEST-DATEN - Entfernen wenn Backend bereit ist
       this.loadDummyMembers();
       this.computeMemberData();
       this.isLoading = false;
@@ -399,19 +395,14 @@ export class AufstellungComponent implements OnInit {
     }
   }
 
-  // Compute and cache member data for performance (Angular 20 Best Practice)
   private computeMemberData(): void {
-    // Reset data using utility method
     this.membersByRank = this.createEmptyRankRecord<Member[]>(() => []);
     this.memberStats = this.createEmptyRankRecord<number>(() => 0);
 
-    // Group members by rank and calculate stats
     this.members.forEach(member => {
       this.membersByRank[member.rank].push(member);
       this.memberStats[member.rank]++;
     });
-
-    // Sort members within each rank by name
     Object.keys(this.membersByRank).forEach(rank => {
       this.membersByRank[rank as RankType].sort((a, b) => a.name.localeCompare(b.name));
     });
@@ -419,22 +410,18 @@ export class AufstellungComponent implements OnInit {
     this.totalMembers = this.members.length;
   }
 
-  // TODO: Remove this method when backend integration is complete
+  // TODO: Remove when backend integration is complete
   private loadDummyMembers(): void {
     const baseMembers = [
-      // Offiziere (max 2) - Führungsebene
       { name: 'TheConen', rank: 'offizier' as RankType, year: '2015', hasDetails: true },
       { name: 'SpecOp0', rank: 'offizier' as RankType, year: '2016', hasDetails: true },
       
-      // Unteroffiziere (max 2) - Manager-Ebene
       { name: 'Reimchen', rank: 'unteroffizier' as RankType, year: '2018', hasDetails: true },
       { name: 'rockn_roller', rank: 'unteroffizier' as RankType, year: '2019', hasDetails: true },
       
-      // Veteranen (max 2) - Erfahrene Mitglieder
       { name: 'GSG9_abzocker', rank: 'veteran' as RankType, year: '2017', hasDetails: true },
       { name: 'Speutzi', rank: 'veteran' as RankType, year: '2018', hasDetails: true },
       
-      // Soldaten (max 2) - Aktive Mitglieder
       { name: 'Corben', rank: 'soldat' as RankType, year: '2022', hasDetails: true },
       { name: 'SchmerzKeks', rank: 'soldat' as RankType, year: '2023', hasDetails: false },
       
@@ -442,13 +429,12 @@ export class AufstellungComponent implements OnInit {
       { name: 'Epsilon', rank: 'rekrut' as RankType, year: '2024', hasDetails: true },
       { name: 'Addi995', rank: 'rekrut' as RankType, year: '2024', hasDetails: false },
       
-      // Gäste (max 2) - Interessenten
       { name: 'Mynx', rank: 'gast' as RankType, year: '2024', hasDetails: false },
       { name: 'Leroy', rank: 'gast' as RankType, year: '2024', hasDetails: false }
     ];
 
     this.members = baseMembers.map((base, index) => ({
-      id: `member-${index + 1}`, // Backend will provide UUIDs
+      id: `member-${index + 1}`,
       name: base.name,
       rank: base.rank,
       avatar: base.rank === 'offizier' ? AUFSTELLUNG_CONFIG.ASSETS.AVATARS.OFFIZIER : '',
@@ -456,31 +442,23 @@ export class AufstellungComponent implements OnInit {
       medals: this.getMedalsForMember(base.name, base.hasDetails, index),
       campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, parseInt(base.year)),
       abteilungen: base.hasDetails ? this.getRandomAbteilungen(index, base.name) : [],
-      isExpanded: false // UI state - not persisted to backend
+      isExpanded: false
     }));
   }
-
-  // Toggle member details - only one can be expanded at a time
   toggleMemberDetails(member: Member): void {
-    // If clicking the same member, just toggle
     if (member.isExpanded) {
       member.isExpanded = false;
       return;
     }
     
-    // Close all other expanded members
     this.members.forEach(m => m.isExpanded = false);
-    
-    // Open the clicked member
     member.isExpanded = true;
   }
 
-  // Get rank display information
   getRankInfo(rank: RankType): RankInfo {
     return this.rankInfo[rank];
   }
 
-  // Get formatted member since date
   getFormattedMemberSince(dateString: string): string {
     const date = new Date(dateString);
     return date.toLocaleDateString('de-DE', {
@@ -489,44 +467,36 @@ export class AufstellungComponent implements OnInit {
       day: 'numeric'
     });
   }
-
-  // Get member year only (for compact view)
   getMemberYear(dateString: string): string {
     const date = new Date(dateString);
     return date.getFullYear().toString();
   }
 
-  // Check if member has expandable content
   hasExpandableContent(member: Member): boolean {
     return member.medals.length > 0 || 
            member.campaignRibbons.length > 0 || 
            member.abteilungen.length > 0;
   }
 
-  // Sort campaign ribbons by year (newest first) - Essential for proper display
   getSortedCampaignRibbons(ribbons: CampaignRibbon[]): CampaignRibbon[] {
     return [...ribbons].sort((a, b) => {
       const yearA = parseInt(a.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
       const yearB = parseInt(b.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
-      return yearB - yearA; // Descending order (newest first)
+      return yearB - yearA;
     });
   }
-
-
 
   private getMedalsForMember(name: string, hasDetails: boolean, index: number): Medal[] {
     if (!hasDetails) return [];
     
     if (name === 'SpecOp0') {
-      // SpecOp0 bekommt alle verfügbaren Medaillen als Demonstration
       return this.availableMedals.map(medal => ({
         ...medal,
         id: `medal-${index}-${medal.name.replace(/\s+/g, '-').toLowerCase()}`
       }));
     }
 
-    // Andere Mitglieder bekommen zufällig 0-1 Medaillen
-    const numMedals = Math.floor(Math.random() * 2); // 0-1 Medaillen
+    const numMedals = Math.floor(Math.random() * 2);
     return this.availableMedals.slice(0, numMedals).map(medal => ({
       ...medal,
       id: `medal-${index}-${medal.name.replace(/\s+/g, '-').toLowerCase()}`
@@ -537,27 +507,23 @@ export class AufstellungComponent implements OnInit {
     if (!hasDetails) return [];
     
     if (name === 'SpecOp0') {
-      // SpecOp0 bekommt alle verfügbaren Campaign Ribbons als Demonstration
       return this.availableRibbons.map(ribbon => ({
         ...ribbon,
         id: `ribbon-${index}-${ribbon.name.replace(/\s+/g, '-').toLowerCase()}`
       }));
     }
 
-    // Andere Mitglieder bekommen zufällig 0-3 Campaign Ribbons (nur passende nach Jahr)
     const eligibleRibbons = this.availableRibbons
       .filter(ribbon => parseInt(ribbon.year) >= year)
-      .slice(0, 3); // Limit to first 3 for variety
+      .slice(0, 3);
 
-    const numRibbons = Math.floor(Math.random() * 4); // 0-3 Ribbons
+    const numRibbons = Math.floor(Math.random() * 4);
     return eligibleRibbons.slice(0, numRibbons).map(ribbon => ({
       ...ribbon,
       id: `ribbon-${index}-${ribbon.name.replace(/\s+/g, '-').toLowerCase()}`,
       year: Math.max(parseInt(ribbon.year), year).toString()
     }));
   }
-
-  // Get rank badge classes with correct color mapping (consolidated method)
   private getRankBadgeClassesBase(rank: RankType, baseClasses: string): string {
     const colors = this.getRankColorClasses(rank);
     return `${baseClasses} ${colors.text} ${colors.bg}`;
@@ -571,7 +537,6 @@ export class AufstellungComponent implements OnInit {
     return this.getRankBadgeClassesBase(rank, 'text-sm px-2 py-1 rounded font-medium');
   }
 
-  // Button styling methods (consistent with other components)
   getPrimaryButtonClasses(): string {
     return AUFSTELLUNG_CONFIG.CSS_CLASSES.BUTTON_PRIMARY;
   }

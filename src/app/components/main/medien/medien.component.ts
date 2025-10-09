@@ -66,14 +66,14 @@ export class MedienComponent implements OnInit {
     this.loadLiveStreams();
   }
 
-  // Security utility functions for template usage (following mitmachen pattern)
+  // Security utility functions
   readonly securityUtils = {
     sanitizeHtml: (html: string) => this.sanitizationService.sanitizeHtml(html),
     stripHtml: (html: string) => this.sanitizationService.stripHtml(html),
     isSafeUrl: (url: string) => this.sanitizationService.isSafeUrl(url)
   };
 
-  // Section configuration (following other components pattern)
+  // Section configuration
   readonly sections = {
     livestreams: {
       title: 'Live Streams',
@@ -94,7 +94,7 @@ export class MedienComponent implements OnInit {
     }
   } as const;
 
-  // Live streams data (simulated - in real app would come from Twitch API)
+  // Live streams data
   liveStreams: LiveStream[] = [];
 
   // Media platforms

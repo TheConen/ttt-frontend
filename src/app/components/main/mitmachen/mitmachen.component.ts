@@ -9,9 +9,9 @@ import { SanitizationService } from '../../../core/services/sanitization.service
 const MITMACHEN_CONFIG = {
   PAGE_TITLE: 'Mitmachen - Werde Teil des TTT',
   SECURITY: {
-    MIN_LINK_INTERVAL: 1000, // Minimum milliseconds between link clicks
-    RADIX: 10, // Base for parseInt operations
-    WINDOW_FEATURES: 'noopener,noreferrer' // Secure window features for window.open()
+    MIN_LINK_INTERVAL: 1000,
+    RADIX: 10,
+    WINDOW_FEATURES: 'noopener,noreferrer'
   },
   EXTERNAL_LINKS: {
     DISCORD: 'https://discord.tacticalteam.de',
@@ -29,7 +29,7 @@ const MITMACHEN_CONFIG = {
   COLORS: {
     ICON_RED: 'bg-tttRed',
     ICON_GREEN: 'bg-tttGreen',
-    ICON_WHITE: 'bg-tttGray-600', // White-styled icon background
+    ICON_WHITE: 'bg-tttGray-600',
     ICON_GRAY: 'bg-tttGray-600',
     ICON_DISCORD: 'bg-[#5865F2]',
     TEXT_RED: 'text-tttRed',
@@ -112,7 +112,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
   private readonly pageTitleService = inject(PageTitleService);
   private readonly sanitizationService = inject(SanitizationService);
   
-  // TrackBy functions - consolidated for reusability
+  // TrackBy functions
   readonly trackByIndex = TrackByUtils.trackByIndex;
   readonly trackById = (index: number, item: { id: string }): string => item.id;
   readonly trackByGameReq = (index: number, item: GameRequirement): string => item.game;
@@ -134,7 +134,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
     featureItem: () => MITMACHEN_CONFIG.CSS_CLASSES.FEATURE_LIST_ITEM
   };
 
-  // Security utility functions for template usage
+  // Security utility functions
   readonly securityUtils = {
     sanitizeHtml: (html: string) => this.sanitizationService.sanitizeHtml(html),
     stripHtml: (html: string) => this.sanitizationService.stripHtml(html),
@@ -370,15 +370,12 @@ export class MitmachenComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // Cleanup any subscriptions or timers if needed
-    // Remove any stored security state on component destruction
     localStorage.removeItem('lastLinkAccess');
   }
 
-  // External link handler with enhanced security and error handling
+  // External link handler
   private openExternalLink(url: string): void {
     try {
-      // Security validation using core service
       if (!this.sanitizationService.isSafeUrl(url)) {
         console.warn('Attempted to open unsafe URL:', url);
         return;
@@ -395,12 +392,11 @@ export class MitmachenComponent implements OnInit, OnDestroy {
 
       localStorage.setItem('lastLinkAccess', now.toString());
 
-      // Try secure window opening first  
       try {
         const newWindow = window.open(url, '_blank', MITMACHEN_CONFIG.SECURITY.WINDOW_FEATURES);
         
         if (newWindow) {
-          newWindow.opener = null; // Additional security measure
+          newWindow.opener = null;
         } else {
           // Fallback: Create invisible link and click it
           const link = document.createElement('a');
@@ -424,11 +420,10 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       }
     } catch (error) {
       console.error('Failed to open external link:', error);
-      // Optional: Show user-friendly error message
     }
   }
 
-  // Consolidated external link methods (for backward compatibility)
+  // External link methods
   readonly externalLinks = {
     discord: () => this.openExternalLink(MITMACHEN_CONFIG.EXTERNAL_LINKS.DISCORD),
     events: () => this.openExternalLink(MITMACHEN_CONFIG.EXTERNAL_LINKS.EVENTS),
@@ -437,14 +432,14 @@ export class MitmachenComponent implements OnInit, OnDestroy {
     arma3SyncTips: () => this.openExternalLink(MITMACHEN_CONFIG.EXTERNAL_LINKS.ARMA3SYNC_TIPS)
   };
 
-  // Legacy method aliases (maintain backward compatibility)
+  // Method aliases
   openDiscord = this.externalLinks.discord;
   openEvents = this.externalLinks.events;
   openArma3SyncGuide = this.externalLinks.arma3SyncGuide;
   openArma3SyncVideo = this.externalLinks.arma3SyncVideo;
   openArma3SyncTipps = this.externalLinks.arma3SyncTips;
 
-  // Button styling methods (consistent with other components)
+  // Button styling methods
   getPrimaryButtonClasses(): string {
     return 'bg-gradient-to-r from-tttRed to-tttRed-600 text-tttWhite shadow-lg hover:shadow-xl hover:shadow-tttRed/30';
   }
