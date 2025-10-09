@@ -51,3 +51,140 @@
 @layer base {
   h1, h2, h3, h4, h5, h6 { @apply font-heading; }
 }
+
+/* TTT Standard Layout Components */
+@layer components {
+  /* Standard page container for legal pages (Impressum, Datenschutz) */
+  .ttt-page-container {
+    @apply mx-auto max-w-6xl px-6 sm:px-8;
+  }
+  
+  /* Compact container for hero sections */
+  .ttt-hero-container {
+    @apply mx-auto max-w-4xl px-6 text-center sm:px-8;
+  }
+  
+  /* Wide container for galleries and showcases */
+  .ttt-wide-container {
+    @apply mx-auto max-w-7xl px-6 sm:px-8 lg:px-12;
+  }
+  
+  /* Standard content card/section styling */
+  .ttt-content-card {
+    @apply rounded-xl border border-tttGray-700 bg-gradient-to-br from-tttGray-800 to-tttGray-900 p-6;
+  }
+
+  /* TTT Typography System - Comprehensive Design System */
+  
+  /* Hero & Main Titles */
+  .ttt-hero-title {
+    @apply mb-4 text-3xl font-bold text-tttWhite drop-shadow-lg md:text-4xl lg:text-5xl transition-all duration-500;
+  }
+  
+  .ttt-page-title {
+    @apply mb-4 text-3xl font-bold text-tttWhite md:text-4xl;
+  }
+  
+  /* Section Titles */
+  .ttt-section-title {
+    @apply mb-4 text-xl font-bold text-tttRed;
+  }
+  
+  .ttt-section-title-large {
+    @apply mb-4 text-3xl font-bold text-tttWhite md:text-4xl;
+  }
+  
+  /* Subsection Titles */
+  .ttt-subsection-title {
+    @apply font-semibold text-tttWhite mb-2;
+  }
+  
+  .ttt-subsection-title-compact {
+    @apply font-semibold text-tttWhite mb-1;
+  }
+  
+  .ttt-feature-title {
+    @apply text-lg font-bold text-tttWhite group-hover:text-tttRed transition-colors duration-300;
+  }
+  
+  /* Body Text */
+  .ttt-hero-text {
+    @apply mx-auto mb-6 max-w-2xl text-base leading-relaxed text-tttGray-100 drop-shadow-md md:text-lg transition-all duration-500;
+  }
+  
+  .ttt-content-text {
+    @apply space-y-4 text-tttGray-300 leading-relaxed;
+  }
+  
+  .ttt-content-text-compact {
+    @apply space-y-2 text-tttGray-300;
+  }
+  
+  .ttt-description-text {
+    @apply mx-auto max-w-3xl text-base text-tttGray-300 leading-relaxed md:text-lg;
+  }
+  
+  .ttt-feature-description {
+    @apply text-sm text-tttGray-300 leading-relaxed;
+  }
+  
+  /* Special Text */
+  .ttt-small-text {
+    @apply text-sm;
+  }
+  
+  .ttt-highlight-text {
+    @apply text-tttWhite;
+  }
+  
+  .ttt-accent-text {
+    @apply text-tttRed;
+  }
+  
+  .ttt-badge-text {
+    @apply text-sm font-medium text-tttRed;
+  }
+  
+  /* Links & Interactive */
+  .ttt-link {
+    @apply text-tttRed hover:text-tttRed-300 transition-colors;
+  }
+  
+  /* Layout Helpers */
+  .ttt-text-center {
+    @apply text-center;
+  }
+  
+  .ttt-constrained-text {
+    @apply mx-auto max-w-2xl;
+  }
+  
+  .ttt-wide-constrained-text {
+    @apply mx-auto max-w-3xl;
+  }
+  
+  /* Specialized Typography */
+  .ttt-step-title {
+    @apply mb-3 text-2xl font-bold text-tttWhite;
+  }
+  
+  .ttt-card-title {
+    @apply mb-1 text-lg font-bold text-tttWhite group-hover:text-tttRed transition-colors duration-300;
+  }
+  
+  .ttt-stat-value {
+    @apply text-2xl font-bold;
+  }
+  
+  .ttt-badge {
+    @apply mb-6 inline-flex items-center gap-2 rounded-full border border-tttRed/30 bg-tttRed/10 px-4 py-2 text-sm font-medium text-tttRed backdrop-blur-sm;
+  }
+  
+  .ttt-step-link {
+    @apply inline-flex items-center gap-1 text-xs font-medium text-tttRed hover:text-tttRed-400 transition-colors;
+  }
+  
+  .ttt-req-text {
+    @apply flex-1 text-base font-semibold text-tttWhite;
+  }
+}
