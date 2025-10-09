@@ -1,0 +1,333 @@
+<!-- TTT Aufstellung Component - Military Roster and Organization Structure -->
+
+<!-- Loading State -->
+<div *ngIf="isLoading" class="flex min-h-96 items-center justify-center">
+  <div class="text-center">
+    <div class="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-tttGray-300 border-t-tttRed"></div>
+    <p class="text-tttWhite/70">Mitgliederdaten werden geladen...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div *ngIf="loadingError && !isLoading" class="flex min-h-96 items-center justify-center">
+  <div class="text-center">
+    <div class="mb-4 flex justify-center">
+      <i class="pi pi-exclamation-triangle text-4xl text-tttRed" aria-hidden="true"></i>
+    </div>
+    <h2 class="mb-2 text-xl font-bold text-tttWhite">Fehler</h2>
+    <p class="mb-4 text-tttWhite/70">{{ loadingError }}</p>
+    <button 
+      (click)="retryLoading()" 
+      [class]="getPrimaryButtonClasses()"
+      aria-label="Mitgliederdaten erneut laden">
+      <i class="pi pi-refresh" aria-hidden="true"></i>
+      <span>Erneut versuchen</span>
+    </button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div *ngIf="!isLoading && !loadingError">
+  
+  <!-- Header Section -->
+  <section class="bg-tttBlack py-8">
+    <div class="ttt-page-container">
+      <div class="mb-8 ttt-text-center">
+        <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
+        <p class="ttt-hero-text text-tttGray-200 mb-4">{{ pageSubtitle }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Overview -->
+  <section class="bg-tttBlack py-8">
+    <div class="ttt-page-container">
+      <div class="mb-6 ttt-text-center">
+        <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
+          <i class="pi pi-chart-bar text-tttRed"></i>
+          {{ sections.OVERVIEW.TITLE }}
+        </h2>
+        <p class="ttt-description-text">{{ sections.OVERVIEW.SUBTITLE }}</p>
+      </div>
+      
+      <div class="mb-8 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
+        <div 
+          *ngFor="let rank of rankOrder; trackBy: trackByRank" 
+          class="ttt-content-card text-center transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
+          <div class="mb-3 flex justify-center">
+            <img 
+              [src]="getRankInfo(rank).icon" 
+              [alt]="getRankInfo(rank).name + ' Abzeichen'"
+              class="h-12 w-12 object-contain transition-transform duration-300 hover:scale-110"
+              loading="lazy" />
+          </div>
+          <h3 class="ttt-card-title">{{ getRankInfo(rank).name }}</h3>
+          <div class="ttt-stat-value" [class]="getRankInfo(rank).color">
+            {{ memberStats[rank] }}
+          </div>
+          <div class="text-xs text-tttWhite/50">Mitglieder</div>
+        </div>
+      </div>
+      
+      <!-- Total Members Summary -->
+      <div class="text-center">
+        <div class="inline-flex items-center gap-2 rounded-lg bg-tttRed px-4 py-2">
+          <i class="pi pi-users text-lg text-tttWhite" aria-hidden="true"></i>
+          <span class="text-lg font-bold text-tttWhite">{{ totalMembers }} aktive Mitglieder</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Member Roster -->
+  <section class="bg-tttGray-900 py-8">
+    <div class="ttt-page-container">
+      <div class="mb-6 ttt-text-center">
+        <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
+          <i class="pi pi-users text-tttRed"></i>
+          {{ sections.ROSTER.TITLE }}
+        </h2>
+        <p class="ttt-description-text">{{ sections.ROSTER.SUBTITLE }}</p>
+      </div>
+
+      <!-- Rank Groups -->
+      <div class="space-y-8">
+        <div 
+          *ngFor="let rank of rankOrder; trackBy: trackByRank" 
+          [class.hidden]="membersByRank[rank].length === 0">
+          
+          <!-- Rank Header -->
+          <div class="mb-6 flex items-center gap-4">
+            <img 
+              *ngIf="rank === 'offizier'"
+              [src]="getRankInfo(rank).icon" 
+              [alt]="getRankInfo(rank).name + ' Abzeichen'"
+              class="h-6 w-6 object-contain"
+              loading="lazy" />
+            <h3 class="text-xl font-bold text-tttWhite">{{ getRankInfo(rank).name }}</h3>
+            <div class="flex-1 h-px bg-gradient-to-r from-tttRed/50 to-transparent"></div>
+            <span class="text-sm font-medium text-tttWhite/70">{{ membersByRank[rank].length }} Mitglieder</span>
+          </div>
+
+          <!-- Members Grid - optimized for clickable cards -->
+          <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+            <div 
+              *ngFor="let member of membersByRank[rank]; trackBy: trackByMember"
+              class="relative">
+              
+              <!-- Member Card - based on original design -->
+              <div 
+                [class.cursor-pointer]="hasExpandableContent(member)"
+                [class.bg-tttRed/5]="member.isExpanded"
+                [class.border-tttRed/50]="member.isExpanded"
+                (click)="hasExpandableContent(member) ? toggleMemberDetails(member) : null"
+                [attr.aria-label]="hasExpandableContent(member) ? 'Details für ' + member.name + (member.isExpanded ? ' ausblenden' : ' anzeigen') : null"
+                [attr.aria-expanded]="member.isExpanded"
+                class="group ttt-content-card p-3 text-center transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 relative min-h-[140px] flex flex-col justify-between">
+                
+                <div>
+                  <!-- Avatar with rank border styling - only for officers -->
+                  <div *ngIf="member.rank === 'offizier'" class="relative mx-auto mb-2 flex justify-center">
+                    <div 
+                      *ngIf="member.avatar && member.avatar !== ''; else noAvatarTemplate"
+                      class="w-12 h-12 rounded-full border-2 overflow-hidden transition-all duration-300"
+                      [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50 group-hover:border-' + getRankInfo(member.rank).color.split('-')[1] + '-400'">
+                      <img 
+                        [src]="member.avatar" 
+                        [alt]="member.name + ' Avatar'"
+                        class="w-full h-full object-cover"
+                        loading="lazy" />
+                      <!-- Rank Badge for officers -->
+                      <div 
+                        class="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full border border-tttBlack flex items-center justify-center"
+                        [class]="'bg-' + getRankInfo(member.rank).color.split('-')[1] + '-400/20'">
+                        <img 
+                          *ngIf="getRankInfo(member.rank).icon.startsWith('/img'); else iconTemplate"
+                          [src]="getRankInfo(member.rank).icon" 
+                          [alt]="getRankInfo(member.rank).name"
+                          class="w-2.5 h-2.5 object-contain" />
+                        <ng-template #iconTemplate>
+                          <i [class]="getRankInfo(member.rank).icon + ' ' + getRankInfo(member.rank).color + ' text-xs'" aria-hidden="true"></i>
+                        </ng-template>
+                      </div>
+                    </div>
+                    
+                    <!-- Fallback for officers without avatar -->
+                    <ng-template #noAvatarTemplate>
+                      <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
+                           [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50 bg-' + getRankInfo(member.rank).color.split('-')[1] + '-400/10'">
+                        <img 
+                          *ngIf="getRankInfo(member.rank).icon.startsWith('/img'); else memberIconTemplate"
+                          [src]="getRankInfo(member.rank).icon" 
+                          [alt]="getRankInfo(member.rank).name"
+                          class="w-4 h-4 object-contain" />
+                        <ng-template #memberIconTemplate>
+                          <i [class]="getRankInfo(member.rank).icon + ' ' + getRankInfo(member.rank).color + ' text-xs'" aria-hidden="true"></i>
+                        </ng-template>
+                      </div>
+                    </ng-template>
+                  </div>
+
+                  <!-- Member Info -->
+                  <h4 class="text-sm font-bold text-tttWhite group-hover:text-tttRed transition-colors duration-300 mb-1 truncate"
+                      [class.mt-2]="member.rank !== 'offizier'">
+                    {{ member.name }}
+                  </h4>
+                  <span class="text-xs px-1.5 py-0.5 rounded font-medium block mb-1"
+                        [class]="getRankBadgeClasses(member.rank)">
+                    {{ getRankInfo(member.rank).shortName }}
+                  </span>
+                </div>
+
+                <!-- Compact Stats as Icons -->
+                <div class="flex justify-center gap-1 text-xs mb-1">
+                  <span *ngIf="member.medals.length > 0" 
+                        class="w-5 h-5 bg-yellow-400/20 rounded flex items-center justify-center" 
+                        [title]="member.medals.length + ' Medaille(n)'">
+                    <i class="pi pi-star-fill text-yellow-400 text-xs" aria-hidden="true"></i>
+                  </span>
+                  <span *ngIf="member.campaignRibbons.length > 0" 
+                        class="w-5 h-5 bg-purple-400/20 rounded flex items-center justify-center"
+                        [title]="member.campaignRibbons.length + ' Kampagne(n)'">
+                    <i class="pi pi-flag text-purple-400 text-xs" aria-hidden="true"></i>
+                  </span>
+                  <span *ngIf="member.abteilungen.length > 0" 
+                        class="w-5 h-5 bg-blue-400/20 rounded flex items-center justify-center"
+                        [title]="member.abteilungen.length + ' Abteilung(en)'">
+                    <i class="pi pi-briefcase text-blue-400 text-xs" aria-hidden="true"></i>
+                  </span>
+                </div>
+
+                <!-- Member since (year) -->
+                <p class="text-xs text-tttGray-500">
+                  {{ getMemberYear(member.memberSince) }}
+                </p>
+
+                <!-- Expand Indicator -->
+                <div *ngIf="hasExpandableContent(member)" 
+                     class="mt-1 flex justify-center">
+                  <i class="pi text-xs text-tttGray-500 transition-transform duration-300"
+                     [class.pi-chevron-down]="!member.isExpanded"
+                     [class.pi-chevron-up]="member.isExpanded" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Expanded Details for this rank -->
+          <div *ngFor="let member of membersByRank[rank]; trackBy: trackByMember">
+            <div *ngIf="member.isExpanded && hasExpandableContent(member)"
+                 class="mb-4 ttt-content-card p-4 border-tttRed/50 bg-tttRed/5">
+              
+              <!-- Member Header in Expanded View -->
+              <div class="flex items-center gap-3 mb-4 pb-3 border-b border-tttGray-700/50">
+                <div class="w-16 h-16 flex-shrink-0">
+                  <div *ngIf="member.avatar && member.avatar !== ''; else expandedNoAvatarTemplate"
+                       class="w-16 h-16 rounded-full border-2 overflow-hidden"
+                       [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50'">
+                    <img [src]="member.avatar" 
+                         [alt]="member.name"
+                         class="w-full h-full object-cover" />
+                  </div>
+                  
+                  <!-- Fallback for Non-Officers in Expanded View -->
+                  <ng-template #expandedNoAvatarTemplate>
+                    <div class="w-16 h-16 rounded-full border-2 flex items-center justify-center"
+                         [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50 bg-' + getRankInfo(member.rank).color.split('-')[1] + '-400/10'">
+                      <img *ngIf="getRankInfo(member.rank).icon.startsWith('/img'); else expandedFallbackIconTemplate"
+                           [src]="getRankInfo(member.rank).icon" 
+                           [alt]="getRankInfo(member.rank).name"
+                           class="w-8 h-8 object-contain" />
+                      <ng-template #expandedFallbackIconTemplate>
+                        <i [class]="getRankInfo(member.rank).icon + ' ' + getRankInfo(member.rank).color + ' text-2xl'" aria-hidden="true"></i>
+                      </ng-template>
+                    </div>
+                  </ng-template>
+                </div>
+                <div class="flex-1">
+                  <h4 class="text-xl font-bold text-tttWhite mb-1">{{ member.name }}</h4>
+                  <div class="flex items-center gap-2">
+                    <span class="text-sm px-2 py-1 rounded font-medium"
+                          [class]="getRankBadgeExpandedClasses(member.rank)">
+                      {{ getRankInfo(member.rank).name }}
+                    </span>
+                    <span class="text-sm text-tttGray-400">
+                      Mitglied seit {{ getFormattedMemberSince(member.memberSince) }}
+                    </span>
+                  </div>
+                </div>
+                <button (click)="toggleMemberDetails(member)"
+                        class="w-8 h-8 rounded-full bg-tttGray-800/50 flex items-center justify-center hover:bg-tttRed/20 transition-all duration-300">
+                  <i class="pi pi-times text-tttGray-400" aria-hidden="true"></i>
+                </button>
+              </div>
+
+              <div class="grid md:grid-cols-3 gap-4">
+                  
+                <!-- Medals Section -->
+                <div *ngIf="member.medals.length > 0" class="space-y-2">
+                  <h5 class="text-sm font-semibold text-tttWhite flex items-center gap-2">
+                    <i class="pi pi-star-fill text-yellow-400" aria-hidden="true"></i>
+                    Auszeichnungen
+                  </h5>
+                  <div class="space-y-2">
+                    <div *ngFor="let medal of member.medals; trackBy: trackByMedal"
+                         class="flex items-center gap-2 p-2 rounded-lg bg-tttGray-800/50 border border-tttGray-600/30">
+                      <img [src]="medal.image" 
+                           [alt]="medal.name"
+                           class="w-6 h-6 object-contain" />
+                      <div class="min-w-0 flex-1">
+                        <p class="text-xs font-medium text-tttWhite truncate">{{ medal.name }}</p>
+                        <p class="text-xs text-tttGray-400 truncate">{{ medal.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Campaign Ribbons Section -->
+                <div *ngIf="member.campaignRibbons.length > 0" class="space-y-2">
+                  <h5 class="text-sm font-semibold text-tttWhite flex items-center gap-2">
+                    <i class="pi pi-flag text-purple-400" aria-hidden="true"></i>
+                    Kampagnen-Teilnahmen
+                  </h5>
+                  <div class="space-y-2">
+                    <div *ngFor="let ribbon of member.campaignRibbons; trackBy: trackByCampaignRibbon"
+                         class="flex items-center gap-2 p-2 rounded-lg bg-tttGray-800/50 border border-tttGray-600/30">
+                      <img [src]="ribbon.image" 
+                             [alt]="ribbon.name"
+                             class="w-6 h-6 object-contain" />
+                      <div class="min-w-0 flex-1">
+                        <p class="text-xs font-medium text-tttWhite truncate">{{ ribbon.campaign }}</p>
+                        <p class="text-xs text-tttGray-400">{{ ribbon.year }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Abteilungen Section -->
+                <div *ngIf="member.abteilungen.length > 0" class="space-y-2">
+                  <h5 class="text-sm font-semibold text-tttWhite flex items-center gap-2">
+                    <i class="pi pi-briefcase text-blue-400" aria-hidden="true"></i>
+                    Abteilungen
+                  </h5>
+                  <div class="space-y-2">
+                    <div *ngFor="let abt of member.abteilungen; trackBy: trackByAbteilung"
+                         class="flex items-center gap-2 p-2 rounded-lg bg-tttGray-800/50 border border-tttGray-600/30">
+                      <img [src]="abt.icon" 
+                           [alt]="abt.name"
+                           class="w-6 h-6 object-contain" />
+                      <div class="min-w-0 flex-1">
+                        <p class="text-xs font-medium text-tttWhite truncate">{{ abt.name }}</p>
+                        <p class="text-xs text-tttGray-400 truncate">{{ abt.description }}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
