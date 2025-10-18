@@ -39,14 +39,19 @@ export class FooterComponent {
             description: 'Partnerschaft seit 2014'
         },
         {
+            name: 'Gruppe Adler',
+            url: 'https://gruppe-adler.de/',
+            description: 'Partnerschaft seit 2022'
+        },
+        {
             name: 'Praetorianische Garde™',
             url: 'https://prae-garde.de/',
             description: 'Partnerschaft seit 2025'
         },
         {
-            name: 'Gruppe Adler',
-            url: 'https://gruppe-adler.de/',
-            description: 'Partnerschaft seit 2022'
+            name: 'Electronic Sports Masters™',
+            url: 'https://esportsmasters.org',
+            description: 'Partnerschaft seit 20xx'
         }
     ];
 
