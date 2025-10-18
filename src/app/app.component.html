@@ -11,8 +11,59 @@
             <div class="p-6">
                 <h3 class="mb-4 text-lg font-bold text-tttWhite">{{ sidebarContent.left.title }}</h3>
                 <div class="space-y-3">
-                    <div class="rounded-lg bg-tttGray-800 p-3">
-                        <p class="text-sm text-tttGray-300">{{ sidebarContent.left.description }}</p>
+                    <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 p-4">
+
+
+                        <!-- Upcoming events (compact) -->
+                        <div class="mb-3">
+                            <ul class="space-y-2">
+                                <li *ngFor="let ev of events$ | async" class="text-sm text-tttGray-300">
+                                    <a [href]="ev.eventUrl" target="_blank" rel="noopener noreferrer"
+                                       class="block group focus:outline-none relative"
+                                       [attr.aria-describedby]="'evt-'+ev.id">
+                                        <div class="">
+                                            <div class="truncate">
+                                                <!-- Title (single-line, truncated) -->
+                                                <div class="font-medium text-tttWhite text-sm truncate"
+                                                     [attr.title]="ev.title">
+                                                    {{ ev.title }}
+                                                </div>
+                                                <div class="text-xs text-tttGray-400">
+                                                    {{ ev.date | date:'dd.MM.yyyy' }} • {{ ev.startTime }} • {{ ev.durationHours }} h
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- type moved inline with metadata -->
+
+                                        <!-- Fancy tooltip / popover shown on hover or keyboard focus -->
+                                        <div role="tooltip" [id]="'evt-'+ev.id"
+                                             class="hidden group-hover:block group-focus:block focus-within:block absolute left-0 top-full mt-2 w-[min(20rem,90vw)] max-w-xs bg-tttWhite text-tttBlack p-3 rounded shadow-lg z-50 whitespace-normal">
+                                            <div class="text-sm font-semibold">{{ ev.title }}</div>
+                                            <div class="text-xs text-tttGray-500 mt-1">{{ ev.date | date:'dd.MM.yyyy' }} • {{ ev.startTime }} • {{ ev.durationHours }} h</div>
+                                            <div class="mt-2">
+                                                <span class="inline-block text-xs rounded px-2 py-1 bg-tttRed text-tttWhite font-medium">{{ ev.type }}</span>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li *ngIf="(events$ | async)?.length === 0" class="text-sm text-tttGray-400">Keine anstehenden Events</li>
+                            </ul>
+                        </div>
+
+                        <!-- End of events card -->
+                    </div>
+
+                    <!-- Separate widget: Interner Bereich -->
+                    <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 p-4">
+                        <div class="text-center">
+                            <a *ngIf="sidebarContent.left?.intern?.routerLink"
+                               [routerLink]="sidebarContent.left.intern.routerLink"
+                               class="inline-flex items-center gap-2 rounded-lg bg-tttRed px-4 py-2 text-sm font-medium text-tttWhite hover:bg-tttRed-600 transition-colors mx-auto"
+                               [attr.aria-label]="sidebarContent.left.intern.ariaLabel">
+                                <i class="pi pi-users"></i>
+                                {{ sidebarContent.left.intern.label }}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

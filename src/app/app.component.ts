@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { AsyncPipe, DatePipe, CommonModule } from '@angular/common';
+import { Observable, of } from 'rxjs';
+import { SlotbotEvent } from './core/services/events.service';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -14,16 +17,52 @@ interface DiscordConfig {
 
 @Component({
     selector: 'ttt-root',
-    imports: [RouterOutlet, HeaderComponent, FooterComponent],
+    standalone: true,
+  imports: [RouterOutlet, RouterLink, CommonModule, AsyncPipe, DatePipe, HeaderComponent, FooterComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
 })
 export class AppComponent {
+  // Dummy-Events für die Eventliste
+  readonly events$: Observable<SlotbotEvent[]> = of([
+    {
+      id: '25350',
+      title: 'SGA Medic 3.0 Beta [Training][Beta]',
+      date: new Date().toISOString(),
+      startTime: '19:30',
+      durationHours: 4,
+      type: 'Training',
+      eventUrl: 'https://events.tacticalteam.de/events/25350'
+    },
+    {
+      id: '25351',
+      title: 'Operation Hill Jumper Teil 1 [Coop][Beta]',
+      date: new Date(Date.now() + 86400000).toISOString(),
+      startTime: '19:30',
+      durationHours: 4,
+      type: 'Coop',
+      eventUrl: 'https://events.tacticalteam.de/events/25351'
+    },
+    {
+      id: '25352',
+      title: 'Übungsunterbrechung [Coop]',
+      date: new Date(Date.now() + 2 * 86400000).toISOString(),
+      startTime: '19:30',
+      durationHours: 4,
+      type: 'Coop',
+      eventUrl: 'https://events.tacticalteam.de/events/25352'
+    }
+  ]);
   // Sidebar content configuration
   readonly sidebarContent = {
     left: {
-      title: 'Left Sidebar',
-      description: 'Features coming soon. Event list, TTT login and post-login links for Missions-Upload, SquadXML'
+      title: 'Nächste Events',
+      description: '',
+      intern: {
+        label: 'Interner Bereich',
+        ariaLabel: 'Interner Mitgliederbereich',
+        routerLink: '/intern'
+      }
     },
     right: {
       title: 'Live Discord',
@@ -33,6 +72,7 @@ export class AppComponent {
       }
     }
   } as const;
+
 
   // Discord widget configuration - using trusted static URL
   readonly discordConfig: DiscordConfig = {
