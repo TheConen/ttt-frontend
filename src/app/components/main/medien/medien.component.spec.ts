@@ -70,7 +70,7 @@ describe('MedienComponent', () => {
         jasmine.objectContaining({ platform: 'instagram' }),
         jasmine.objectContaining({ platform: 'tiktok' }),
         jasmine.objectContaining({ platform: 'steam' }),
-        jasmine.objectContaining({ platform: 'arma3units' }),
+        jasmine.objectContaining({ platform: 'reddit' }),
         jasmine.objectContaining({ platform: 'github' })
       ])
     );

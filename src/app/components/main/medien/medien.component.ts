@@ -29,7 +29,7 @@ interface MediaLink extends BaseMediaItem {
 }
 
 interface SocialMediaLink extends BaseMediaItem {
-  platform: 'x' | 'mastodon' | 'bluesky' | 'instagram' | 'tiktok' | 'steam' | 'arma3units' | 'github';
+  platform: 'x' | 'mastodon' | 'bluesky' | 'instagram' | 'tiktok' | 'steam' | 'reddit' | 'github';
   name: string;
   username: string;
   color: string;
@@ -181,13 +181,13 @@ export class MedienComponent implements OnInit {
       color: 'text-blue-300'
     },
     {
-      id: 'arma3units',
-      platform: 'arma3units',
-      name: 'Arma 3 Units',
-      username: 'Tactical Training Team',
-      url: 'https://units.arma3.com/unit/tacticalteam',
-      icon: 'pi pi-users',
-      color: 'text-green-400'
+      id: 'reddit',
+      platform: 'reddit',
+      name: 'Reddit',
+      username: 'tacticaltrainingteam',
+      url: 'https://www.reddit.com/user/tacticaltrainingteam/',
+      icon: 'pi pi-reddit',
+      color: 'text-red-400'
     },
     {
       id: 'github',
@@ -273,7 +273,7 @@ export class MedienComponent implements OnInit {
     'instagram': 'hover:border-pink-500/50 hover:bg-pink-500/10',
     'tiktok': 'hover:border-red-400/50 hover:bg-red-400/10',
     'steam': 'hover:border-blue-300/50 hover:bg-blue-300/10',
-    'arma3units': 'hover:border-green-400/50 hover:bg-green-400/10',
+    'reddit': 'hover:border-red-400/50 hover:bg-green-400/10',
     'github': 'hover:border-gray-400/50 hover:bg-gray-400/10'
   } as const;
 

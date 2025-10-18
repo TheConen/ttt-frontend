@@ -64,11 +64,6 @@
     @apply mx-auto max-w-4xl px-6 text-center sm:px-8;
   }
   
-  /* Wide container for galleries and showcases */
-  .ttt-wide-container {
-    @apply mx-auto max-w-7xl px-6 sm:px-8 lg:px-12;
-  }
-  
   /* Standard content card/section styling */
   .ttt-content-card {
     @apply rounded-xl border border-tttGray-700 bg-gradient-to-br from-tttGray-800 to-tttGray-900 p-6;
