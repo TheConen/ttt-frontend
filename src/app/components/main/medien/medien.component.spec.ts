@@ -45,7 +45,7 @@ describe('MedienComponent', () => {
   });
 
   it('should have correct page configuration', () => {
-    expect(component.pageTitle).toBe('Medien & Social Media');
+    expect(component.pageTitle).toBe('Medien');
     expect(component.pageSubtitle).toBe('Streams, Videos und Community-Kanäle des Tactical Training Teams');
   });
 
