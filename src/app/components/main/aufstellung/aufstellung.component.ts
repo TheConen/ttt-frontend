@@ -163,7 +163,7 @@ export class AufstellungComponent implements OnInit {
    * Deterministic mock random generator - replaces Math.random() for testing
    * Uses seed-based approach to avoid cryptographic weakness warnings
    */
-  private mockRandom(index: number = 0): number {
+  private mockRandom(index = 0): number {
     const seed = this.mockDataSeed + index;
     return (seed * 9301 + 49297) % 233280 / 233280;
   }
@@ -514,7 +514,7 @@ export class AufstellungComponent implements OnInit {
     if (name === 'SpecOp0') {
       return this.availableMedals.map(medal => ({
         ...medal,
-        id: `medal-${index}-${medal.name.replaceAll(' ', '-').toLowerCase()}`
+        id: `medal-${index}-${medal.name.replace(/ /g, '-').toLowerCase()}`
       }));
     }
 
@@ -536,14 +536,14 @@ export class AufstellungComponent implements OnInit {
     }
 
     const eligibleRibbons = this.availableRibbons
-      .filter(ribbon => Number.parseInt(ribbon.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX) >= year)
+      .filter(ribbon => parseInt(ribbon.year, 10) >= year)
       .slice(0, 3);
 
     const numRibbons = Math.floor(this.mockRandom(index * 30) * 4);
     return eligibleRibbons.slice(0, numRibbons).map(ribbon => ({
       ...ribbon,
       id: `ribbon-${index}-${ribbon.name.replaceAll(' ', '-').toLowerCase()}`,
-      year: Math.max(Number.parseInt(ribbon.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX), year).toString()
+      year: Math.max(parseInt(ribbon.year, 10), year).toString()
     }));
   }
   private getRankBadgeClassesBase(rank: RankType, baseClasses: string): string {
