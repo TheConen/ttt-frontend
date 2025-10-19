@@ -451,7 +451,7 @@ export class AufstellungComponent implements OnInit {
       avatar: base.rank === 'offizier' ? AUFSTELLUNG_CONFIG.ASSETS.AVATARS.OFFIZIER : '',
       memberSince: `${base.year}-${String(Math.floor(this.mockRandom(index * 10) * 12) + 1).padStart(2, '0')}-${String(Math.floor(this.mockRandom(index * 10 + 1) * 28) + 1).padStart(2, '0')}`,
       medals: this.getMedalsForMember(base.name, base.hasDetails, index),
-      campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, Number.parseInt(base.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX)),
+  campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, Number.parseInt(base.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX)),
       abteilungen: base.hasDetails ? this.generateRandomDepartments() : [],
       isExpanded: false
     }));
@@ -502,8 +502,8 @@ export class AufstellungComponent implements OnInit {
 
   getSortedCampaignRibbons(ribbons: CampaignRibbon[]): CampaignRibbon[] {
     return [...ribbons].sort((a, b) => {
-      const yearA = Number.parseInt(a.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
-      const yearB = Number.parseInt(b.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
+  const yearA = Number.parseInt(a.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
+  const yearB = Number.parseInt(b.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX);
       return yearB - yearA;
     });
   }
@@ -514,7 +514,7 @@ export class AufstellungComponent implements OnInit {
     if (name === 'SpecOp0') {
       return this.availableMedals.map(medal => ({
         ...medal,
-        id: `medal-${index}-${medal.name.replace(/ /g, '-').toLowerCase()}`
+  id: `medal-${index}-${medal.name.replaceAll(' ', '-').toLowerCase()}`
       }));
     }
 
@@ -536,14 +536,14 @@ export class AufstellungComponent implements OnInit {
     }
 
     const eligibleRibbons = this.availableRibbons
-      .filter(ribbon => parseInt(ribbon.year, 10) >= year)
+  .filter(ribbon => Number.parseInt(ribbon.year, 10) >= year)
       .slice(0, 3);
 
     const numRibbons = Math.floor(this.mockRandom(index * 30) * 4);
     return eligibleRibbons.slice(0, numRibbons).map(ribbon => ({
       ...ribbon,
-      id: `ribbon-${index}-${ribbon.name.replaceAll(' ', '-').toLowerCase()}`,
-      year: Math.max(parseInt(ribbon.year, 10), year).toString()
+  id: `ribbon-${index}-${ribbon.name.replaceAll(' ', '-').toLowerCase()}`,
+  year: Math.max(Number.parseInt(ribbon.year, 10), year).toString()
     }));
   }
   private getRankBadgeClassesBase(rank: RankType, baseClasses: string): string {
