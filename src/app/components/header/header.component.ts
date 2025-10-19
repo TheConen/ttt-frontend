@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit {
                 label: 'Home',
                 icon: 'pi pi-home',
                 styleClass: 'font-heading',
+                routerLink: ['/']
             },
             {
                 label: 'Events',
@@ -48,6 +49,7 @@ export class HeaderComponent implements OnInit {
                 label: 'Medien',
                 icon: 'pi pi-images',
                 styleClass: 'font-heading',
+                routerLink: ['/medien']
             },
             {
                 label: 'Über uns',
@@ -58,11 +60,19 @@ export class HeaderComponent implements OnInit {
                         label: 'Aufstellung',
                         icon: 'pi pi-sitemap',
                         styleClass: 'font-heading',
+                        routerLink: ['/aufstellung']
                     },
                     {
-                        label: 'Unsere Geschichte',
+                        label: 'Event-Replay',
+                        icon: 'pi pi-play',
+                        styleClass: 'font-heading',
+                        url: 'https://replay.tacticalteam.de'
+                    },
+                    {
+                        label: 'TTT-Chronik',
                         icon: 'pi pi-history',
                         styleClass: 'font-heading',
+                        routerLink: ['/chronik']
                     },
                     {
                         label: 'Shop',
