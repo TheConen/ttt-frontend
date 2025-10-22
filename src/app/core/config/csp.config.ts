@@ -51,24 +51,28 @@ export const TRUSTED_SOURCES = {
 export const CSP_CONFIG: CSPConfig = {
   defaultSrc: ["'self'"],
   
-  scriptSrc: [
-    "'self'",
-    "'unsafe-eval'", // Required for Angular in development
-    "'unsafe-inline'", // Required for Angular in development
-    TRUSTED_SOURCES.discord.main
-  ],
+    scriptSrc: [
+      "'self'",
+      "'unsafe-eval'", // Required for Angular in development
+      "'unsafe-inline'", // Required for Angular in development
+      TRUSTED_SOURCES.discord.main,
+      "https://edge.marker.io",
+      "https://app.marker.io"
+    ],
   
   styleSrc: [
     "'self'",
     "'unsafe-inline'", // Required for Angular and PrimeNG
     TRUSTED_SOURCES.google.fonts,
-    TRUSTED_SOURCES.discord.main
+    TRUSTED_SOURCES.discord.main,
+    "https://app.marker.io"
   ],
   
   fontSrc: [
     "'self'",
     TRUSTED_SOURCES.google.fontsStatic,
-    TRUSTED_SOURCES.discord.main
+    TRUSTED_SOURCES.discord.main,
+    "https://app.marker.io"
   ],
   
   imgSrc: [
@@ -77,7 +81,8 @@ export const CSP_CONFIG: CSPConfig = {
     "blob:",
     TRUSTED_SOURCES.discord.main,
     TRUSTED_SOURCES.discord.cdn,
-    TRUSTED_SOURCES.discord.assets
+    TRUSTED_SOURCES.discord.assets,
+    "https://app.marker.io"
   ],
   
   connectSrc: [
@@ -85,17 +90,21 @@ export const CSP_CONFIG: CSPConfig = {
     "ws:",
     "wss:",
     TRUSTED_SOURCES.discord.main,
-    TRUSTED_SOURCES.discord.gateway
+    TRUSTED_SOURCES.discord.gateway,
+    "https://app.marker.io",
+    "https://api.marker.io"
   ],
   
   frameSrc: [
     "'self'",
-    TRUSTED_SOURCES.discord.main
+    TRUSTED_SOURCES.discord.main,
+    "https://app.marker.io"
   ],
   
   childSrc: [
     "'self'",
-    TRUSTED_SOURCES.discord.main
+    TRUSTED_SOURCES.discord.main,
+    "https://app.marker.io"
   ],
   
   frameAncestors: ["'none'"],
