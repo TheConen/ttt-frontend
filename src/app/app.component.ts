@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { AsyncPipe, DatePipe, CommonModule } from '@angular/common';
 import { Observable, of } from 'rxjs';
 import { SlotbotEvent } from './core/services/events.service';
@@ -18,7 +18,7 @@ interface DiscordConfig {
 @Component({
     selector: 'ttt-root',
     standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule, AsyncPipe, DatePipe, HeaderComponent, FooterComponent],
+  imports: [RouterOutlet, CommonModule, AsyncPipe, DatePipe, HeaderComponent, FooterComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
 })
