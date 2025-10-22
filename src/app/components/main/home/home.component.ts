@@ -110,7 +110,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     readonly content = {
         features: {
             title: 'Deine MilSim-Community für <span class="ttt-accent-text">Rookies</span> und taktische <span class="ttt-accent-text">Profis</span>',
-            subtitle: 'Von Waffenkunde über Funken bis zu Taktik, Missionsbau und TvT - erlebe authentische MilSim-Missionen mit uns.'
+            subtitle: 'Von Waffenkunde über Funken bis zu Taktik, Missionsbau und TvT - wir bieten authentische MilSim-Missionen.'
         },
         join: {
             badge: 'Werde Teil der Community',
@@ -120,7 +120,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             processSubtitle: '4 einfache Schritte zur TTT-Mitgliedschaft',
             requirements: {
                 title: 'Voraussetzungen',
-                subtitle: 'Was du für TTT brauchst'
+                subtitle: 'Was du brauchst'
             }
         },
         gallery: {
@@ -129,7 +129,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         orbat: {
             badge: 'Chain of Command',
             title: 'Unsere Struktur',
-            subtitle: 'Schau dir unsere <span class="font-bold">verschiedenen Aufgaben</span> an und finde heraus, wo du dich am wohlsten fühlst.',
+            subtitle: 'Schau dir unsere <span class="font-bold">verschiedenen Ränge</span> an und finde heraus, wo du dich am wohlsten fühlst.',
             ctaButton: 'VOLLSTÄNDIGE AUFSTELLUNG'
         }
     } as const;
@@ -163,7 +163,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         },
         {
             number: 4,
-            title: 'Willkommen bei TTT!',
+            title: 'Willkommen beim TTT!',
             description: 'Du bist jetzt Teil der TTT-Familie und kannst an allen Events teilnehmen',
             icon: 'pi pi-star-fill',
             iconColor: 'text-tttGreen'
@@ -195,11 +195,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     // ORBAT ranks for structure section
     readonly orbatRanks: OrbatRank[] = [
-        { title: 'Offiziere', icon: 'pi pi-star-fill', description: 'Führen das TTT eigenverantwortlich' },
+        { title: 'Offiziere', icon: 'pi pi-star-fill', description: 'Führen die TTT-Abteilungen' },
         { title: 'Unteroffiziere', icon: 'pi pi-star', description: 'Direkte Unterstützer der Offiziere' },
-        { title: 'Veteranen', icon: 'pi pi-shield', description: 'Hervorragende langjährige Mitglieder' },
+        { title: 'Veteranen', icon: 'pi pi-shield', description: 'Besonders engagierte Mitglieder' },
         { title: 'Soldaten', icon: 'pi pi-user', description: 'Vollwertige TTT-Mitglieder' },
-        { title: 'Rekruten', icon: 'pi pi-users', description: 'Angehende Mitglieder' },
+        { title: 'Rekruten', icon: 'pi pi-users', description: 'Angehende TTT-Mitglieder' },
         { title: 'Gäste', icon: 'pi pi-eye', description: 'Freie Mitspieler bei Events' }
     ];
 
