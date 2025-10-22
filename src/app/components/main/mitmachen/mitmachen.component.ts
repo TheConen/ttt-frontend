@@ -120,7 +120,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
 
   // Component data
   readonly pageTitle = 'Mitmachen beim TTT';
-  readonly pageSubtitle = 'Bei uns gibt\'s regelmäßig Events für Arma 3 und Arma Reforger. Du kannst deine Skills trainieren, spannende Missionen erleben oder dich in taktischen Gefechten beweisen.';
+  readonly pageSubtitle = 'Wir veranstalten regelmäßig Events für Arma 3 und Arma Reforger – von Training über Missionen bis zu taktischen Gefechten ist alles dabei.';
   readonly eventSchedule = 'dienstags und freitags von 19:30 bis 23:30 Uhr';
   
   // CSS utility functions
@@ -220,7 +220,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
       id: 'guest',
       title: 'Gast',
       subtitle: 'Flexibel und unverbindlich',
-      description: 'Der Rang "Gast" eignet sich für Spieler, die gelegentlich bei uns teilnehmen möchten, ohne Verpflichtungen zu übernehmen. Dieser Rang ist auch für Spieler aus anderen Arma 3 Communities gedacht.',
+      description: 'Der Rang "Gast" eignet sich für Spieler, die gelegentlich bei uns teilnehmen möchten, ohne Verpflichtungen zu übernehmen. Dieser Rang ist auch für Spieler aus anderen Arma Communities gedacht.',
       icon: 'pi-users',
       iconColor: MITMACHEN_CONFIG.COLORS.ICON_WHITE,
       textColor: MITMACHEN_CONFIG.COLORS.TEXT_WHITE,
@@ -282,7 +282,7 @@ export class MitmachenComponent implements OnInit, OnDestroy {
 
   readonly hints = [
     createIconItem('pi-check', MITMACHEN_CONFIG.COLORS.TEXT_GREEN, 'Solltest du Fragen oder Probleme haben, stehen dir unsere Technikchecker zur Verfügung'),
-    createIconItem('pi-check', MITMACHEN_CONFIG.COLORS.TEXT_GREEN, 'Erreiche sie über das Hammer-Symbol im TeamSpeak (ts3.tacticalteam.de)'),
+    createIconItem('pi-check', MITMACHEN_CONFIG.COLORS.TEXT_GREEN, 'Erkenne sie anhand des Hammer-Symbols im Discord oder TeamSpeak (ts3.tacticalteam.de)'),
     createIconItem('pi-exclamation-triangle', MITMACHEN_CONFIG.COLORS.TEXT_RED, '<strong>Überprüfe vor dem Event bitte, ob alles funktioniert - spätestens bis 18 Uhr am Event-Tag!</strong>')
   ];
 

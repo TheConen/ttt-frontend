@@ -63,7 +63,8 @@ const AUFSTELLUNG_CONFIG = {
     },
     MEDALS: {
       BASE_PATH: '/img/aufstellung/medals/',
-      HONOR: 'ttt_mdh.png'
+      HONOR: 'medal-mdh.png',
+      TRAINING_GOLD: 'medal-gold-training.png'
     },
     RIBBONS: {
       BASE_PATH: '/img/aufstellung/ribbons/',
@@ -314,6 +315,11 @@ export class AufstellungComponent implements OnInit {
       name: 'Medal of Honor',
       image: `${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.HONOR}`,
       description: 'Wird für besondere Verdienste im TTT verliehen'
+    },
+    {
+      name: 'Training Gold',
+      image: `${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.MEDALS.TRAINING_GOLD}`,
+      description: 'Abzeichen für Trainingsleistungen (Gold)'
     }
   ];
 
@@ -452,7 +458,7 @@ export class AufstellungComponent implements OnInit {
       memberSince: `${base.year}-${String(Math.floor(this.mockRandom(index * 10) * 12) + 1).padStart(2, '0')}-${String(Math.floor(this.mockRandom(index * 10 + 1) * 28) + 1).padStart(2, '0')}`,
       medals: this.getMedalsForMember(base.name, base.hasDetails, index),
   campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, Number.parseInt(base.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX)),
-      abteilungen: base.hasDetails ? this.generateRandomDepartments() : [],
+  abteilungen: base.hasDetails ? (base.name === 'SpecOp0' ? [...this.allDepartments] : this.generateRandomDepartments()) : [],
       isExpanded: false
     }));
   }

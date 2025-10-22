@@ -101,7 +101,7 @@ export class MedienComponent implements OnInit {
       name: 'YouTube',
       url: 'https://www.youtube.com/@tacticalteamde',
       icon: 'pi pi-youtube',
-      description: 'Mission-Videos, Tutorials und Community-Highlights',
+      description: 'Mission-Videos, Streams, Tutorials und Community-Highlights',
       color: 'text-red-500'
     },
     {

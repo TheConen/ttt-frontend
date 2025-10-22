@@ -63,22 +63,28 @@ export class HeaderComponent implements OnInit {
                         routerLink: ['/aufstellung']
                     },
                     {
-                        label: 'Event-Replay',
-                        icon: 'pi pi-play',
-                        styleClass: 'font-heading',
-                        url: 'https://replay.tacticalteam.de'
-                    },
-                    {
                         label: 'TTT-Chronik',
                         icon: 'pi pi-history',
                         styleClass: 'font-heading',
                         routerLink: ['/chronik']
                     },
                     {
+                        label: 'Event-Replay',
+                        icon: 'pi pi-play',
+                        styleClass: 'font-heading',
+                        url: 'https://replay.tacticalteam.de'
+                    },
+                    {
                         label: 'Shop',
                         icon: 'pi pi-shopping-bag',
                         styleClass: 'font-heading',
                         url: 'https://tacticalteam.myspreadshop.de'
+                    },
+                                        {
+                        label: 'Mitgliederlogin',
+                        icon: 'pi pi-user ',
+                        styleClass: 'font-heading',
+                        routerLink: ['/intern']
                     },
                 ],
             },
