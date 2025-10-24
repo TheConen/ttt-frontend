@@ -11,7 +11,7 @@
             <div class="p-6">
                 <h3 class="mb-4 text-lg font-bold text-tttWhite flex items-center gap-2 hidden md:flex">
                     <i class="pi pi-calendar text-tttRed"></i>
-                    {{ sidebarContent.left.title }}
+                    Nächste Events
                 </h3>
                 <div class="space-y-3">
                     <!-- Upcoming events (ohne Widget-Box) -->
@@ -48,30 +48,30 @@
             <div class="p-6">
                 <h3 class="mb-4 text-lg font-bold text-tttWhite">
                     <i [class]="discordIcon.class"></i>
-                    {{ sidebarContent.right.title }}
+                    Live Discord
                 </h3>
                 <div class="space-y-3">
                     <!-- Discord Widget -->
                     <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 overflow-hidden">
-                        <iframe 
-                            src="https://discord.com/widget?id=121399943393968128&theme=dark" 
-                            width="100%" 
-                            height="400" 
+                        <iframe
+                            src="https://discord.com/widget?id=121399943393968128&theme=dark"
+                            width="100%"
+                            height="400"
                             sandbox="allow-popups allow-same-origin allow-scripts"
                             class="w-full border-0"
                             title="TTT Discord Server">
                         </iframe>
                     </div>
-                    
+
                     <!-- Fallback Discord Link -->
                     <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 p-4">
                         <div class="text-center">
-                            <p class="text-sm text-tttGray-300 mb-3">{{ sidebarContent.right.fallback.message }}</p>
-                            <a [href]="discordConfig.directUrl" 
+                            <p class="text-sm text-tttGray-300 mb-3">Widget lädt nicht?</p>
+                            <a [href]="discordConfig.directUrl"
                                target="_blank"
                                class="inline-flex items-center gap-2 rounded-lg bg-[#5865F2] px-4 py-2 text-sm font-medium text-white hover:bg-[#4752C4] transition-colors">
                                 <i class="pi pi-discord"></i>
-                                {{ sidebarContent.right.fallback.buttonText }}
+                                Discord beitreten
                             </a>
                         </div>
                     </div>

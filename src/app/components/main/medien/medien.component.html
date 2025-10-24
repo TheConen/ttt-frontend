@@ -1,11 +1,11 @@
 <!-- Medien & Social Media Page -->
 <section class="min-h-screen bg-tttBlack py-8">
   <div class="ttt-page-container">
-    
+
     <!-- Page Header -->
     <div class="mb-8 ttt-text-center">
       <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
-      <p class="ttt-hero-text text-tttGray-200 mb-4">{{ pageSubtitle }}</p>
+      <p class="ttt-hero-text text-tttGray-200 mb-4">Streams, Videos und Community-Kanäle des Tactical Training Teams</p>
     </div>
 
     <!-- Live Streams Section -->
@@ -13,43 +13,43 @@
       <div class="mb-6 ttt-text-center">
         <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
           <i class="pi pi-video text-tttRed"></i>
-          {{ sections.livestreams.title }}
+          Live Streams
         </h2>
-        <p class="ttt-description-text">{{ sections.livestreams.subtitle }}</p>
+        <p class="ttt-description-text">Aktuelle Live-Übertragungen unserer Community</p>
       </div>
 
       <!-- Live Streams Grid -->
-      <div *ngIf="liveStreams.length > 0; else noStreams" 
+      <div *ngIf="liveStreams.length > 0; else noStreams"
            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div 
+        <div
           *ngFor="let stream of liveStreams; trackBy: trackByLiveStream"
           class="ttt-content-card group hover:border-tttRed/50 transition-all duration-300 cursor-pointer"
           (click)="openExternalLink(stream.url, $event)"
           (keydown)="handleKeyboardNavigation(stream.url, $event)"
-          [attr.tabindex]="0"
-          [attr.role]="'button'"
-          [attr.aria-label]="'Stream öffnen: ' + stream.title">
-          
+          tabindex="0"
+          role="button"
+          aria-label="Stream öffnen: {{ stream.title }}">
+
           <!-- Stream Thumbnail -->
           <div class="relative mb-4 overflow-hidden rounded-lg">
-            <img 
-              [src]="stream.thumbnail" 
+            <img
+              [src]="stream.thumbnail"
               [alt]="stream.title"
               class="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300">
-            
+
             <!-- Live Indicator -->
             <div class="absolute top-2 left-2 bg-red-600 text-white px-2 py-1 rounded text-xs font-bold animate-pulse">
               <i class="pi pi-circle-fill mr-1"></i>
               LIVE
             </div>
-            
+
             <!-- Viewer Count -->
             <div class="absolute bottom-2 right-2 bg-black/70 text-white px-2 py-1 rounded text-xs">
               <i class="pi pi-eye mr-1"></i>
               {{ stream.viewers }}
             </div>
           </div>
-          
+
           <!-- Stream Info -->
           <div>
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -64,7 +64,7 @@
       <ng-template #noStreams>
         <div class="ttt-content-card text-center py-8">
           <i class="pi pi-video text-tttGray-500 text-4xl mb-4"></i>
-          <p class="text-tttGray-400">{{ sections.livestreams.emptyMessage }}</p>
+          <p class="text-tttGray-400">Derzeit sind keine Streams aktiv</p>
           <p class="text-tttGray-500 text-sm mt-2">
             Schau regelmäßig vorbei oder folge uns auf Twitch für Benachrichtigungen!
           </p>
@@ -77,41 +77,106 @@
       <div class="mb-6 ttt-text-center">
         <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
           <i class="pi pi-play text-tttRed"></i>
-          {{ sections.media.title }}
+          Medien-Kanäle
         </h2>
-        <p class="ttt-description-text">{{ sections.media.subtitle }}</p>
+        <p class="ttt-description-text">Unsere Video- und Streaming-Plattformen</p>
       </div>
 
       <!-- Media Links Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div 
-          *ngFor="let media of mediaLinks; trackBy: trackByMediaLink"
-          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full"
-          [class]="getPlatformStyling(media.platform)"
-          (click)="openExternalLink(media.url, $event)"
-          (keydown)="handleKeyboardNavigation(media.url, $event)"
-          [attr.tabindex]="0"
-          [attr.role]="'button'"
-          [attr.aria-label]="'Medien öffnen: ' + media.name + ' auf ' + media.platform">
-          
+        <!-- YouTube -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-red-500/50 hover:bg-red-500/10"
+          (click)="openExternalLink(externalLinks.youtube, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.youtube, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Medien öffnen: YouTube auf youtube">
+
           <!-- Media Icon and Title -->
           <div class="flex items-center mb-4">
             <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 group-hover:scale-110 transition-transform">
-              <i [class]="media.icon + ' text-xl ' + media.color"></i>
+              <i class="pi pi-youtube text-xl text-red-500"></i>
             </div>
             <div>
               <h3 class="text-tttWhite font-semibold text-lg group-hover:text-tttRed transition-colors">
-                {{ media.name }}
+                YouTube
               </h3>
             </div>
           </div>
-          
+
           <!-- Description -->
-          <p class="text-tttGray-300 text-sm leading-relaxed flex-grow mb-4">{{ media.description }}</p>
-          
+          <p class="text-tttGray-300 text-sm leading-relaxed flex-grow mb-4">Mission-Videos, Streams, Tutorials und Community-Highlights</p>
+
           <!-- Visit Link -->
           <div class="mt-auto">
-            <span [class]="getSecondaryButtonClasses()">
+            <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
+              <span>Besuchen</span>
+              <i class="pi pi-external-link"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Twitch -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-purple-500/50 hover:bg-purple-500/10"
+          (click)="openExternalLink(externalLinks.twitch, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.twitch, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Medien öffnen: Twitch auf twitch">
+
+          <!-- Media Icon and Title -->
+          <div class="flex items-center mb-4">
+            <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 group-hover:scale-110 transition-transform">
+              <i class="pi pi-twitch text-xl text-purple-500"></i>
+            </div>
+            <div>
+              <h3 class="text-tttWhite font-semibold text-lg group-hover:text-tttRed transition-colors">
+                Twitch
+              </h3>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="text-tttGray-300 text-sm leading-relaxed flex-grow mb-4">Live-Streams unserer Missionen und Events</p>
+
+          <!-- Visit Link -->
+          <div class="mt-auto">
+            <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
+              <span>Besuchen</span>
+              <i class="pi pi-external-link"></i>
+            </span>
+          </div>
+        </div>
+
+        <!-- Trovo -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-green-500/50 hover:bg-green-500/10"
+          (click)="openExternalLink(externalLinks.trovo, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.trovo, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Medien öffnen: Trovo auf trovo">
+
+          <!-- Media Icon and Title -->
+          <div class="flex items-center mb-4">
+            <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 group-hover:scale-110 transition-transform">
+              <i class="pi pi-video text-xl text-green-500"></i>
+            </div>
+            <div>
+              <h3 class="text-tttWhite font-semibold text-lg group-hover:text-tttRed transition-colors">
+                Trovo
+              </h3>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="text-tttGray-300 text-sm leading-relaxed flex-grow mb-4">Alternative Streaming-Plattform für unsere Community</p>
+
+          <!-- Visit Link -->
+          <div class="mt-auto">
+            <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
               <span>Besuchen</span>
               <i class="pi pi-external-link"></i>
             </span>
@@ -125,36 +190,210 @@
       <div class="mb-6 ttt-text-center">
         <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
           <i class="pi pi-share-alt text-tttRed"></i>
-          {{ sections.social.title }}
+          Community & Plattformen
         </h2>
-        <p class="ttt-description-text">{{ sections.social.subtitle }}</p>
+        <p class="ttt-description-text">Folge uns auf Social Media und anderen Plattformen</p>
       </div>
 
       <!-- Social Media Grid -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div 
-          *ngFor="let social of socialMediaLinks; trackBy: trackBySocialLink"
-          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full"
-          [class]="getPlatformStyling(social.platform)"
-          (click)="openExternalLink(social.url, $event)"
-          (keydown)="handleKeyboardNavigation(social.url, $event)"
-          [attr.tabindex]="0"
-          [attr.role]="'button'"
-          [attr.aria-label]="'Social Media öffnen: ' + social.name + ' auf ' + social.platform">
-          
+        <!-- X (Twitter) -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-blue-400/50 hover:bg-blue-400/10"
+          (click)="openExternalLink(externalLinks.x, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.x, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: X (Twitter) auf x">
+
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
-              <i [class]="social.icon + ' text-xl ' + social.color"></i>
+              <i class="pi pi-twitter text-xl text-blue-400"></i>
             </div>
           </div>
-          
+
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
-              {{ social.name }}
+              X (Twitter)
             </h3>
-            <p class="text-tttGray-400 text-xs break-words leading-tight">{{ social.username }}</p>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">@TTT_ArmA</p>
+          </div>
+        </div>
+
+        <!-- Mastodon -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-purple-400/50 hover:bg-purple-400/10"
+          (click)="openExternalLink(externalLinks.mastodon, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.mastodon, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: Mastodon auf mastodon">
+
+          <!-- Social Icon -->
+          <div class="flex justify-center mb-3">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
+              <i class="pi pi-hashtag text-xl text-purple-400"></i>
+            </div>
+          </div>
+
+          <!-- Social Info -->
+          <div class="flex-grow flex flex-col justify-center">
+            <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
+              Mastodon
+            </h3>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticaltrainingteam</p>
+          </div>
+        </div>
+
+        <!-- Bluesky -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-sky-400/50 hover:bg-sky-400/10"
+          (click)="openExternalLink(externalLinks.bluesky, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.bluesky, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: Bluesky auf bluesky">
+
+          <!-- Social Icon -->
+          <div class="flex justify-center mb-3">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
+              <i class="pi pi-cloud text-xl text-sky-400"></i>
+            </div>
+          </div>
+
+          <!-- Social Info -->
+          <div class="flex-grow flex flex-col justify-center">
+            <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
+              Bluesky
+            </h3>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticalteam.bsky.social</p>
+          </div>
+        </div>
+
+        <!-- Instagram -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-pink-500/50 hover:bg-pink-500/10"
+          (click)="openExternalLink(externalLinks.instagram, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.instagram, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: Instagram auf instagram">
+
+          <!-- Social Icon -->
+          <div class="flex justify-center mb-3">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
+              <i class="pi pi-instagram text-xl text-pink-500"></i>
+            </div>
+          </div>
+
+          <!-- Social Info -->
+          <div class="flex-grow flex flex-col justify-center">
+            <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
+              Instagram
+            </h3>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticaltrainingteam</p>
+          </div>
+        </div>
+
+        <!-- TikTok -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-red-400/50 hover:bg-red-400/10"
+          (click)="openExternalLink(externalLinks.tiktok, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.tiktok, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: TikTok auf tiktok">
+
+          <!-- Social Icon -->
+          <div class="flex justify-center mb-3">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
+              <i class="pi pi-video text-xl text-red-400"></i>
+            </div>
+          </div>
+
+          <!-- Social Info -->
+          <div class="flex-grow flex flex-col justify-center">
+            <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
+              TikTok
+            </h3>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticaltrainingteam</p>
+          </div>
+        </div>
+
+        <!-- Steam -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-blue-300/50 hover:bg-blue-300/10"
+          (click)="openExternalLink(externalLinks.steam, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.steam, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: Steam Gruppe auf steam">
+
+          <!-- Social Icon -->
+          <div class="flex justify-center mb-3">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
+              <i class="pi pi-desktop text-xl text-blue-300"></i>
+            </div>
+          </div>
+
+          <!-- Social Info -->
+          <div class="flex-grow flex flex-col justify-center">
+            <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
+              Steam Gruppe
+            </h3>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">Tactical Training Team</p>
+          </div>
+        </div>
+
+        <!-- Reddit -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-red-400/50 hover:bg-red-400/10"
+          (click)="openExternalLink(externalLinks.reddit, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.reddit, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: Reddit auf reddit">
+
+          <!-- Social Icon -->
+          <div class="flex justify-center mb-3">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
+              <i class="pi pi-reddit text-xl text-red-400"></i>
+            </div>
+          </div>
+
+          <!-- Social Info -->
+          <div class="flex-grow flex flex-col justify-center">
+            <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
+              Reddit
+            </h3>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">tacticaltrainingteam</p>
+          </div>
+        </div>
+
+        <!-- GitHub -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-gray-400/50 hover:bg-gray-400/10"
+          (click)="openExternalLink(externalLinks.github, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.github, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Social Media öffnen: GitHub auf github">
+
+          <!-- Social Icon -->
+          <div class="flex justify-center mb-3">
+            <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
+              <i class="pi pi-github text-xl text-gray-400"></i>
+            </div>
+          </div>
+
+          <!-- Social Info -->
+          <div class="flex-grow flex flex-col justify-center">
+            <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
+              GitHub
+            </h3>
+            <p class="text-tttGray-400 text-xs break-words leading-tight">TacticalTrainingTeam</p>
           </div>
         </div>
       </div>
@@ -165,54 +404,93 @@
       <div class="mb-6 ttt-text-center">
         <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
           <i class="pi pi-palette text-tttRed"></i>
-          {{ sections.corporate.title }}
+          Corporate Design
         </h2>
-        <p class="ttt-description-text">{{ sections.corporate.subtitle }}</p>
+        <p class="ttt-description-text">Logos, Richtlinien und offizielle Ressourcen</p>
       </div>
 
       <!-- Corporate Resources Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div 
-          *ngFor="let resource of corporateResources; trackBy: trackByCorporateResource"
+        <!-- Corporate Design Wiki -->
+        <div
           class="ttt-content-card group cursor-pointer transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 flex flex-col h-full"
-          (click)="openExternalLink(resource.url, $event)"
-          (keydown)="handleKeyboardNavigation(resource.url, $event)"
-          [attr.tabindex]="0"
-          [attr.role]="'button'"
-          [attr.aria-label]="'Ressource öffnen: ' + resource.title">
-          
+          (click)="openExternalLink(externalLinks.wiki, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.wiki, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Ressource öffnen: Corporate Design Wiki">
+
           <!-- Resource Header -->
           <div class="flex items-start mb-4 flex-grow">
             <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 flex-shrink-0 group-hover:scale-110 transition-transform">
-              <i [class]="resource.icon + ' text-xl text-tttRed'"></i>
+              <i class="pi pi-book text-xl text-tttRed"></i>
             </div>
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-1">
                 <h3 class="text-tttWhite font-semibold group-hover:text-tttRed transition-colors">
-                  {{ resource.title }}
+                  Corporate Design Wiki
                 </h3>
-                <span 
-                  *ngIf="resource.fileType" 
-                  class="px-2 py-1 bg-tttGray-700 text-tttGray-300 text-xs rounded font-mono">
-                  {{ resource.fileType }}
-                </span>
               </div>
-              <p class="text-tttGray-300 text-sm">{{ resource.description }}</p>
+              <p class="text-tttGray-300 text-sm">Umfassende Richtlinien für Logo-Verwendung, Farben und Design-Standards</p>
             </div>
           </div>
-          
+
           <!-- Action Link -->
           <div class="flex items-center justify-between mt-auto">
-            <span [class]="getSecondaryButtonClasses()">
-              <span>{{ resource.type === 'wiki' ? 'Im Wiki öffnen' : 'In der Cloud ansehen' }}</span>
-              <i [class]="'pi ' + (resource.type === 'wiki' ? 'pi-external-link' : 'pi-cloud')"></i>
+            <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
+              <span>Im Wiki öffnen</span>
+              <i class="pi pi-external-link"></i>
             </span>
-            
+
             <!-- Preview Image -->
             <div class="w-16 h-16 bg-tttGray-700/30 rounded-lg overflow-hidden">
-              <img 
-                src="/img/medien/placeholder.webp" 
-                [alt]="resource.title"
+              <img
+                src="/img/medien/placeholder.webp"
+                alt="Corporate Design Wiki"
+                class="w-full h-full object-cover opacity-50 group-hover:opacity-75 transition-opacity">
+            </div>
+          </div>
+        </div>
+
+        <!-- Logos und Designs -->
+        <div
+          class="ttt-content-card group cursor-pointer transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 flex flex-col h-full"
+          (click)="openExternalLink(externalLinks.files, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.files, $event)"
+          tabindex="0"
+          role="button"
+          aria-label="Ressource öffnen: Logos und Designs">
+
+          <!-- Resource Header -->
+          <div class="flex items-start mb-4 flex-grow">
+            <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 flex-shrink-0 group-hover:scale-110 transition-transform">
+              <i class="pi pi-images text-xl text-tttRed"></i>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <h3 class="text-tttWhite font-semibold group-hover:text-tttRed transition-colors">
+                  Logos und Designs
+                </h3>
+                <span class="px-2 py-1 bg-tttGray-700 text-tttGray-300 text-xs rounded font-mono">
+                  ZIP
+                </span>
+              </div>
+              <p class="text-tttGray-300 text-sm">Hochauflösende Logos und Design-Ressourcen in verschiedenen Formaten</p>
+            </div>
+          </div>
+
+          <!-- Action Link -->
+          <div class="flex items-center justify-between mt-auto">
+            <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
+              <span>In der Cloud ansehen</span>
+              <i class="pi pi-cloud"></i>
+            </span>
+
+            <!-- Preview Image -->
+            <div class="w-16 h-16 bg-tttGray-700/30 rounded-lg overflow-hidden">
+              <img
+                src="/img/medien/placeholder.webp"
+                alt="Logos und Designs"
                 class="w-full h-full object-cover opacity-50 group-hover:opacity-75 transition-opacity">
             </div>
           </div>
@@ -228,12 +506,12 @@
           Teil der Community werden
         </h3>
         <p class="text-tttGray-300 mb-6">
-          Folge uns auf deinen bevorzugten Plattformen und bleibe über unsere Aktivitäten, 
-          Events und neue Inhalte auf dem Laufenden. Jede Interaktion hilft uns dabei, 
+          Folge uns auf deinen bevorzugten Plattformen und bleibe über unsere Aktivitäten,
+          Events und neue Inhalte auf dem Laufenden. Jede Interaktion hilft uns dabei,
           die TTT-Community zu vergrößern!
         </p>
-        <a 
-          routerLink="/mitmachen" 
+        <a
+          routerLink="/mitmachen"
           [class]="getPrimaryButtonClasses() + ' px-6 py-3 text-lg'">
           <i class="pi pi-arrow-right"></i>
           Jetzt mitmachen

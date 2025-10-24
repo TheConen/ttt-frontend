@@ -4,33 +4,33 @@
   <section class="relative py-20 overflow-hidden">
     <!-- Background Image -->
     <div class="absolute inset-0">
-      <img src="/img/home-banner/home-banner1.webp" 
-           alt="TTT Mitmachen Background" 
+      <img src="/img/home-banner/home-banner1.webp"
+           alt="TTT Mitmachen Background"
            class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-r from-tttBlack/95 via-tttBlack/85 to-tttBlack/75"></div>
     </div>
-    
+
     <!-- Content -->
     <div class="relative z-10 flex h-full items-center">
       <div class="max-w-3xl mx-auto px-6 ttt-text-center">
         <div class="ttt-badge mb-6">
-          <i class="pi {{ heroData.badge.icon }}"></i>
-          <span>{{ heroData.badge.text }}</span>
+          <i class="pi pi-users"></i>
+          <span>Das TTT als offene Community</span>
         </div>
-        
+
         <h1 class="ttt-hero-title">
           MITMACHEN BEIM <span class="text-tttRed">TTT</span>
         </h1>
-        
+
         <p class="ttt-hero-text">
           {{ pageSubtitle }}
-          Unsere Treffen sind <strong class="text-tttRed">{{ eventSchedule }}</strong>. 
-          {{ heroData.additionalText }}
+          Unsere Treffen sind <strong class="text-tttRed">{{ eventSchedule }}</strong>.
+          Mitmachen kann jeder - egal ob Rekrut oder Gast.
         </p>
 
         <div class="flex justify-center mt-8">
-          <img src="/img/logo-hex-black.webp" 
-               [alt]="heroData.logoAlt" 
+          <img src="/img/logo-hex-black.webp"
+               alt="TTT Logo"
                class="h-20 w-auto">
         </div>
       </div>
@@ -41,106 +41,203 @@
   <section class="py-12">
     <div class="ttt-page-container">
       <div class="ttt-text-center mb-8">
-        <h2 class="ttt-section-title-large">{{ sections.joinPaths.title }}</h2>
-        <p class="ttt-description-text">{{ sections.joinPaths.description }}</p>
+        <h2 class="ttt-section-title-large">Deine Wege in das TTT</h2>
+        <p class="ttt-description-text">Zwei verschiedene Wege führen zu uns – wähle den passenden für dich</p>
       </div>
 
       <div class="grid gap-8 lg:grid-cols-2">
-        <div 
-          *ngFor="let path of joinPaths; trackBy: trackById"
-          class="ttt-content-card flex flex-col">
-          
+        <!-- Rekrut - Community Mitglied -->
+        <div class="ttt-content-card flex flex-col">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 {{ path.iconColor }} rounded-lg flex items-center justify-center">
-              <i class="pi {{ path.icon }} text-lg text-white"></i>
+            <div class="w-12 h-12 bg-tttRed rounded-lg flex items-center justify-center">
+              <i class="pi pi-user-plus text-lg text-white"></i>
             </div>
             <div>
-              <h3 class="ttt-feature-title">{{ path.title }}</h3>
-              <p class="text-sm text-tttGray-300">{{ path.subtitle }}</p>
-            </div>
-          </div>
-          
-          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
-            {{ path.description }}
-          </p>
-          
-          <div class="space-y-2 mb-4">
-            <div 
-              *ngFor="let feature of path.features; trackBy: trackByIndex"
-              class="flex items-start gap-2">
-              <i class="pi pi-check {{ path.textColor }} text-xs mt-1"></i>
-              <span class="text-sm text-tttGray-300">{{ feature }}</span>
+              <h3 class="ttt-feature-title">Rekrut - Community Mitglied</h3>
+              <p class="text-sm text-tttGray-300">Der Standard-Weg ins TTT</p>
             </div>
           </div>
 
-          <button 
-            pButton 
-            (click)="path.buttonAction()"
-            class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 mt-auto {{ path.id === 'recruit' ? getPrimaryButtonClasses() : getSecondaryButtonClasses() }}">
-            {{ path.buttonLabel }}
+          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            Als Rekrut wirst du fester Bestandteil unserer Community und kannst an allen Events teilnehmen. Du durchläufst eine kurze Einführungsphase und lernst unsere Spielweise kennen.
+          </p>
+
+          <div class="space-y-2 mb-4">
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Vollwertige Community-Mitgliedschaft</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Teilnahme an allen Events</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Zugang zu internen Bereichen</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Möglichkeit zur Weiterentwicklung</span>
+            </div>
+          </div>
+
+          <button
+            pButton
+            (click)="openDiscord()"
+            class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 mt-auto {{ getPrimaryButtonClasses() }}">
+            Discord beitreten
+          </button>
+        </div>
+
+        <!-- Gast -->
+        <div class="ttt-content-card flex flex-col">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 bg-tttGray-600 rounded-lg flex items-center justify-center">
+              <i class="pi pi-users text-lg text-white"></i>
+            </div>
+            <div>
+              <h3 class="ttt-feature-title">Gast</h3>
+              <p class="text-sm text-tttGray-300">Flexibel und unverbindlich</p>
+            </div>
+          </div>
+
+          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            Der Rang "Gast" eignet sich für Spieler, die gelegentlich bei uns teilnehmen möchten, ohne Verpflichtungen zu übernehmen. Dieser Rang ist auch für Spieler aus anderen Arma Communities gedacht.
+          </p>
+
+          <div class="space-y-2 mb-4">
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Keine Verpflichtungen oder Probezeit</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Ideal für andere Community-Mitglieder</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Gelegentliche Teilnahme möglich</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Schneller Einstieg</span>
+            </div>
+          </div>
+
+          <button
+            pButton
+            (click)="openDiscord()"
+            class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 mt-auto {{ getSecondaryButtonClasses() }}">
+            Discord beitreten
           </button>
         </div>
       </div>
     </div>
   </section>
 
-    <!-- Die Voraussetzungen -->
-    <section class="py-12">
-      <div class="ttt-page-container">
-        <div class="ttt-text-center mb-8">
-          <h2 class="ttt-section-title-large">{{ sections.requirements.title }}</h2>
-          <p class="ttt-description-text">{{ sections.requirements.description }}</p>
-        </div>
+  <!-- Die Voraussetzungen -->
+  <section class="py-12">
+    <div class="ttt-page-container">
+      <div class="ttt-text-center mb-8">
+        <h2 class="ttt-section-title-large">Die Voraussetzungen</h2>
+        <p class="ttt-description-text">Was du für die Teilnahme an unseren Events brauchst</p>
+      </div>
 
-        <div class="ttt-content-card">
-          <!-- Spiel-Anforderungen -->
-          <div class="mb-6 p-4 bg-tttGray-800 rounded-lg">
-            <h3 class="text-lg font-semibold text-tttWhite mb-4 flex items-center gap-2">
-              <i class="pi pi-desktop text-tttRed"></i>
-              {{ sections.requirements.gameRequirementsTitle }}
-            </h3>
-            <div class="grid gap-4 sm:grid-cols-2">
-              <div 
-                *ngFor="let gameReq of gameRequirements; trackBy: trackByGameReq"
-                class="flex items-center gap-3 p-3 bg-tttBlack/30 rounded-lg">
-                <i class="pi {{ gameReq.icon }} {{ gameReq.iconColor }} text-lg"></i>
-                <div>
-                  <p class="text-sm font-medium text-tttWhite">{{ gameReq.game }}</p>
-                  <p class="text-xs text-tttGray-300">{{ gameReq.requirements }}</p>
-                </div>
+      <div class="ttt-content-card">
+        <!-- Spiel-Anforderungen -->
+        <div class="mb-6 p-4 bg-tttGray-800 rounded-lg">
+          <h3 class="text-lg font-semibold text-tttWhite mb-4 flex items-center gap-2">
+            <i class="pi pi-desktop text-tttRed"></i>
+            Spiel-Anforderungen
+          </h3>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <!-- Arma 3 -->
+            <div class="flex items-center gap-3 p-3 bg-tttBlack/30 rounded-lg">
+              <i class="pi pi-desktop text-tttRed text-lg"></i>
+              <div>
+                <p class="text-sm font-medium text-tttWhite">Arma 3</p>
+                <p class="text-xs text-tttGray-300">Apex & Contact DLCs erforderlich</p>
+              </div>
+            </div>
+            <!-- Arma Reforger -->
+            <div class="flex items-center gap-3 p-3 bg-tttBlack/30 rounded-lg">
+              <i class="pi pi-play text-tttGreen text-lg"></i>
+              <div>
+                <p class="text-sm font-medium text-tttWhite">Arma Reforger</p>
+                <p class="text-xs text-tttGray-300">Nur Base Game erforderlich</p>
               </div>
             </div>
           </div>
+        </div>
 
-          <!-- Weitere Voraussetzungen -->
-          <div>
-            <h3 class="text-lg font-semibold text-tttWhite mb-4 flex items-center gap-2">
-              <i class="pi pi-check-circle text-tttGreen"></i>
-              {{ sections.requirements.additionalRequirementsTitle }}
-            </h3>
-            <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <div 
-                *ngFor="let requirement of requirements; trackBy: trackById"
-                class="p-4 bg-tttGray-800 rounded-lg text-center">
-                <div class="w-10 h-10 {{ requirement.iconColor }} rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <i class="pi {{ requirement.icon }} text-sm text-white"></i>
-                </div>
-                <h4 class="text-sm font-semibold text-tttWhite mb-2">{{ requirement.title }}</h4>
-                <p class="text-xs text-tttGray-300 leading-relaxed">{{ requirement.description }}</p>
+        <!-- Weitere Voraussetzungen -->
+        <div>
+          <h3 class="text-lg font-semibold text-tttWhite mb-4 flex items-center gap-2">
+            <i class="pi pi-check-circle text-tttGreen"></i>
+            Weitere Voraussetzungen
+          </h3>
+          <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <!-- Ab 18 Jahre -->
+            <div class="p-4 bg-tttGray-800 rounded-lg text-center">
+              <div class="w-10 h-10 bg-tttRed rounded-lg flex items-center justify-center mx-auto mb-3">
+                <i class="pi pi-id-card text-sm text-white"></i>
               </div>
+              <h4 class="text-sm font-semibold text-tttWhite mb-2">Ab 18 Jahre</h4>
+              <p class="text-xs text-tttGray-300 leading-relaxed">Wir sind der Meinung, dass Arma 3 und Reforger reife Persönlichkeiten brauchen, die die Geduld aufbringen, taktisch zu spielen.</p>
+            </div>
+            <!-- Headset für TS3 & Discord -->
+            <div class="p-4 bg-tttGray-800 rounded-lg text-center">
+              <div class="w-10 h-10 bg-[#5865F2] rounded-lg flex items-center justify-center mx-auto mb-3">
+                <i class="pi pi-microphone text-sm text-white"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-tttWhite mb-2">Headset für TS3 & Discord</h4>
+              <p class="text-xs text-tttGray-300 leading-relaxed">Für den Spielbetrieb und zur Kommunikation innerhalb der Community zwingend notwendig.</p>
+            </div>
+            <!-- Disziplin während Events -->
+            <div class="p-4 bg-tttGray-800 rounded-lg text-center">
+              <div class="w-10 h-10 bg-tttGreen rounded-lg flex items-center justify-center mx-auto mb-3">
+                <i class="pi pi-shield text-sm text-white"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-tttWhite mb-2">Disziplin während Events</h4>
+              <p class="text-xs text-tttGray-300 leading-relaxed">Motivation die das taktische Spielen erfordert und die Geduld, den Feind auch mal nur zu beobachten.</p>
+            </div>
+            <!-- Geeigneter Computer -->
+            <div class="p-4 bg-tttGray-800 rounded-lg text-center">
+              <div class="w-10 h-10 bg-tttGray-600 rounded-lg flex items-center justify-center mx-auto mb-3">
+                <i class="pi pi-cog text-sm text-white"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-tttWhite mb-2">Geeigneter Computer</h4>
+              <p class="text-xs text-tttGray-300 leading-relaxed">PC der auch bei anspruchsvollen Missionen mit bis zu 60+ Spielern in beiden Arma-Titeln flüssig läuft.</p>
+            </div>
+            <!-- Bereitschaft um Neues zu lernen -->
+            <div class="p-4 bg-tttGray-800 rounded-lg text-center">
+              <div class="w-10 h-10 bg-tttGreen rounded-lg flex items-center justify-center mx-auto mb-3">
+                <i class="pi pi-book text-sm text-white"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-tttWhite mb-2">Bereitschaft um Neues zu lernen</h4>
+              <p class="text-xs text-tttGray-300 leading-relaxed">Sich innerhalb des Spiels in ein Team einzugliedern und sich an die Spielgewohnheiten des TTT anzupassen.</p>
+            </div>
+            <!-- Zuverlässigkeit & Pünktlichkeit -->
+            <div class="p-4 bg-tttGray-800 rounded-lg text-center">
+              <div class="w-10 h-10 bg-tttRed rounded-lg flex items-center justify-center mx-auto mb-3">
+                <i class="pi pi-clock text-sm text-white"></i>
+              </div>
+              <h4 class="text-sm font-semibold text-tttWhite mb-2">Zuverlässigkeit & Pünktlichkeit</h4>
+              <p class="text-xs text-tttGray-300 leading-relaxed">Regelmäßige und pünktliche Teilnahme an Events. Bei Verhinderung rechtzeitige Abmeldung.</p>
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
   <!-- Arma3Sync und Tech-Check -->
   <section class="py-12">
     <div class="ttt-page-container">
       <div class="ttt-text-center mb-8">
-        <h2 class="ttt-section-title-large">{{ sections.arma3Sync.title }}</h2>
+        <h2 class="ttt-section-title-large">Arma3Sync und Tech-Check</h2>
         <p class="ttt-description-text">
-          {{ sections.arma3Sync.description }}
+          Für Arma 3 Events benötigst du Arma3Sync für Mods. Arma Reforger lädt Mods automatisch beim Server-Join.
         </p>
       </div>
 
@@ -149,12 +246,12 @@
         <div class="relative mb-8 rounded-xl overflow-hidden border-2 border-tttRed/30">
           <!-- Background Image -->
           <div class="absolute inset-0">
-            <img src="/img/mitmachen/mitmachen-arma3sync.webp" 
-                 alt="Arma3Sync Background" 
+            <img src="/img/mitmachen/mitmachen-arma3sync.webp"
+                 alt="Arma3Sync Background"
                  class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-r from-tttBlack/90 via-tttBlack/80 to-tttBlack/70"></div>
           </div>
-          
+
           <!-- Content -->
           <div class="relative z-10 p-6">
             <div class="flex items-start gap-4 mb-6">
@@ -164,30 +261,63 @@
               <div class="flex-1">
                 <!-- Header with better background -->
                 <div class="bg-tttBlack/80 backdrop-blur-sm rounded-lg p-4 mb-6 border border-tttRed/20">
-                  <h3 class="ttt-feature-title mb-2 text-tttWhite drop-shadow-lg">{{ sections.arma3Sync.cardTitle }}</h3>
+                  <h3 class="ttt-feature-title mb-2 text-tttWhite drop-shadow-lg">Arma3Sync - Nur für Arma 3</h3>
                   <p class="text-sm text-tttWhite mb-0 leading-relaxed drop-shadow-md">
-                    {{ sections.arma3Sync.cardDescription }}
+                    Für Arma 3 Events musst du Modifikationen über Arma3Sync herunterladen. Bei Arma Reforger werden Mods automatisch beim Server-Join geladen. Wähle deine bevorzugte Lernmethode für Arma3Sync.
                   </p>
                 </div>
-                
+
                 <!-- Tutorial Options -->
                 <div class="grid gap-4 md:grid-cols-3">
-                  <div 
-                    *ngFor="let tutorial of arma3SyncOptions; trackBy: trackById"
-                    class="flex flex-col gap-3 p-4 bg-tttBlack/60 backdrop-blur-sm rounded-lg border border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 transition-all duration-300">
+                  <!-- Schriftliche Anleitung -->
+                  <div class="flex flex-col gap-3 p-4 bg-tttBlack/60 backdrop-blur-sm rounded-lg border border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 transition-all duration-300">
                     <div class="flex items-center gap-3">
                       <div class="w-10 h-10 bg-tttRed/30 rounded-lg flex items-center justify-center flex-shrink-0">
-                        <i class="pi {{ tutorial.icon }} text-tttRed text-sm"></i>
+                        <i class="pi pi-file-text text-tttRed text-sm"></i>
                       </div>
                       <div>
-                        <h4 class="text-sm font-semibold text-tttWhite">{{ tutorial.title }}</h4>
-                        <p class="text-xs text-tttGray-300">{{ tutorial.description }}</p>
+                        <h4 class="text-sm font-semibold text-tttWhite">Schriftliche Anleitung</h4>
+                        <p class="text-xs text-tttGray-300">Detaillierte Wiki-Anleitung</p>
                       </div>
                     </div>
-                    <button pButton (click)="tutorial.action()" 
+                    <button pButton (click)="openArma3SyncGuide()"
                             class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30">
-                      <i class="pi {{ tutorial.icon }} text-xs"></i>
-                      {{ tutorial.buttonLabel }}
+                      <i class="pi pi-file-text text-xs"></i>
+                      Anleitung öffnen
+                    </button>
+                  </div>
+                  <!-- Video-Tutorial -->
+                  <div class="flex flex-col gap-3 p-4 bg-tttBlack/60 backdrop-blur-sm rounded-lg border border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 transition-all duration-300">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-tttRed/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="pi pi-play text-tttRed text-sm"></i>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-semibold text-tttWhite">Video-Tutorial</h4>
+                        <p class="text-xs text-tttGray-300">Schritt-für-Schritt Video</p>
+                      </div>
+                    </div>
+                    <button pButton (click)="openArma3SyncVideo()"
+                            class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30">
+                      <i class="pi pi-play text-xs"></i>
+                      Video ansehen
+                    </button>
+                  </div>
+                  <!-- Tipps & Tricks -->
+                  <div class="flex flex-col gap-3 p-4 bg-tttBlack/60 backdrop-blur-sm rounded-lg border border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 transition-all duration-300">
+                    <div class="flex items-center gap-3">
+                      <div class="w-10 h-10 bg-tttRed/30 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <i class="pi pi-lightbulb text-tttRed text-sm"></i>
+                      </div>
+                      <div>
+                        <h4 class="text-sm font-semibold text-tttWhite">Tipps & Tricks</h4>
+                        <p class="text-xs text-tttGray-300">Hilfreiche Video-Tipps</p>
+                      </div>
+                    </div>
+                    <button pButton (click)="openArma3SyncTips()"
+                            class="inline-flex items-center gap-2 rounded-lg bg-gradient-to-r from-tttRed to-tttRed-600 px-4 py-2 text-sm font-bold text-tttWhite shadow-lg transition-all duration-300 hover:shadow-xl hover:shadow-tttRed/30">
+                      <i class="pi pi-lightbulb text-xs"></i>
+                      Tipps ansehen
                     </button>
                   </div>
                 </div>
@@ -203,24 +333,30 @@
               <i class="pi pi-cog text-lg text-tttBlack"></i>
             </div>
             <div class="flex-1">
-              <h3 class="ttt-feature-title mb-2">{{ sections.techCheck.title }}</h3>
+              <h3 class="ttt-feature-title mb-2">Tech-Check</h3>
               <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
-                {{ sections.techCheck.description }}
+                Bevor du an Events teilnimmst, solltest du sicherstellen, dass alles korrekt funktioniert.
               </p>
             </div>
           </div>
-          
+
           <div class="bg-gradient-to-r from-tttGray-800 to-tttGray-700 p-4 rounded-lg">
             <h4 class="text-base font-semibold text-tttWhite mb-3">
               <i class="pi pi-info-circle text-tttGreen mr-2 text-sm"></i>
-              {{ sections.techCheck.hintsTitle }}
+              Wichtige Hinweise zum Tech-Check
             </h4>
             <ul class="space-y-2">
-              <li 
-                *ngFor="let hint of hints; trackBy: trackByIndex"
-                class="flex items-start gap-2">
-                <i class="pi {{ hint.icon }} {{ hint.iconColor }} text-xs mt-1"></i>
-                <span class="text-sm text-tttGray-300" [innerHTML]="securityUtils.sanitizeHtml(hint.text)"></span>
+              <li class="flex items-start gap-2">
+                <i class="pi pi-check text-tttGreen text-xs mt-1"></i>
+                <span class="text-sm text-tttGray-300">Solltest du Fragen oder Probleme haben, stehen dir unsere Technikchecker zur Verfügung</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="pi pi-check text-tttGreen text-xs mt-1"></i>
+                <span class="text-sm text-tttGray-300">Erkenne sie anhand des Hammer-Symbols im Discord oder TeamSpeak (ts3.tacticalteam.de)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <i class="pi pi-exclamation-triangle text-tttRed text-xs mt-1"></i>
+                <span class="text-sm text-tttGray-300"><strong>Überprüfe vor dem Event bitte, ob alles funktioniert - spätestens bis 18 Uhr am Event-Tag!</strong></span>
               </li>
             </ul>
           </div>
@@ -233,45 +369,100 @@
   <section class="py-12 bg-gradient-to-br from-tttGray-900 via-tttRed/10 to-tttGray-800">
     <div class="ttt-page-container">
       <div class="ttt-text-center mb-8">
-        <h2 class="ttt-section-title-large">{{ sections.eventPaths.title }}</h2>
+        <h2 class="ttt-section-title-large">Dein Event in das TTT</h2>
         <p class="ttt-description-text">
-          {{ sections.eventPaths.description }}
+          Zwei verschiedene Wege stehen zur Auswahl – je nach deiner Erfahrung
         </p>
       </div>
 
       <div class="grid gap-8 lg:grid-cols-2">
-        <div 
-          *ngFor="let path of eventPaths; trackBy: trackByTitle"
-          class="ttt-content-card flex flex-col">
-          
+        <!-- Einsteiger Event - Für Jeden -->
+        <div class="ttt-content-card flex flex-col">
           <div class="flex items-center gap-3 mb-4">
-            <div class="w-12 h-12 {{ path.iconColor }} rounded-lg flex items-center justify-center">
-              <i class="pi {{ path.icon }} text-lg text-white"></i>
+            <div class="w-12 h-12 bg-tttGray-600 rounded-lg flex items-center justify-center">
+              <i class="pi pi-graduation-cap text-lg text-white"></i>
             </div>
             <div>
-              <h3 class="ttt-feature-title">{{ path.title }}</h3>
-              <p class="text-sm text-tttGray-300">{{ path.subtitle }}</p>
+              <h3 class="ttt-feature-title">Einsteiger Event - Für Jeden</h3>
+              <p class="text-sm text-tttGray-300">Der Standard-Weg ins TTT</p>
             </div>
           </div>
-          
-          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed" [innerHTML]="securityUtils.sanitizeHtml(path.description)"></p>
-          
-          <div *ngIf="path.highlight" class="text-sm text-tttGray-300 mb-4 leading-relaxed">
-            {{ path.highlight }}
+
+          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            Um erfolgreich an unseren TTT-Events teilzunehmen, musst du eine Einführung in das taktische Spiel erhalten, indem du an einem unserer "Einsteiger-Events" teilnimmst.
+          </p>
+
+          <div class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            Ohne Teilnahme an einem Einsteiger-Event kannst du nicht an den normalen TTT-Events teilnehmen.
           </div>
 
           <div class="space-y-2 mb-6 flex-grow">
-            <div 
-              *ngFor="let feature of path.features; trackBy: trackByIndex"
-              class="flex items-start gap-2">
-              <i class="pi pi-check {{ path.iconColor === 'bg-tttGray-600' ? 'text-tttWhite' : 'text-tttRed' }} text-xs mt-1"></i>
-              <span class="text-sm text-tttGray-300">{{ feature }}</span>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Für alle Erfahrungsstufen geeignet</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Solides Fundament für taktisches Spiel</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Voraussetzung für normale Events</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttWhite text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Regelmäßige Termine verfügbar</span>
             </div>
           </div>
 
-          <button pButton (click)="path.action()" 
-                  class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 mt-auto {{ path.title.includes('Einsteiger') ? getSecondaryButtonClasses() : getPrimaryButtonClasses() }}">
-            {{ path.buttonLabel }}
+          <button pButton (click)="openEvents()"
+                  class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 mt-auto {{ getSecondaryButtonClasses() }}">
+            Nächstes Einsteiger-Event finden
+          </button>
+        </div>
+
+        <!-- Fast Path - Für Veteranen -->
+        <div class="ttt-content-card flex flex-col">
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-12 h-12 bg-tttRed rounded-lg flex items-center justify-center">
+              <i class="pi pi-star text-lg text-white"></i>
+            </div>
+            <div>
+              <h3 class="ttt-feature-title">Fast Path - Für Veteranen</h3>
+              <p class="text-sm text-tttGray-300">Der schnelle Weg für Erfahrene</p>
+            </div>
+          </div>
+
+          <p class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            Du hast bereits Erfahrung im taktischen Spielen von Arma und verstehst den Begriff MilSim. Du beherrschst ACE & ACRE2 und kennst dich mit taktischen Bewegungen und Angriffsmanövern aus?
+          </p>
+
+          <div class="text-sm text-tttGray-300 mb-4 leading-relaxed">
+            Dann vereinbare einen Termin für einen Fast-Path mit unserer Personal-Abteilung (@Personal) im Discord.
+          </div>
+
+          <div class="space-y-2 mb-6 flex-grow">
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Erfahrung mit ACE & ACRE2 erforderlich</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Kenntnisse in taktischen Bewegungen</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">MilSim-Erfahrung vorhanden</span>
+            </div>
+            <div class="flex items-start gap-2">
+              <i class="pi pi-check text-tttRed text-xs mt-1"></i>
+              <span class="text-sm text-tttGray-300">Termin mit Personal-Abteilung</span>
+            </div>
+          </div>
+
+          <button pButton (click)="openDiscord()"
+                  class="w-full px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300 mt-auto {{ getPrimaryButtonClasses() }}">
+            Personal-Abteilung kontaktieren
           </button>
         </div>
       </div>
@@ -282,37 +473,42 @@
   <section class="py-16 bg-gradient-to-r from-tttRed via-tttRed-600 to-tttRed-700">
     <div class="ttt-hero-container ttt-text-center">
       <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
-        {{ sections.finalCta.title }}
+        Das nächste Einsteiger Event finden
       </h2>
       <p class="text-lg text-tttRed-100 mb-6 ttt-constrained-text">
-        <strong>{{ sections.finalCta.description }}</strong>
+        <strong>Anmeldung TTT-Discord → Setup (Arma3Sync für Arma 3) → Einsteiger-Event → Los geht's!</strong>
       </p>
-      
+
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-        <button pButton (click)="openEvents()" 
+        <button pButton (click)="openEvents()"
                 class="inline-flex items-center gap-2 bg-white text-tttRed hover:bg-tttGray-100 px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
           <i class="pi pi-calendar"></i>
-          {{ sections.finalCta.buttons.events }}
+          Jetzt nachschauen
         </button>
-        
-        <button pButton (click)="openDiscord()" 
+
+        <button pButton (click)="openDiscord()"
                 class="inline-flex items-center gap-2 bg-transparent border-2 border-white text-white hover:bg-white hover:text-tttRed px-8 py-4 text-lg font-bold rounded-xl transition-all duration-300">
           <i class="pi pi-discord"></i>
-          {{ sections.finalCta.buttons.discord }}
+          Discord beitreten
         </button>
       </div>
 
       <div class="flex flex-wrap justify-center items-center gap-6 text-white mb-8">
-        <ng-container *ngFor="let stat of sections.finalCta.stats; trackBy: trackByIndex; let last = last">
-          <div class="ttt-text-center">
-            <div class="text-2xl font-bold">{{ stat.value }}</div>
-            <div class="text-tttRed-200 text-sm">{{ stat.label }}</div>
-          </div>
-          <div *ngIf="!last" class="w-px h-8 bg-tttRed-400 hidden sm:block"></div>
-        </ng-container>
+        <div class="ttt-text-center">
+          <div class="text-2xl font-bold">80+</div>
+          <div class="text-tttRed-200 text-sm">Aktive Mitglieder</div>
+        </div>
+        <div class="w-px h-8 bg-tttRed-400 hidden sm:block"></div>
+        <div class="ttt-text-center">
+          <div class="text-2xl font-bold">2x</div>
+          <div class="text-tttRed-200 text-sm">Events pro Woche</div>
+        </div>
+        <div class="w-px h-8 bg-tttRed-400 hidden sm:block"></div>
+        <div class="ttt-text-center">
+          <div class="text-2xl font-bold">2013</div>
+          <div class="text-tttRed-200 text-sm">Gegründet</div>
+        </div>
       </div>
-
-
     </div>
   </section>
 

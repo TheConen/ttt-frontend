@@ -32,7 +32,7 @@ describe('MedienComponent', () => {
     component = fixture.componentInstance;
     mockPageTitleService = TestBed.inject(PageTitleService) as jasmine.SpyObj<PageTitleService>;
     mockSanitizationService = TestBed.inject(SanitizationService) as jasmine.SpyObj<SanitizationService>;
-    
+
     fixture.detectChanges();
   });
 
@@ -44,46 +44,25 @@ describe('MedienComponent', () => {
     expect(mockPageTitleService.setTitle).toHaveBeenCalledWith('Medien');
   });
 
-  it('should have correct page configuration', () => {
+  it('should have correct page title', () => {
     expect(component.pageTitle).toBe('Medien');
-    expect(component.pageSubtitle).toBe('Streams, Videos und Community-Kanäle des Tactical Training Teams');
   });
 
-  it('should have media links configured', () => {
-    expect(component.mediaLinks.length).toBeGreaterThan(0);
-    expect(component.mediaLinks).toEqual(
-      jasmine.arrayContaining([
-        jasmine.objectContaining({ platform: 'youtube' }),
-        jasmine.objectContaining({ platform: 'twitch' }),
-        jasmine.objectContaining({ platform: 'trovo' })
-      ])
-    );
-  });
-
-  it('should have social media links configured', () => {
-    expect(component.socialMediaLinks.length).toBeGreaterThan(0);
-    expect(component.socialMediaLinks).toEqual(
-      jasmine.arrayContaining([
-        jasmine.objectContaining({ platform: 'x' }),
-        jasmine.objectContaining({ platform: 'mastodon' }),
-        jasmine.objectContaining({ platform: 'bluesky' }),
-        jasmine.objectContaining({ platform: 'instagram' }),
-        jasmine.objectContaining({ platform: 'tiktok' }),
-        jasmine.objectContaining({ platform: 'steam' }),
-        jasmine.objectContaining({ platform: 'reddit' }),
-        jasmine.objectContaining({ platform: 'github' })
-      ])
-    );
-  });
-
-  it('should have corporate resources configured', () => {
-    expect(component.corporateResources.length).toBeGreaterThan(0);
-    expect(component.corporateResources).toEqual(
-      jasmine.arrayContaining([
-        jasmine.objectContaining({ type: 'wiki' }),
-        jasmine.objectContaining({ type: 'download' })
-      ])
-    );
+  it('should have external links configured', () => {
+    expect(component.externalLinks).toBeDefined();
+    expect(component.externalLinks.youtube).toBe('https://www.youtube.com/@tacticalteamde');
+    expect(component.externalLinks.twitch).toBe('https://www.twitch.tv/tacticaltrainingteam');
+    expect(component.externalLinks.trovo).toBe('https://trovo.live/tacticalteam');
+    expect(component.externalLinks.x).toBe('https://x.com/TTT_ArmA');
+    expect(component.externalLinks.mastodon).toBe('https://mastodon.social/@tacticaltrainingteam');
+    expect(component.externalLinks.bluesky).toBe('https://bsky.app/profile/tacticalteam.bsky.social');
+    expect(component.externalLinks.instagram).toBe('https://www.instagram.com/tacticaltrainingteam/');
+    expect(component.externalLinks.tiktok).toBe('https://www.tiktok.com/@tacticaltrainingteam');
+    expect(component.externalLinks.steam).toBe('https://steamcommunity.com/groups/tacticaltrainingteam');
+    expect(component.externalLinks.reddit).toBe('https://www.reddit.com/user/tacticaltrainingteam/');
+    expect(component.externalLinks.github).toBe('https://github.com/orgs/TacticalTrainingTeam/');
+    expect(component.externalLinks.wiki).toBe('https://wiki.tacticalteam.de/de/TTT-PR/Corporate-Identity');
+    expect(component.externalLinks.files).toBe('https://files.tacticalteam.de/s/36FWSHsGNwaXLHg');
   });
 
   it('should open external links safely', () => {
@@ -132,8 +111,21 @@ describe('MedienComponent', () => {
   });
 
   it('should have trackBy functions', () => {
-    const testMediaLink = { id: 'test', platform: 'youtube' as const, name: 'Test', url: 'test', icon: 'test', description: 'test', color: 'test' };
-    const trackByResult = component.trackByMediaLink(0, testMediaLink);
-    expect(trackByResult).toBe('test');
+    const testLiveStream = { id: 'test', url: 'test', channelName: 'test', title: 'test', viewers: 0, thumbnail: 'test', isLive: true };
+    const trackByLiveStreamResult = component.trackByLiveStream(0, testLiveStream);
+    expect(trackByLiveStreamResult).toBe('test');
+
+    const trackByIndexResult = component.trackByIndex(5);
+    expect(trackByIndexResult).toBe(5);
+  });
+
+  it('should have button styling methods', () => {
+    const primaryClasses = component.getPrimaryButtonClasses();
+    const secondaryClasses = component.getSecondaryButtonClasses();
+
+    expect(primaryClasses).toContain('bg-gradient-to-r');
+    expect(primaryClasses).toContain('from-tttRed');
+    expect(secondaryClasses).toContain('border');
+    expect(secondaryClasses).toContain('bg-tttWhite/10');
   });
 });

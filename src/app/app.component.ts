@@ -23,7 +23,7 @@ interface DiscordConfig {
     styleUrl: './app.component.css',
 })
 export class AppComponent {
-  // Dummy-Events für die Eventliste
+  // Dummy-Events für die Eventliste (später aus Service laden)
   readonly events$: Observable<SlotbotEvent[]> = of([
     {
       id: '25350',
@@ -53,27 +53,6 @@ export class AppComponent {
       eventUrl: 'https://events.tacticalteam.de/events/25352'
     }
   ]);
-  // Sidebar content configuration
-  readonly sidebarContent = {
-    left: {
-      title: 'Nächste Events',
-      description: '',
-      intern: {
-        label: 'Interner Bereich',
-        ariaLabel: 'Interner Mitgliederbereich',
-        routerLink: '/intern'
-      }
-    },
-    right: {
-      title: 'Live Discord',
-      fallback: {
-        message: 'Widget lädt nicht?',
-        buttonText: 'Discord beitreten'
-      }
-    }
-  } as const;
-
-
   // Discord widget configuration - using trusted static URL
   readonly discordConfig: DiscordConfig = {
     serverId: '121399943393968128',
