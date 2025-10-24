@@ -4,59 +4,25 @@
     <div class="absolute inset-0">
         <!-- Image Container -->
         <div class="relative w-full h-full">
-            <div *ngFor="let slide of bannerSlides; let i = index" 
-                 class="absolute inset-0 transition-opacity duration-1000 ease-in-out"
-                 [class.opacity-100]="i === currentImageIndex"
-                 [class.opacity-0]="i !== currentImageIndex">
-                <img [src]="slide.image" 
-                     [alt]="slide.title + ' - ' + slide.subtitle" 
+            <div class="absolute inset-0">
+                <img src="/img/home-banner/home-banner1.webp"
+                     alt="Tactical Training Team"
                      class="w-full h-full object-cover" />
             </div>
             <!-- Dark overlay for better text readability -->
             <div class="absolute inset-0 ttt-gradient-overlay"></div>
         </div>
-
-        <!-- Navigation Arrows -->
-        <button 
-            (click)="previousImage()" 
-            aria-label="Vorheriges Banner-Bild"
-            class="absolute left-4 top-1/2 -translate-y-1/2 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-tttBlack/30 text-tttWhite backdrop-blur-sm transition-all duration-300 hover:bg-tttRed/80 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-tttRed">
-            <i class="pi pi-chevron-left text-lg" aria-hidden="true"></i>
-        </button>
-        <button 
-            (click)="nextImage()" 
-            aria-label="Nächstes Banner-Bild"
-            class="absolute right-4 top-1/2 -translate-y-1/2 z-20 flex h-12 w-12 items-center justify-center rounded-full bg-tttBlack/30 text-tttWhite backdrop-blur-sm transition-all duration-300 hover:bg-tttRed/80 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-tttRed">
-            <i class="pi pi-chevron-right text-lg" aria-hidden="true"></i>
-        </button>
-
-        <!-- Slide Indicators -->
-        <fieldset class="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 flex space-x-2 border-0 p-0 m-0">
-            <legend class="sr-only">Banner-Navigation</legend>
-            <button 
-                *ngFor="let slide of bannerSlides; let i = index"
-                (click)="goToImage(i)"
-                [attr.aria-label]="'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)"
-                [attr.aria-current]="i === currentImageIndex ? 'true' : 'false'"
-                class="h-3 w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-tttRed focus:ring-offset-2"
-                [class.bg-tttRed]="i === currentImageIndex"
-                [class.bg-tttWhite/40]="i !== currentImageIndex"
-                [class.scale-125]="i === currentImageIndex">
-            </button>
-        </fieldset>
     </div>
 
     <!-- Content Overlay -->
     <div class="relative z-10 flex h-full items-center">
         <div class="ttt-hero-container">
-            <h1 class="ttt-hero-title" 
-                [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title || 'Tactical Training Team')">
-                <span [innerHTML]="bannerSlides[currentImageIndex].title || 'Tactical Training Team'"></span>
-                <span class="sr-only" *ngIf="!bannerSlides[currentImageIndex].title">Tactical Training Team</span>
+            <h1 class="ttt-hero-title">
+                <span>TACTICAL TRAINING <span class="text-tttRed">TEAM</span></span>
             </h1>
-            
+
             <p class="ttt-hero-text">
-                {{ bannerSlides[currentImageIndex].subtitle }}
+                Als eine der größeren Arma-Gemeinschaften im deutschsprachigen Raum bieten wir dir das volle Paket: Von Ausbildung und Training bis hin zu Events und Kampagnen ist alles dabei.
             </p>
         </div>
     </div>
@@ -78,24 +44,61 @@
             </h2>
             <div class="mx-auto mb-4 h-1 w-20 bg-gradient-to-r from-tttRed to-tttRed-600 rounded-full"></div>
             <p class="ttt-description-text">
-                {{ content.features.subtitle }}
+                Von Waffenkunde über Funken bis zu Taktik, Missionsbau und TvT - wir bieten authentische MilSim-Missionen.
             </p>
         </div>
-        
+
         <div class="grid gap-6 md:grid-cols-2">
-            <div 
-                *ngFor="let feature of features" 
-                class="ttt-content-card group relative overflow-hidden transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
+            <div class="ttt-content-card group relative overflow-hidden transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
                 <!-- Background glow effect -->
                 <div class="absolute -inset-1 rounded-xl bg-gradient-to-r from-tttRed/20 to-tttRed-600/20 opacity-0 blur transition-opacity duration-300 group-hover:opacity-100"></div>
                 <div class="relative">
                     <div class="mb-4 flex items-center gap-3">
                         <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-tttRed to-tttRed-600 shadow-lg">
-                            <i [class]="getFeatureIconClasses(feature.icon)"></i>
+                            <i class="pi pi-calendar"></i>
                         </div>
-                        <h3 class="ttt-feature-title">{{ feature.title }}</h3>
+                        <h3 class="ttt-feature-title">Mindestens zwei Events pro Woche</h3>
                     </div>
-                    <p class="ttt-feature-description">{{ feature.description }}</p>
+                    <p class="ttt-feature-description">Ob Trainings, Coop-Missionen, Zeus-Missionen oder externe Events: bei uns gibt es jede Woche mindestens 2 Spieltage.</p>
+                </div>
+            </div>
+            <div class="ttt-content-card group relative overflow-hidden transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
+                <!-- Background glow effect -->
+                <div class="absolute -inset-1 rounded-xl bg-gradient-to-r from-tttRed/20 to-tttRed-600/20 opacity-0 blur transition-opacity duration-300 group-hover:opacity-100"></div>
+                <div class="relative">
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-tttRed to-tttRed-600 shadow-lg">
+                            <i class="pi pi-graduation-cap"></i>
+                        </div>
+                        <h3 class="ttt-feature-title">Ausbildung & Training</h3>
+                    </div>
+                    <p class="ttt-feature-description">Wir legen großen Wert auf unsere Ausbildungstätigkeit. Spannende, abwechslungsreiche und stetig weiterentwickelte Trainingskonzepte.</p>
+                </div>
+            </div>
+            <div class="ttt-content-card group relative overflow-hidden transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
+                <!-- Background glow effect -->
+                <div class="absolute -inset-1 rounded-xl bg-gradient-to-r from-tttRed/20 to-tttRed-600/20 opacity-0 blur transition-opacity duration-300 group-hover:opacity-100"></div>
+                <div class="relative">
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-tttRed to-tttRed-600 shadow-lg">
+                            <i class="pi pi-users"></i>
+                        </div>
+                        <h3 class="ttt-feature-title">Für Einsteiger & Profis</h3>
+                    </div>
+                    <p class="ttt-feature-description">Unabhängig von Wissensstand werden Einsteiger explizit durch Ausbildung aufgebaut! Keine Pflichttermine!</p>
+                </div>
+            </div>
+            <div class="ttt-content-card group relative overflow-hidden transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
+                <!-- Background glow effect -->
+                <div class="absolute -inset-1 rounded-xl bg-gradient-to-r from-tttRed/20 to-tttRed-600/20 opacity-0 blur transition-opacity duration-300 group-hover:opacity-100"></div>
+                <div class="relative">
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-tttRed to-tttRed-600 shadow-lg">
+                            <i class="pi pi-shield"></i>
+                        </div>
+                        <h3 class="ttt-feature-title">Abwechslungsreiche Herausforderungen</h3>
+                    </div>
+                    <p class="ttt-feature-description">Erlebe neue Blickwinkel als JTAC, Panzerkommandant, Gruppenführer oder einfacher Infanterist in unterschiedlichsten Einsätzen.</p>
                 </div>
             </div>
         </div>
@@ -110,28 +113,28 @@
         <div class="absolute bottom-10 right-10 h-64 w-64 rounded-full bg-gradient-to-l from-tttGreen/15 to-tttRed/10 blur-3xl animate-pulse" style="animation-delay: 2s;"></div>
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-gradient-to-r from-tttRed/5 to-transparent blur-3xl animate-spin" style="animation-duration: 30s;"></div>
     </div>
-    
+
     <!-- Grid Pattern Overlay -->
     <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.4) 1px, transparent 0); background-size: 50px 50px;"></div>
 
     <div class="relative ttt-page-container">
-        
+
         <!-- Modern Header -->
         <div class="mb-12 text-center">
             <!-- Simple Badge -->
             <div class="ttt-badge">
                 <i class="pi pi-users text-tttRed"></i>
-                <span>{{ content.join.badge }}</span>
+                <span>Werde Teil der Community</span>
             </div>
-            
+
             <!-- Main Title -->
             <h2 class="ttt-section-title-large">
                 Bereit für das<span class="text-tttRed">TTT</span>?
             </h2>
-            
+
             <!-- Simple Divider -->
             <div class="mx-auto mb-6 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-tttRed to-transparent"></div>
-            
+
             <!-- Subtitle -->
             <p class="ttt-description-text">
                 Von der Anmeldung bis zum ersten Event - dein Weg in die <span class="ttt-accent-text font-semibold">TTT-Familie</span>
@@ -140,52 +143,83 @@
 
                 <!-- Modern Grid Layout -->
         <div class="grid gap-12 lg:grid-cols-12">
-            
+
             <!-- Left Side: Join Process Timeline -->
             <div class="lg:col-span-7 space-y-6">
                 <div class="text-left">
                     <h3 class="mb-3 text-2xl font-bold text-tttWhite">
                         <i class="pi pi-map text-tttRed mr-2"></i>
-                        {{ content.join.processTitle }}
+                        Wie mitmachen?
                     </h3>
-                    <p class="text-base text-tttGray-400">{{ content.join.processSubtitle }}</p>
+                    <p class="text-base text-tttGray-400">4 einfache Schritte zur TTT-Mitgliedschaft</p>
                 </div>
 
                 <!-- Simple Timeline -->
                 <div class="relative space-y-6">
                     <!-- Timeline Line -->
                     <div class="absolute left-5 top-0 bottom-0 w-0.5 bg-gradient-to-b from-tttRed to-tttRed/30"></div>
-                    
+
                     <!-- Dynamic Steps -->
-                    <div *ngFor="let step of joinSteps; let i = index" class="group relative flex items-start gap-4">
-                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold shadow-lg transition-transform duration-300 group-hover:scale-110"
-                             [class]="step.number < 4 
-                                 ? 'bg-gradient-to-br from-tttRed to-tttRed-600 text-tttWhite' 
-                                 : 'bg-gradient-to-br from-tttGreen to-tttGreen text-tttBlack'">
-                            {{ step.number < 4 ? step.number : '✓' }}
+                    <div class="group relative flex items-start gap-4">
+                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold shadow-lg transition-transform duration-300 group-hover:scale-110 bg-gradient-to-br from-tttRed to-tttRed-600 text-tttWhite">
+                            1
                         </div>
-                        <div class="flex-1 rounded-lg p-4 backdrop-blur-sm transition-all duration-300"
-                             [class]="step.number < 4 
-                                 ? 'border border-tttGray-700/50 bg-tttGray-800/30 group-hover:border-tttRed/40 group-hover:bg-tttRed/5' 
-                                 : 'border border-tttGreen/30 bg-tttGreen/5 group-hover:border-tttGreen/40 group-hover:bg-tttGreen/10'">
-                            <h4 class="mb-1 text-lg font-bold transition-colors duration-300"
-                                [class]="step.number < 4 
-                                    ? 'text-tttWhite group-hover:text-tttRed ttt-card-title' 
-                                    : 'text-tttGreen'">
-                                <i [class]="step.icon + ' ' + step.iconColor + ' mr-2'"></i>
-                                {{ step.title }}
+                        <div class="flex-1 rounded-lg p-4 backdrop-blur-sm transition-all duration-300 border border-tttGray-700/50 bg-tttGray-800/30 group-hover:border-tttRed/40 group-hover:bg-tttRed/5">
+                            <h4 class="mb-1 text-lg font-bold transition-colors duration-300 text-tttWhite group-hover:text-tttRed ttt-card-title">
+                                <i class="pi pi-discord text-tttRed mr-2"></i>
+                                Discord beitreten
                             </h4>
-                            <p class="text-sm text-tttGray-400 leading-relaxed"
-                               [class]="step.number < 4 ? 'mb-2' : ''">
-                                {{ step.description }}
+                            <p class="text-sm text-tttGray-400 leading-relaxed mb-2">
+                                Tritt unserem Discord-Server bei und stelle dich der Community vor
                             </p>
-                            <a *ngIf="step.link" 
-                               [href]="step.link.url" 
+                            <a href="https://discord.tacticalteam.de"
                                target="_blank"
                                class="ttt-step-link">
                                 <i class="pi pi-external-link"></i>
-                                {{ step.link.label }}
+                                discord.tacticalteam.de
                             </a>
+                        </div>
+                    </div>
+                    <div class="group relative flex items-start gap-4">
+                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold shadow-lg transition-transform duration-300 group-hover:scale-110 bg-gradient-to-br from-tttRed to-tttRed-600 text-tttWhite">
+                            2
+                        </div>
+                        <div class="flex-1 rounded-lg p-4 backdrop-blur-sm transition-all duration-300 border border-tttGray-700/50 bg-tttGray-800/30 group-hover:border-tttRed/40 group-hover:bg-tttRed/5">
+                            <h4 class="mb-1 text-lg font-bold transition-colors duration-300 text-tttWhite group-hover:text-tttRed ttt-card-title">
+                                <i class="pi pi-download text-tttGreen mr-2"></i>
+                                Arma3Sync Setup
+                            </h4>
+                            <p class="text-sm text-tttGray-400 leading-relaxed mb-2">
+                                Richte Arma3Sync für Arma 3 ein und lade die erforderlichen Mods herunter
+                            </p>
+                        </div>
+                    </div>
+                    <div class="group relative flex items-start gap-4">
+                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold shadow-lg transition-transform duration-300 group-hover:scale-110 bg-gradient-to-br from-tttRed to-tttRed-600 text-tttWhite">
+                            3
+                        </div>
+                        <div class="flex-1 rounded-lg p-4 backdrop-blur-sm transition-all duration-300 border border-tttGray-700/50 bg-tttGray-800/30 group-hover:border-tttRed/40 group-hover:bg-tttRed/5">
+                            <h4 class="mb-1 text-lg font-bold transition-colors duration-300 text-tttWhite group-hover:text-tttRed ttt-card-title">
+                                <i class="pi pi-calendar text-tttRed mr-2"></i>
+                                Einsteiger-Event oder Fast-Path
+                            </h4>
+                            <p class="text-sm text-tttGray-400 leading-relaxed mb-2">
+                                Nimm an deinem ersten Event teil und lerne die Community kennen
+                            </p>
+                        </div>
+                    </div>
+                    <div class="group relative flex items-start gap-4">
+                        <div class="relative z-10 flex h-10 w-10 items-center justify-center rounded-xl text-lg font-bold shadow-lg transition-transform duration-300 group-hover:scale-110 bg-gradient-to-br from-tttGreen to-tttGreen text-tttBlack">
+                            ✓
+                        </div>
+                        <div class="flex-1 rounded-lg p-4 backdrop-blur-sm transition-all duration-300 border border-tttGreen/30 bg-tttGreen/5 group-hover:border-tttGreen/40 group-hover:bg-tttGreen/10">
+                            <h4 class="mb-1 text-lg font-bold transition-colors duration-300 text-tttGreen">
+                                <i class="pi pi-star-fill text-tttGreen mr-2"></i>
+                                Willkommen beim TTT!
+                            </h4>
+                            <p class="text-sm text-tttGray-400 leading-relaxed">
+                                Du bist jetzt Teil der TTT-Familie und kannst an allen Events teilnehmen
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -198,19 +232,62 @@
                     <div class="mb-6">
                         <h3 class="ttt-step-title">
                             <i class="pi pi-check-circle text-tttGreen mr-2"></i>
-                            {{ content.join.requirements.title }}
+                            Voraussetzungen
                         </h3>
-                        <p class="text-base text-tttGray-400">{{ content.join.requirements.subtitle }}</p>
+                        <p class="text-base text-tttGray-400">Was du brauchst</p>
                     </div>
 
                     <div class="space-y-3">
-                        <div *ngFor="let req of requirements" 
-                             class="group rounded-lg border border-tttGray-700/50 bg-tttGray-800/60 p-3 transition-all duration-300 hover:border-tttRed/40 hover:bg-tttRed/5">
+                        <div class="group rounded-lg border border-tttGray-700/50 bg-tttGray-800/60 p-3 transition-all duration-300 hover:border-tttRed/40 hover:bg-tttRed/5">
                             <div class="flex items-center gap-3">
                                 <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-tttRed/20 ring-1 ring-tttRed/20 transition-all duration-300 group-hover:bg-tttRed/30 group-hover:ring-tttRed/40">
-                                    <i [class]="getRequirementIconClasses(req.icon)"></i>
+                                    <i class="pi pi-id-card"></i>
                                 </div>
-                                <span class="ttt-req-text">{{ req.label }}</span>
+                                <span class="ttt-req-text">Ab 18 Jahre</span>
+                                <div class="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                    <i class="pi pi-check-circle text-sm text-tttGreen"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group rounded-lg border border-tttGray-700/50 bg-tttGray-800/60 p-3 transition-all duration-300 hover:border-tttRed/40 hover:bg-tttRed/5">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-tttRed/20 ring-1 ring-tttRed/20 transition-all duration-300 group-hover:bg-tttRed/30 group-hover:ring-tttRed/40">
+                                    <i class="pi pi-microphone"></i>
+                                </div>
+                                <span class="ttt-req-text">Headset für TeamSpeak 3 & Discord</span>
+                                <div class="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                    <i class="pi pi-check-circle text-sm text-tttGreen"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group rounded-lg border border-tttGray-700/50 bg-tttGray-800/60 p-3 transition-all duration-300 hover:border-tttRed/40 hover:bg-tttRed/5">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-tttRed/20 ring-1 ring-tttRed/20 transition-all duration-300 group-hover:bg-tttRed/30 group-hover:ring-tttRed/40">
+                                    <i class="pi pi-download"></i>
+                                </div>
+                                <span class="ttt-req-text">Apex & Contact Expansion (Arma 3)</span>
+                                <div class="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                    <i class="pi pi-check-circle text-sm text-tttGreen"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group rounded-lg border border-tttGray-700/50 bg-tttGray-800/60 p-3 transition-all duration-300 hover:border-tttRed/40 hover:bg-tttRed/5">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-tttRed/20 ring-1 ring-tttRed/20 transition-all duration-300 group-hover:bg-tttRed/30 group-hover:ring-tttRed/40">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ttt-req-text">Keine Erfahrung notwendig</span>
+                                <div class="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                                    <i class="pi pi-check-circle text-sm text-tttGreen"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="group rounded-lg border border-tttGray-700/50 bg-tttGray-800/60 p-3 transition-all duration-300 hover:border-tttRed/40 hover:bg-tttRed/5">
+                            <div class="flex items-center gap-3">
+                                <div class="flex h-10 w-10 items-center justify-center rounded-lg bg-tttRed/20 ring-1 ring-tttRed/20 transition-all duration-300 group-hover:bg-tttRed/30 group-hover:ring-tttRed/40">
+                                    <i class="pi pi-calendar"></i>
+                                </div>
+                                <span class="ttt-req-text">Spieltage: Dienstag & Freitag</span>
                                 <div class="opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                                     <i class="pi pi-check-circle text-sm text-tttGreen"></i>
                                 </div>
@@ -221,47 +298,39 @@
 
             </div>
         </div>
-        
+
         <!-- Full Width CTA Section -->
         <div class="mt-12 rounded-xl border border-tttRed/20 bg-gradient-to-br from-tttRed/10 to-tttRed/5 p-8 backdrop-blur-sm">
             <!-- Community Stats -->
             <div class="mb-8 grid grid-cols-3 gap-6 md:grid-cols-6">
                 <div *ngFor="let stat of communityStats"
                      class="rounded-lg border border-tttWhite/10 bg-tttWhite/5 p-4 text-center backdrop-blur-sm">
-                    <div class="ttt-stat-value" [class]="stat.color">{{ stat.value }}</div>
+                    <div class="ttt-stat-value text-tttGreen">{{ stat.value }}</div>
                     <div class="text-xs text-tttGray-400">{{ stat.label }}</div>
                 </div>
                 <div class="col-span-3 flex gap-4">
                     <!-- CTA Buttons -->
-                    <ng-container *ngFor="let button of ctaButtons">
-                        <!-- Internal Router Link -->
-                        <a *ngIf="button.routerLink && !button.href"
-                           [routerLink]="button.routerLink"
-                           pButton 
-                           size="large" 
-                           [class]="button.primary ? getPrimaryButtonClasses() : getSecondaryButtonClasses()"
-                           [severity]="button.primary ? 'primary' : 'secondary'">
-                            <span class="flex items-center justify-center gap-2 w-full">
-                                <i [class]="button.icon"></i>
-                                {{ button.label }}
-                            </span>
-                        </a>
-                        
-                        <!-- External Link -->
-                        <a *ngIf="button.href && !button.routerLink"
-                           [href]="button.href"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           pButton 
-                           size="large" 
-                           [class]="button.primary ? getPrimaryButtonClasses() : getSecondaryButtonClasses()"
-                           [severity]="button.primary ? 'primary' : 'secondary'">
-                            <span class="flex items-center justify-center gap-2 w-full">
-                                <i [class]="button.icon"></i>
-                                {{ button.label }}
-                            </span>
-                        </a>
-                    </ng-container>
+                    <a routerLink="/mitmachen"
+                       pButton
+                       size="large"
+                       class="bg-tttRed border-tttRed text-tttWhite hover:bg-tttRed-600 hover:border-tttRed-600">
+                        <span class="flex items-center justify-center gap-2 w-full">
+                            <i class="pi pi-rocket"></i>
+                            JETZT DURCHSTARTEN
+                        </span>
+                    </a>
+
+                    <a href="https://wiki.tacticalteam.de"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       pButton
+                       size="large"
+                       class="bg-transparent border-tttGray-600 text-tttGray-300 hover:bg-tttGray-700 hover:border-tttGray-500">
+                        <span class="flex items-center justify-center gap-2 w-full">
+                            <i class="pi pi-book"></i>
+                            WIKI ENTDECKEN
+                        </span>
+                    </a>
                 </div>
             </div>
         </div>
@@ -277,10 +346,44 @@
             <div class="gallery-container overflow-hidden">
                 <div class="gallery-track flex gap-6">
                     <!-- Seamless loop gallery images -->
-                    <div *ngFor="let galleryItem of getGalleryImagesForLoop(); let i = index" 
-                         class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
-                        <img [src]="galleryItem" 
-                             [alt]="'TTT Community Moment ' + (i + 1)"
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img1.webp"
+                             alt="TTT Community Moment 1"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img2.webp"
+                             alt="TTT Community Moment 2"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img3.webp"
+                             alt="TTT Community Moment 3"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img4.webp"
+                             alt="TTT Community Moment 4"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img5.webp"
+                             alt="TTT Community Moment 5"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img6.webp"
+                             alt="TTT Community Moment 6"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img7.webp"
+                             alt="TTT Community Moment 7"
+                             class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    </div>
+                    <div class="flex-shrink-0 w-80 h-48 rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 group">
+                        <img src="/img/home-gallery/gallery-img8.webp"
+                             alt="TTT Community Moment 8"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     </div>
                 </div>
@@ -307,43 +410,97 @@
         <div class="absolute inset-0 bg-gradient-to-r from-tttBlack/20 to-transparent"></div>
         <div class="absolute inset-0" style="background-image: radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);"></div>
     </div>
-    
+
     <div class="relative ttt-page-container ttt-text-center">
         <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-tttWhite/20 bg-tttWhite/10 px-3 py-1.5 text-xs font-medium backdrop-blur-sm">
             <i class="pi pi-sitemap text-tttWhite"></i>
-            {{ content.orbat.badge }}
+            Chain of Command
         </div>
-        
-        <h2 class="ttt-section-title-large mb-3">{{ content.orbat.title }}</h2>
+
+        <h2 class="ttt-section-title-large mb-3">Unsere Struktur</h2>
         <p class="ttt-hero-text">
             Schau dir unsere <span class="font-bold">verschiedenen Aufgaben</span> an und finde heraus, wo du dich am wohlsten fühlst.
         </p>
-        
+
         <!-- ORBAT Grid -->
         <div class="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            <div *ngFor="let rank of orbatRanks" 
-                 class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
+            <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
-                        <i [class]="rank.icon + ' text-sm text-tttWhite'"></i>
+                        <i class="pi pi-star-fill text-sm text-tttWhite"></i>
                     </div>
                     <div class="text-left">
-                        <h3 class="text-base font-bold">{{ rank.title }}</h3>
-                        <p class="text-xs opacity-80">{{ rank.description }}</p>
+                        <h3 class="text-base font-bold">Offiziere</h3>
+                        <p class="text-xs opacity-80">Führen die TTT-Abteilungen</p>
+                    </div>
+                </div>
+            </div>
+            <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
+                <div class="mb-2 flex items-center gap-3">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
+                        <i class="pi pi-star text-sm text-tttWhite"></i>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-base font-bold">Unteroffiziere</h3>
+                        <p class="text-xs opacity-80">Direkte Unterstützer der Offiziere</p>
+                    </div>
+                </div>
+            </div>
+            <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
+                <div class="mb-2 flex items-center gap-3">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
+                        <i class="pi pi-shield text-sm text-tttWhite"></i>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-base font-bold">Veteranen</h3>
+                        <p class="text-xs opacity-80">Besonders engagierte Mitglieder</p>
+                    </div>
+                </div>
+            </div>
+            <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
+                <div class="mb-2 flex items-center gap-3">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
+                        <i class="pi pi-user text-sm text-tttWhite"></i>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-base font-bold">Soldaten</h3>
+                        <p class="text-xs opacity-80">Vollwertige TTT-Mitglieder</p>
+                    </div>
+                </div>
+            </div>
+            <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
+                <div class="mb-2 flex items-center gap-3">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
+                        <i class="pi pi-users text-sm text-tttWhite"></i>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-base font-bold">Rekruten</h3>
+                        <p class="text-xs opacity-80">Angehende TTT-Mitglieder</p>
+                    </div>
+                </div>
+            </div>
+            <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
+                <div class="mb-2 flex items-center gap-3">
+                    <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
+                        <i class="pi pi-eye text-sm text-tttWhite"></i>
+                    </div>
+                    <div class="text-left">
+                        <h3 class="text-base font-bold">Gäste</h3>
+                        <p class="text-xs opacity-80">Freie Mitspieler bei Events</p>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- CTA Button -->
         <div class="flex justify-center">
-            <a routerLink="/aufstellung" 
-               pButton 
-               size="large" 
+            <a routerLink="/aufstellung"
+               pButton
+               size="large"
                class="group relative overflow-hidden bg-tttWhite px-8 py-4 font-heading font-bold text-base text-tttRed shadow-xl transition-all duration-300 hover:bg-tttGray-100 hover:shadow-2xl hover:scale-105">
                 <span class="relative z-10 flex items-center gap-2">
                     <i class="pi pi-list transition-transform duration-300 group-hover:translate-x-1"></i>
-                    {{ content.orbat.ctaButton }}
+                    VOLLSTÄNDIGE AUFSTELLUNG
                 </span>
             </a>
         </div>

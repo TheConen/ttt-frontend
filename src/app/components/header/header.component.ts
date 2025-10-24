@@ -88,6 +88,12 @@ export class HeaderComponent implements OnInit {
                     },
                 ],
             },
+            {
+                label: '',
+                icon: 'pi pi-user',
+                styleClass: 'font-heading',
+                routerLink: ['/intern']
+            },
         ];
     }
 }

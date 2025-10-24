@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrackByUtils, KeyboardNavigationUtils } from '../../../shared/utils';
 import { PageTitleService } from '../../../core/services/page-title.service';
@@ -18,7 +18,7 @@ const AUFSTELLUNG_CONFIG = {
       SUBTITLE: 'Aktuelle Personalstärke nach Rängen'
     },
     ROSTER: {
-      TITLE: 'Personalaufstellung', 
+      TITLE: 'Personalaufstellung',
       SUBTITLE: 'Unsere Mitglieder'
     }
   },
@@ -79,7 +79,7 @@ const AUFSTELLUNG_CONFIG = {
     GROUPS: {
       BASE_PATH: '/img/aufstellung/group/',
       MISSIONSBAU: 'group-missionsbau-icon.png',
-      MEDIEN: 'group-pr-icon.png', 
+      MEDIEN: 'group-pr-icon.png',
       TECHNIK: 'group-technik-icon.png'
     },
     AVATARS: {
@@ -137,7 +137,8 @@ interface RankInfo {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './aufstellung.component.html',
-  styleUrl: './aufstellung.component.css'
+  styleUrl: './aufstellung.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AufstellungComponent implements OnInit {
   // Services
@@ -174,7 +175,7 @@ export class AufstellungComponent implements OnInit {
     this.loadMembers();
   }
 
-  // TrackBy functions  
+  // TrackBy functions
   readonly trackByRank = TrackByUtils.trackByIndex;
   readonly trackByMember = TrackByUtils.trackByProperty<Member>('id');
   readonly trackByMedal = TrackByUtils.trackByProperty<Medal>('id');
@@ -290,23 +291,23 @@ export class AufstellungComponent implements OnInit {
 
   // Departments configuration
   private readonly allDepartments: Abteilung[] = [
-    { 
-      id: 'abt-1', 
-      name: 'Missionsbau', 
-      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MISSIONSBAU}`, 
-      description: 'Wissensvermittlung & Multiplikation im Missionsbau' 
+    {
+      id: 'abt-1',
+      name: 'Missionsbau',
+      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MISSIONSBAU}`,
+      description: 'Wissensvermittlung & Multiplikation im Missionsbau'
     },
-    { 
-      id: 'abt-2', 
-      name: 'Medien & PR', 
-      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MEDIEN}`, 
-      description: 'Social Media und Öffentlichkeitsarbeit' 
+    {
+      id: 'abt-2',
+      name: 'Medien & PR',
+      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.MEDIEN}`,
+      description: 'Social Media und Öffentlichkeitsarbeit'
     },
-    { 
-      id: 'abt-3', 
-      name: 'Technik', 
-      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.TECHNIK}`, 
-      description: 'Server-Administration und technische Wartung' 
+    {
+      id: 'abt-3',
+      name: 'Technik',
+      icon: `${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.BASE_PATH}${AUFSTELLUNG_CONFIG.ASSETS.GROUPS.TECHNIK}`,
+      description: 'Server-Administration und technische Wartung'
     }
   ];
 
@@ -371,7 +372,7 @@ export class AufstellungComponent implements OnInit {
   private generateRandomDepartments(): Abteilung[] {
     // Mock data generation - uses deterministic approach for testing
     const numGroups = Math.floor(this.mockRandom(1) * 2) + 1;
-    const shuffled = [...this.allDepartments].sort((a, b) => 
+    const shuffled = [...this.allDepartments].sort((a, b) =>
       a.name.localeCompare(b.name) * (this.mockRandom(2) > 0.5 ? 1 : -1)
     );
     return shuffled.slice(0, numGroups);
@@ -432,20 +433,20 @@ export class AufstellungComponent implements OnInit {
     const baseMembers = [
       { name: 'TheConen', rank: 'offizier' as RankType, year: '2015', hasDetails: true },
       { name: 'SpecOp0', rank: 'offizier' as RankType, year: '2016', hasDetails: true },
-      
+
       { name: 'Reimchen', rank: 'unteroffizier' as RankType, year: '2018', hasDetails: true },
       { name: 'rockn_roller', rank: 'unteroffizier' as RankType, year: '2019', hasDetails: true },
-      
+
       { name: 'GSG9_abzocker', rank: 'veteran' as RankType, year: '2017', hasDetails: true },
       { name: 'Speutzi', rank: 'veteran' as RankType, year: '2018', hasDetails: true },
-      
+
       { name: 'Corben', rank: 'soldat' as RankType, year: '2022', hasDetails: true },
       { name: 'SchmerzKeks', rank: 'soldat' as RankType, year: '2023', hasDetails: false },
-      
-      // Rekruten (max 2) - Neue Mitglieder  
+
+      // Rekruten (max 2) - Neue Mitglieder
       { name: 'Epsilon', rank: 'rekrut' as RankType, year: '2024', hasDetails: true },
       { name: 'Addi995', rank: 'rekrut' as RankType, year: '2024', hasDetails: false },
-      
+
       { name: 'Mynx', rank: 'gast' as RankType, year: '2024', hasDetails: false },
       { name: 'Leroy', rank: 'gast' as RankType, year: '2024', hasDetails: false }
     ];
@@ -467,7 +468,7 @@ export class AufstellungComponent implements OnInit {
       member.isExpanded = false;
       return;
     }
-    
+
     for (const m of this.members) {
       m.isExpanded = false;
     }
@@ -477,8 +478,8 @@ export class AufstellungComponent implements OnInit {
   // Keyboard navigation handler for member details toggle
   handleMemberKeyboardNavigation(member: Member, event: KeyboardEvent): void {
     KeyboardNavigationUtils.handleToggle(
-      event, 
-      this.hasExpandableContent(member), 
+      event,
+      this.hasExpandableContent(member),
       () => this.toggleMemberDetails(member)
     );
   }
@@ -501,8 +502,8 @@ export class AufstellungComponent implements OnInit {
   }
 
   hasExpandableContent(member: Member): boolean {
-    return member.medals.length > 0 || 
-           member.campaignRibbons.length > 0 || 
+    return member.medals.length > 0 ||
+           member.campaignRibbons.length > 0 ||
            member.abteilungen.length > 0;
   }
 
@@ -516,7 +517,7 @@ export class AufstellungComponent implements OnInit {
 
   private getMedalsForMember(name: string, hasDetails: boolean, index: number): Medal[] {
     if (!hasDetails) return [];
-    
+
     if (name === 'SpecOp0') {
       return this.availableMedals.map(medal => ({
         ...medal,
@@ -533,7 +534,7 @@ export class AufstellungComponent implements OnInit {
 
   private getCampaignRibbonsForMember(name: string, hasDetails: boolean, index: number, year: number): CampaignRibbon[] {
     if (!hasDetails) return [];
-    
+
     if (name === 'SpecOp0') {
       return this.availableRibbons.map(ribbon => ({
         ...ribbon,
