@@ -29,7 +29,7 @@ export class ChronikComponent implements OnInit {
   timelineEvents: TimelineEvent[] = [
     {
       id: 'genesis',
-      title: 'Operation Genesis',
+      title: 'OP Genesis',
       date: '11. November 2013',
       type: 'anniversary',
       icon: 'pi-flag',
@@ -43,7 +43,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'intel',
-      title: 'Operation Intel',
+      title: 'OP Intel',
       date: 'März 2014',
       type: 'milestone',
       icon: 'pi-file-edit',
@@ -56,7 +56,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'rookie',
-      title: 'Operation Rookie',
+      title: 'OP Rookie',
       date: 'Mai 2015',
       type: 'system',
       icon: 'pi-users',
@@ -70,7 +70,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'handover',
-      title: 'Operation Handover',
+      title: 'OP Handover',
       date: 'Juni 2016',
       type: 'system',
       icon: 'pi-server',
@@ -83,7 +83,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'gladiator',
-      title: 'Operation Gladiator',
+      title: 'OP Gladiator',
       date: 'September 2018',
       type: 'milestone',
       icon: 'pi-trophy',
@@ -97,7 +97,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'rebrand',
-      title: 'Operation Rebrand',
+      title: 'OP Rebrand',
       date: 'Januar 2019',
       type: 'milestone',
       icon: 'pi-palette',
@@ -111,7 +111,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'hierarchy',
-      title: 'Operation Hierarchy',
+      title: 'OP Hierarchy',
       date: 'März 2019',
       type: 'system',
       icon: 'pi-sitemap',
@@ -124,7 +124,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'digital',
-      title: 'Operation Digital',
+      title: 'OP Digital',
       date: 'September 2020',
       type: 'milestone',
       icon: 'pi-globe',
@@ -138,7 +138,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'knowledge',
-      title: 'Operation Knowledge',
+      title: 'OP Knowledge',
       date: 'Oktober 2021',
       type: 'milestone',
       icon: 'pi-book',
@@ -153,7 +153,7 @@ export class ChronikComponent implements OnInit {
     },
     {
       id: 'decade',
-      title: 'Operation Decade',
+      title: 'OP Decade',
       date: '11. November 2023',
       type: 'anniversary',
       icon: 'pi-star',

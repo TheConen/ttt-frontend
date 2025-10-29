@@ -85,14 +85,12 @@
       <!-- Media Links Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- YouTube -->
-        <div
-          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-red-500/50 hover:bg-red-500/10"
+        <button
+          type="button"
+          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-red-500/50 hover:bg-red-500/10 text-left"
           (click)="openExternalLink(externalLinks.youtube, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.youtube, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Medien öffnen: YouTube auf youtube">
-
           <!-- Media Icon and Title -->
           <div class="flex items-center mb-4">
             <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 group-hover:scale-110 transition-transform">
@@ -104,10 +102,8 @@
               </h3>
             </div>
           </div>
-
           <!-- Description -->
           <p class="text-tttGray-300 text-sm leading-relaxed flex-grow mb-4">Mission-Videos, Streams, Tutorials und Community-Highlights</p>
-
           <!-- Visit Link -->
           <div class="mt-auto">
             <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
@@ -115,17 +111,15 @@
               <i class="pi pi-external-link"></i>
             </span>
           </div>
-        </div>
+        </button>
 
         <!-- Twitch -->
-        <div
-          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-purple-500/50 hover:bg-purple-500/10"
+        <button
+          type="button"
+          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-purple-500/50 hover:bg-purple-500/10 text-left"
           (click)="openExternalLink(externalLinks.twitch, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.twitch, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Medien öffnen: Twitch auf twitch">
-
           <!-- Media Icon and Title -->
           <div class="flex items-center mb-4">
             <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 group-hover:scale-110 transition-transform">
@@ -137,10 +131,8 @@
               </h3>
             </div>
           </div>
-
           <!-- Description -->
           <p class="text-tttGray-300 text-sm leading-relaxed flex-grow mb-4">Live-Streams unserer Missionen und Events</p>
-
           <!-- Visit Link -->
           <div class="mt-auto">
             <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
@@ -148,32 +140,28 @@
               <i class="pi pi-external-link"></i>
             </span>
           </div>
-        </div>
+        </button>
 
-        <!-- Trovo -->
-        <div
-          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-green-500/50 hover:bg-green-500/10"
-          (click)="openExternalLink(externalLinks.trovo, $event)"
-          (keydown)="handleKeyboardNavigation(externalLinks.trovo, $event)"
-          tabindex="0"
-          role="button"
-          aria-label="Medien öffnen: Trovo auf trovo">
-
+        <!-- Kick -->
+        <button
+          type="button"
+          class="ttt-content-card group cursor-pointer transition-all duration-300 flex flex-col h-full hover:border-green-600/50 hover:bg-green-600/10 text-left"
+          (click)="openExternalLink(externalLinks.kick, $event)"
+          (keydown)="handleKeyboardNavigation(externalLinks.kick, $event)"
+          aria-label="Medien öffnen: Kick auf kick">
           <!-- Media Icon and Title -->
           <div class="flex items-center mb-4">
             <div class="flex items-center justify-center w-12 h-12 rounded-lg bg-tttGray-700/50 mr-4 group-hover:scale-110 transition-transform">
-              <i class="pi pi-video text-xl text-green-500"></i>
+              <i class="pi pi-play text-xl text-green-600"></i>
             </div>
             <div>
               <h3 class="text-tttWhite font-semibold text-lg group-hover:text-tttRed transition-colors">
-                Trovo
+                Kick
               </h3>
             </div>
           </div>
-
           <!-- Description -->
           <p class="text-tttGray-300 text-sm leading-relaxed flex-grow mb-4">Alternative Streaming-Plattform für unsere Community</p>
-
           <!-- Visit Link -->
           <div class="mt-auto">
             <span class="inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20">
@@ -181,7 +169,7 @@
               <i class="pi pi-external-link"></i>
             </span>
           </div>
-        </div>
+        </button>
       </div>
     </div>
 
@@ -198,21 +186,18 @@
       <!-- Social Media Grid -->
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <!-- X (Twitter) -->
-        <div
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-blue-400/50 hover:bg-blue-400/10"
           (click)="openExternalLink(externalLinks.x, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.x, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: X (Twitter) auf x">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-twitter text-xl text-blue-400"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -220,24 +205,21 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">@TTT_ArmA</p>
           </div>
-        </div>
+        </button>
 
         <!-- Mastodon -->
-        <div
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-purple-400/50 hover:bg-purple-400/10"
           (click)="openExternalLink(externalLinks.mastodon, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.mastodon, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: Mastodon auf mastodon">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-hashtag text-xl text-purple-400"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -245,24 +227,21 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticaltrainingteam</p>
           </div>
-        </div>
+        </button>
 
         <!-- Bluesky -->
-        <div
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-sky-400/50 hover:bg-sky-400/10"
           (click)="openExternalLink(externalLinks.bluesky, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.bluesky, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: Bluesky auf bluesky">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-cloud text-xl text-sky-400"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -270,24 +249,21 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticalteam.bsky.social</p>
           </div>
-        </div>
+        </button>
 
         <!-- Instagram -->
-        <div
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-pink-500/50 hover:bg-pink-500/10"
           (click)="openExternalLink(externalLinks.instagram, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.instagram, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: Instagram auf instagram">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-instagram text-xl text-pink-500"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -295,24 +271,21 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticaltrainingteam</p>
           </div>
-        </div>
+        </button>
 
         <!-- TikTok -->
-        <div
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-red-400/50 hover:bg-red-400/10"
           (click)="openExternalLink(externalLinks.tiktok, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.tiktok, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: TikTok auf tiktok">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-video text-xl text-red-400"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -320,24 +293,21 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">@tacticaltrainingteam</p>
           </div>
-        </div>
+        </button>
 
         <!-- Steam -->
-        <div
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-blue-300/50 hover:bg-blue-300/10"
           (click)="openExternalLink(externalLinks.steam, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.steam, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: Steam Gruppe auf steam">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-desktop text-xl text-blue-300"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -345,24 +315,21 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">Tactical Training Team</p>
           </div>
-        </div>
+        </button>
 
         <!-- Reddit -->
-        <div
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-red-400/50 hover:bg-red-400/10"
           (click)="openExternalLink(externalLinks.reddit, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.reddit, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: Reddit auf reddit">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-reddit text-xl text-red-400"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -370,24 +337,19 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">tacticaltrainingteam</p>
           </div>
-        </div>
-
-        <!-- GitHub -->
-        <div
+        </button>
+        <button
+          type="button"
           class="ttt-content-card group cursor-pointer transition-all duration-300 text-center flex flex-col h-full hover:border-gray-400/50 hover:bg-gray-400/10"
           (click)="openExternalLink(externalLinks.github, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.github, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Social Media öffnen: GitHub auf github">
-
           <!-- Social Icon -->
           <div class="flex justify-center mb-3">
             <div class="flex items-center justify-center w-12 h-12 rounded-full bg-tttGray-700/50 group-hover:scale-110 transition-transform">
               <i class="pi pi-github text-xl text-gray-400"></i>
             </div>
           </div>
-
           <!-- Social Info -->
           <div class="flex-grow flex flex-col justify-center">
             <h3 class="text-tttWhite font-semibold mb-1 group-hover:text-tttRed transition-colors">
@@ -395,7 +357,8 @@
             </h3>
             <p class="text-tttGray-400 text-xs break-words leading-tight">TacticalTrainingTeam</p>
           </div>
-        </div>
+        </button>
+          </div>
       </div>
     </div>
 
@@ -412,12 +375,11 @@
       <!-- Corporate Resources Grid -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Corporate Design Wiki -->
-        <div
-          class="ttt-content-card group cursor-pointer transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 flex flex-col h-full"
+        <button
+          type="button"
+          class="ttt-content-card group cursor-pointer transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 flex flex-col h-full text-left"
           (click)="openExternalLink(externalLinks.wiki, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.wiki, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Ressource öffnen: Corporate Design Wiki">
 
           <!-- Resource Header -->
@@ -450,15 +412,14 @@
                 class="w-full h-full object-cover opacity-50 group-hover:opacity-75 transition-opacity">
             </div>
           </div>
-        </div>
+  </button>
 
         <!-- Logos und Designs -->
-        <div
-          class="ttt-content-card group cursor-pointer transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 flex flex-col h-full"
+        <button
+          type="button"
+          class="ttt-content-card group cursor-pointer transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 flex flex-col h-full text-left"
           (click)="openExternalLink(externalLinks.files, $event)"
           (keydown)="handleKeyboardNavigation(externalLinks.files, $event)"
-          tabindex="0"
-          role="button"
           aria-label="Ressource öffnen: Logos und Designs">
 
           <!-- Resource Header -->
@@ -494,7 +455,7 @@
                 class="w-full h-full object-cover opacity-50 group-hover:opacity-75 transition-opacity">
             </div>
           </div>
-        </div>
+  </button>
       </div>
     </div>
 
@@ -518,6 +479,4 @@
         </a>
       </div>
     </div>
-
-  </div>
 </section>
