@@ -117,11 +117,4 @@ export class MedienComponent implements OnInit {
   } as const;
 
   // Button styling methods
-  getPrimaryButtonClasses(): string {
-    return this.buttonStyles.primary;
-  }
-
-  getSecondaryButtonClasses(): string {
-    return this.buttonStyles.secondary;
-  }
 }
