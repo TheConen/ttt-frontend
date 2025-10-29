@@ -458,10 +458,27 @@ export class AufstellungComponent implements OnInit {
       avatar: base.rank === 'offizier' ? AUFSTELLUNG_CONFIG.ASSETS.AVATARS.OFFIZIER : '',
       memberSince: `${base.year}-${String(Math.floor(this.mockRandom(index * 10) * 12) + 1).padStart(2, '0')}-${String(Math.floor(this.mockRandom(index * 10 + 1) * 28) + 1).padStart(2, '0')}`,
       medals: this.getMedalsForMember(base.name, base.hasDetails, index),
-  campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, Number.parseInt(base.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX)),
-  abteilungen: base.hasDetails ? (base.name === 'SpecOp0' ? [...this.allDepartments] : this.generateRandomDepartments()) : [],
+      campaignRibbons: this.getCampaignRibbonsForMember(base.name, base.hasDetails, index, Number.parseInt(base.year, AUFSTELLUNG_CONFIG.SECURITY.RADIX)),
+      abteilungen: this.getAbteilungenForMember(base, index),
       isExpanded: false
     }));
+
+  }
+
+  /**
+   * Liefert die Abteilungen für ein Mitglied, um verschachtelte Ternary-Logik zu vermeiden und Duplikate zu verhindern.
+   */
+  private getAbteilungenForMember(base: { name: string; hasDetails: boolean }, index: number): Abteilung[] {
+    if (!base.hasDetails) return [];
+    if (this.isSpecOp0(base.name)) return [...this.allDepartments];
+    return this.generateRandomDepartments();
+  }
+
+  /**
+   * Utility: Prüft, ob ein Mitglied 'SpecOp0' ist (für alle Medaillen, Ribbons, Abteilungen).
+   */
+  private isSpecOp0(name: string): boolean {
+    return name === 'SpecOp0';
   }
   toggleMemberDetails(member: Member): void {
     if (member.isExpanded) {
@@ -518,10 +535,10 @@ export class AufstellungComponent implements OnInit {
   private getMedalsForMember(name: string, hasDetails: boolean, index: number): Medal[] {
     if (!hasDetails) return [];
 
-    if (name === 'SpecOp0') {
+    if (this.isSpecOp0(name)) {
       return this.availableMedals.map(medal => ({
         ...medal,
-  id: `medal-${index}-${medal.name.replaceAll(' ', '-').toLowerCase()}`
+        id: `medal-${index}-${medal.name.replaceAll(' ', '-').toLowerCase()}`
       }));
     }
 
@@ -535,7 +552,7 @@ export class AufstellungComponent implements OnInit {
   private getCampaignRibbonsForMember(name: string, hasDetails: boolean, index: number, year: number): CampaignRibbon[] {
     if (!hasDetails) return [];
 
-    if (name === 'SpecOp0') {
+    if (this.isSpecOp0(name)) {
       return this.availableRibbons.map(ribbon => ({
         ...ribbon,
         id: `ribbon-${index}-${ribbon.name.replaceAll(' ', '-').toLowerCase()}`
