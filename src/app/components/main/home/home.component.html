@@ -1,39 +1,53 @@
-<!-- Hero Section with Background Slider -->
-<section class="relative h-80 overflow-hidden">
+
+
+
+<!-- Hero Section with Background Slider (no absolute/fixed) -->
+<section class="h-80 overflow-hidden">
     <!-- Background Image Slider -->
-    <div class="absolute inset-0">
-        <!-- Image Container -->
-        <div class="relative w-full h-full">
-            <div class="absolute inset-0">
-                <img src="/img/home-banner/home-banner1.webp"
-                     alt="Tactical Training Team"
-                     class="w-full h-full object-cover" />
+    <div class="w-full h-full relative">
+        <div class="w-full h-full">
+            <div *ngFor="let slide of bannerSlides; let i = index"
+                     class="w-full h-full transition-opacity duration-1000 ease-in-out"
+                     [class.opacity-100]="i === currentImageIndex"
+                     [class.opacity-0]="i !== currentImageIndex"
+                     style="position: absolute; inset: 0;" >
+                <img [src]="slide.image"
+                         [alt]="slide.title + ' - ' + slide.subtitle"
+                         class="w-full h-full object-cover" />
             </div>
             <!-- Dark overlay for better text readability -->
-            <div class="absolute inset-0 ttt-gradient-overlay"></div>
+            <div class="w-full h-full ttt-gradient-overlay" style="position: absolute; inset: 0;"></div>
         </div>
-    </div>
-
-    <!-- Content Overlay -->
-    <div class="relative z-10 flex h-full items-center">
-        <div class="ttt-hero-container">
-            <h1 class="ttt-hero-title">
-                <span>TACTICAL TRAINING <span class="text-tttRed">TEAM</span></span>
-            </h1>
-
-            <p class="ttt-hero-text">
-                Als eine der größeren Arma-Gemeinschaften im deutschsprachigen Raum bieten wir dir das volle Paket: Von Ausbildung und Training bis hin zu Events und Kampagnen ist alles dabei.
-            </p>
-        </div>
-    </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2">
-        <div class="flex h-8 w-6 items-center justify-center rounded-full border-2 border-tttWhite/30">
-            <div class="h-2 w-0.5 animate-bounce bg-tttWhite rounded-full"></div>
+        <!-- Slide Indicators -->
+        <fieldset class="flex justify-center space-x-2 border-0 p-0 m-0 mt-4">
+            <legend class="sr-only">Banner-Navigation</legend>
+            <button
+                *ngFor="let slide of bannerSlides; let i = index"
+                (click)="goToImage(i)"
+                [attr.aria-label]="'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)"
+                [attr.aria-current]="i === currentImageIndex ? 'true' : 'false'"
+                class="h-3 w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-tttRed focus:ring-offset-2"
+                [class.bg-tttRed]="i === currentImageIndex"
+                [class.bg-tttWhite/40]="i !== currentImageIndex"
+                [class.scale-125]="i === currentImageIndex">
+            </button>
+        </fieldset>
+        <!-- Content Overlay -->
+        <div class="absolute inset-0 flex h-full items-center z-10 pointer-events-none">
+            <div class="ttt-hero-container pointer-events-auto">
+                <h1 class="ttt-hero-title"
+                        [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title || 'Tactical Training Team')">
+                    <span [innerHTML]="bannerSlides[currentImageIndex].title || 'Tactical Training Team'"></span>
+                    <span class="sr-only" *ngIf="!bannerSlides[currentImageIndex].title">Tactical Training Team</span>
+                </h1>
+                <p class="ttt-hero-text">
+                    {{ bannerSlides[currentImageIndex].subtitle }}
+                </p>
+            </div>
         </div>
     </div>
 </section>
+
 
 <!-- Features Section -->
 <section class="bg-tttBlack py-12">
@@ -129,11 +143,11 @@
 
             <!-- Main Title -->
             <h2 class="ttt-section-title-large">
-                Bereit für das<span class="text-tttRed">TTT</span>?
+                Bereit für das<span class="text-tttRed"> TTT</span>?
             </h2>
 
             <!-- Simple Divider -->
-            <div class="mx-auto mb-6 h-1 w-24 rounded-full bg-gradient-to-r from-transparent via-tttRed to-transparent"></div>
+            <div class="mx-auto mb-4 h-1 w-20 bg-gradient-to-r from-tttRed to-tttRed-600 rounded-full"></div>
 
             <!-- Subtitle -->
             <p class="ttt-description-text">
@@ -173,7 +187,7 @@
                                 Tritt unserem Discord-Server bei und stelle dich der Community vor
                             </p>
                             <a href="https://discord.tacticalteam.de"
-                               target="_blank"
+                               target="_blank" rel="noopener noreferrer"
                                class="ttt-step-link">
                                 <i class="pi pi-external-link"></i>
                                 discord.tacticalteam.de
@@ -313,10 +327,10 @@
                     <a routerLink="/mitmachen"
                        pButton
                        size="large"
-                       class="bg-tttRed border-tttRed text-tttWhite hover:bg-tttRed-600 hover:border-tttRed-600">
-                        <span class="flex items-center justify-center gap-2 w-full">
+                       class="bg-tttRed border-tttRed text-tttWhite hover:bg-tttRed-600 hover:border-tttRed-600 break-words text-balance text-center">
+                        <span class="flex items-center justify-center gap-2 w-full break-words text-balance text-center">
                             <i class="pi pi-rocket"></i>
-                            JETZT DURCHSTARTEN
+                            <span class="break-words text-balance">JETZT DURCHSTARTEN</span>
                         </span>
                     </a>
 
@@ -325,10 +339,10 @@
                        rel="noopener noreferrer"
                        pButton
                        size="large"
-                       class="bg-transparent border-tttGray-600 text-tttGray-300 hover:bg-tttGray-700 hover:border-tttGray-500">
-                        <span class="flex items-center justify-center gap-2 w-full">
+                       class="bg-transparent border-tttGray-600 text-tttGray-300 hover:bg-tttGray-700 hover:border-tttGray-500 break-words text-balance text-center">
+                        <span class="flex items-center justify-center gap-2 w-full break-words text-balance text-center">
                             <i class="pi pi-book"></i>
-                            WIKI ENTDECKEN
+                            <span class="break-words text-balance">WIKI ENTDECKEN</span>
                         </span>
                     </a>
                 </div>
@@ -427,7 +441,7 @@
             <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
-                        <i class="pi pi-star-fill text-sm text-tttWhite"></i>
+                        <img src="/img/aufstellung/ranks/TTT-Icon_Offizier.png" alt="Offizier" class="h-7 w-7 object-contain" />
                     </div>
                     <div class="text-left">
                         <h3 class="text-base font-bold">Offiziere</h3>
@@ -438,7 +452,7 @@
             <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
-                        <i class="pi pi-star text-sm text-tttWhite"></i>
+                        <img src="/img/aufstellung/ranks/TTT-Icon_Unteroffizier.png" alt="Unteroffizier" class="h-7 w-7 object-contain" />
                     </div>
                     <div class="text-left">
                         <h3 class="text-base font-bold">Unteroffiziere</h3>
@@ -449,7 +463,7 @@
             <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
-                        <i class="pi pi-shield text-sm text-tttWhite"></i>
+                        <img src="/img/aufstellung/ranks/TTT-Icon_Soldat-Veteran.png" alt="Veteran" class="h-7 w-7 object-contain" />
                     </div>
                     <div class="text-left">
                         <h3 class="text-base font-bold">Veteranen</h3>
@@ -460,7 +474,7 @@
             <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
-                        <i class="pi pi-user text-sm text-tttWhite"></i>
+                        <img src="/img/aufstellung/ranks/TTT-Icon_Soldat-Veteran.png" alt="Soldat" class="h-7 w-7 object-contain" />
                     </div>
                     <div class="text-left">
                         <h3 class="text-base font-bold">Soldaten</h3>
@@ -471,7 +485,7 @@
             <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
-                        <i class="pi pi-users text-sm text-tttWhite"></i>
+                        <img src="/img/aufstellung/ranks/TTT-Icon_Rekrut.png" alt="Rekrut" class="h-7 w-7 object-contain" />
                     </div>
                     <div class="text-left">
                         <h3 class="text-base font-bold">Rekruten</h3>
@@ -482,7 +496,7 @@
             <div class="group rounded-lg border border-tttWhite/20 bg-tttWhite/10 p-3 backdrop-blur-sm transition-all duration-300 hover:bg-tttWhite/20 hover:scale-105">
                 <div class="mb-2 flex items-center gap-3">
                     <div class="flex h-8 w-8 items-center justify-center rounded-full bg-tttWhite/20 transition-all duration-300 group-hover:bg-tttWhite/30">
-                        <i class="pi pi-eye text-sm text-tttWhite"></i>
+                        <img src="/img/aufstellung/ranks/TTT-Icon_Gast.png" alt="Gast" class="h-7 w-7 object-contain" />
                     </div>
                     <div class="text-left">
                         <h3 class="text-base font-bold">Gäste</h3>

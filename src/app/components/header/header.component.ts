@@ -25,13 +25,17 @@ export class HeaderComponent implements OnInit {
                 label: 'Events',
                 icon: 'pi pi-calendar',
                 styleClass: 'font-heading',
-                url: 'https://events.tacticalteam.de'
+                url: 'https://events.tacticalteam.de',
+                target: '_blank',
+                rel: 'noopener noreferrer'
             },
             {
                 label: 'Discord',
                 icon: 'pi pi-discord',
                 styleClass: 'font-heading',
-                url: 'https://discord.tacticalteam.de'
+                url: 'https://discord.tacticalteam.de',
+                target: '_blank',
+                rel: 'noopener noreferrer'
             },
             {
                 label: 'TS3',
@@ -43,7 +47,9 @@ export class HeaderComponent implements OnInit {
                 label: 'Wiki',
                 icon: 'pi pi-book',
                 styleClass: 'font-heading',
-                url: 'https://wiki.tacticalteam.de'
+                url: 'https://wiki.tacticalteam.de',
+                target: '_blank',
+                rel: 'noopener noreferrer'
             },
             {
                 label: 'Medien',
@@ -72,19 +78,17 @@ export class HeaderComponent implements OnInit {
                         label: 'Event-Replay',
                         icon: 'pi pi-play',
                         styleClass: 'font-heading',
-                        url: 'https://replay.tacticalteam.de'
+                        url: 'https://replay.tacticalteam.de',
+                        target: '_blank',
+                        rel: 'noopener noreferrer'
                     },
                     {
                         label: 'Shop',
                         icon: 'pi pi-shopping-bag',
                         styleClass: 'font-heading',
-                        url: 'https://tacticalteam.myspreadshop.de'
-                    },
-                                        {
-                        label: 'Mitgliederlogin',
-                        icon: 'pi pi-user ',
-                        styleClass: 'font-heading',
-                        routerLink: ['/intern']
+                        url: 'https://tacticalteam.myspreadshop.de',
+                        target: '_blank',
+                        rel: 'noopener noreferrer'
                     },
                 ],
             },
