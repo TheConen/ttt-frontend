@@ -40,7 +40,7 @@ export class MedienComponent implements OnInit {
   readonly externalLinks = {
     youtube: 'https://www.youtube.com/@tacticalteamde',
     twitch: 'https://www.twitch.tv/tacticaltrainingteam',
-    trovo: 'https://trovo.live/tacticalteam',
+  kick: 'https://kick.com/tacticaltrainingteam',
     x: 'https://x.com/TTT_ArmA',
     mastodon: 'https://mastodon.social/@tacticaltrainingteam',
     bluesky: 'https://bsky.app/profile/tacticalteam.bsky.social',
@@ -94,7 +94,7 @@ export class MedienComponent implements OnInit {
   private readonly platformStyles: Record<string, string> = {
     'youtube': 'hover:border-red-500/50 hover:bg-red-500/10',
     'twitch': 'hover:border-purple-500/50 hover:bg-purple-500/10',
-    'trovo': 'hover:border-green-500/50 hover:bg-green-500/10',
+    'kick': 'hover:border-green-600/50 hover:bg-green-600/10',
     'x': 'hover:border-blue-400/50 hover:bg-blue-400/10',
     'mastodon': 'hover:border-purple-400/50 hover:bg-purple-400/10',
     'bluesky': 'hover:border-sky-400/50 hover:bg-sky-400/10',
