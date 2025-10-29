@@ -46,7 +46,7 @@
         </nav>
         <aside class="md:w-64 bg-tttGray-900 border-l border-tttGray-800">
             <div class="p-6">
-                <h3 class="mb-4 text-lg font-bold text-tttWhite">
+                <h3 class="mb-4 text-lg font-bold text-tttWhite flex items-center gap-2">
                     <i [class]="discordIcon.class"></i>
                     Live Discord
                 </h3>
@@ -69,8 +69,8 @@
                             <p class="text-sm text-tttGray-300 mb-3">Widget lädt nicht?</p>
                             <a [href]="discordConfig.directUrl"
                                target="_blank"
-                               class="inline-flex items-center gap-2 rounded-lg bg-[#5865F2] px-4 py-2 text-sm font-medium text-white hover:bg-[#4752C4] transition-colors">
-                                <i class="pi pi-discord"></i>
+                               [ngClass]="'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium ' + discordIcon.colors.primary + ' ' + discordIcon.colors.text + ' ' + discordIcon.colors.hover + ' transition-colors'">
+                                <i class="pi pi-discord text-tttWhite"></i>
                                 Discord beitreten
                             </a>
                         </div>

@@ -182,3 +182,10 @@
     @apply flex-1 text-base font-semibold text-tttWhite;
   }
 }
+  /* Zentrale Button Styles */
+  .ttt-btn-primary {
+    @apply inline-flex items-center justify-center gap-2 bg-gradient-to-r from-tttRed to-tttRed-600 text-tttWhite shadow-lg hover:shadow-xl hover:shadow-tttRed/30 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300;
+  }
+  .ttt-btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 border border-tttWhite/30 bg-tttWhite/10 text-tttWhite hover:bg-tttWhite/20 px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-300;
+  }

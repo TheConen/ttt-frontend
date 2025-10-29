@@ -316,18 +316,18 @@
         <!-- Full Width CTA Section -->
         <div class="mt-12 rounded-xl border border-tttRed/20 bg-gradient-to-br from-tttRed/10 to-tttRed/5 p-8 backdrop-blur-sm">
             <!-- Community Stats -->
-            <div class="mb-8 grid grid-cols-3 gap-6 md:grid-cols-6">
+            <div class="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-6">
                 <div *ngFor="let stat of communityStats"
-                     class="rounded-lg border border-tttWhite/10 bg-tttWhite/5 p-4 text-center backdrop-blur-sm">
+                     class="rounded-lg border border-tttWhite/10 bg-tttWhite/5 p-4 text-center backdrop-blur-sm flex flex-col items-center justify-center">
                     <div class="ttt-stat-value text-tttGreen">{{ stat.value }}</div>
                     <div class="text-xs text-tttGray-400">{{ stat.label }}</div>
                 </div>
-                <div class="col-span-3 flex gap-4">
+                <div class="col-span-1 sm:col-span-3 md:col-span-3 flex flex-col sm:flex-row gap-4 w-full">
                     <!-- CTA Buttons -->
                     <a routerLink="/mitmachen"
                        pButton
                        size="large"
-                       class="bg-tttRed border-tttRed text-tttWhite hover:bg-tttRed-600 hover:border-tttRed-600 break-words text-balance text-center">
+                       class="ttt-btn-primary w-full text-center">
                         <span class="flex items-center justify-center gap-2 w-full break-words text-balance text-center">
                             <i class="pi pi-rocket"></i>
                             <span class="break-words text-balance">JETZT DURCHSTARTEN</span>
@@ -339,7 +339,7 @@
                        rel="noopener noreferrer"
                        pButton
                        size="large"
-                       class="bg-transparent border-tttGray-600 text-tttGray-300 hover:bg-tttGray-700 hover:border-tttGray-500 break-words text-balance text-center">
+                       class="ttt-btn-secondary w-full text-center">
                         <span class="flex items-center justify-center gap-2 w-full break-words text-balance text-center">
                             <i class="pi pi-book"></i>
                             <span class="break-words text-balance">WIKI ENTDECKEN</span>

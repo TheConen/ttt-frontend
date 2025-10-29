@@ -583,11 +583,4 @@ export class AufstellungComponent implements OnInit {
     return this.getRankBadgeClassesBase(rank, 'text-sm px-2 py-1 rounded font-medium');
   }
 
-  getPrimaryButtonClasses(): string {
-    return AUFSTELLUNG_CONFIG.CSS_CLASSES.BUTTON_PRIMARY;
-  }
-
-  getSecondaryButtonClasses(): string {
-    return AUFSTELLUNG_CONFIG.CSS_CLASSES.BUTTON_SECONDARY;
-  }
 }

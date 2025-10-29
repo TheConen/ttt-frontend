@@ -130,11 +130,4 @@ export class MitmachenComponent implements OnInit, OnDestroy {
   openArma3SyncTips = () => this.openExternalLink(this.externalLinks.arma3SyncTips);
 
   // Button styling methods
-  getPrimaryButtonClasses(): string {
-    return 'bg-gradient-to-r from-tttRed to-tttRed-600 text-tttWhite shadow-lg hover:shadow-xl hover:shadow-tttRed/30';
-  }
-
-  getSecondaryButtonClasses(): string {
-    return 'border border-tttWhite/30 bg-tttWhite/10 text-tttWhite hover:bg-tttWhite/20';
-  }
 }

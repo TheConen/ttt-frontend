@@ -63,12 +63,13 @@ export class AppComponent {
     widgetTitle: 'TTT Discord Server'
   };
 
-  // Discord icon configuration
+  // Discord icon configuration (tttRed)
   readonly discordIcon = {
-    class: 'pi pi-discord text-[#5865F2] mr-2',
+    class: 'pi pi-discord text-tttRed mr-2',
     colors: {
-      primary: '#5865F2',
-      hover: '#4752C4'
+      primary: 'bg-tttRed',
+      hover: 'hover:bg-tttRed-600',
+      text: 'text-tttWhite'
     }
   } as const;
 }
