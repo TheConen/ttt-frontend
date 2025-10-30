@@ -12,12 +12,14 @@
 
     <!-- Live Streams Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div *ngFor="let stream of liveStreams; trackBy: trackByLiveStream"
-           class="ttt-content-card group hover:border-tttRed/50 transition-all duration-300 cursor-pointer"
-           (click)="openExternalLink(stream.url, $event)"
-           (keydown)="handleKeyboardNavigation(stream.url, $event)"
-           tabindex="0"
-           [attr.aria-label]="'Live Stream öffnen: ' + stream.title">
+    <a *ngFor="let stream of liveStreams; trackBy: trackByLiveStream"
+      class="ttt-content-card group hover:border-tttRed/50 transition-all duration-300 cursor-pointer"
+      (click)="openExternalLink(stream.url, $event)"
+      (keydown)="handleKeyboardNavigation(stream.url, $event)"
+      [attr.aria-label]="'Live Stream öffnen: ' + stream.title"
+      [href]="stream.url"
+      target="_blank"
+      rel="noopener noreferrer">
         <!-- Stream Thumbnail -->
         <div class="relative mb-4">
           <img [src]="stream.thumbnail"
@@ -37,7 +39,6 @@
             </span>
           </div>
         </div>
-
         <!-- Stream Info -->
         <div class="space-y-2">
           <h3 class="text-lg font-bold text-tttWhite group-hover:text-tttRed transition-colors line-clamp-2">
@@ -48,7 +49,7 @@
             {{ stream.channelName }}
           </p>
         </div>
-      </div>
+    </a>
     </div>
 
     <!-- No Live Streams Message -->

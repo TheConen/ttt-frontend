@@ -29,7 +29,6 @@
           Gegründet wurde das TTT von <strong>relain</strong>, der im April 2015 von seiner Leitungsposition zurückgetreten ist.
         </p>
       </div>
-    </div>
   </div>
 
   <!-- Timeline Section -->
@@ -37,7 +36,7 @@
     <div class="mb-6 ttt-text-center">
       <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
         <i class="pi pi-clock text-tttRed"></i>
-        TTT Timeline
+        TTT-Timeline
       </h2>
       <p class="ttt-description-text">Meilensteine des Tactical Training Teams</p>
     </div>
@@ -45,10 +44,8 @@
     <!-- Timeline Container - Sehr kompakte Karten mit Ausklapp-Effekt -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-stretch">
       <div *ngFor="let event of timelineEvents; trackBy: trackByIndex" class="relative h-full">
-        <!-- Kompakte Timeline Card -->
-        <div
-          role="button"
-          tabindex="0"
+        <button
+          type="button"
           class="group ttt-content-card p-2 text-left transition-all duration-200 hover:border-tttRed/40 hover:bg-tttRed/5 relative min-h-[110px] h-full flex flex-col justify-between shadow-md"
           [ngClass]="{
             'bg-tttRed/10 border-tttRed/70': event.expanded
@@ -82,7 +79,7 @@
                [class.pi-chevron-down]="!event.expanded"
                [class.pi-chevron-up]="event.expanded" aria-hidden="true"></i>
           </div>
-        </div>
+        </button>
         <!-- Expanded Details -->
         <div *ngIf="event.expanded" class="absolute z-10 left-0 right-0 mt-2 ttt-content-card p-3 border-tttRed/70 bg-tttRed/10 shadow-xl animate-fadeIn">
           <button (click)="toggleEventDetails(event)"
@@ -101,6 +98,7 @@
             </ul>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>

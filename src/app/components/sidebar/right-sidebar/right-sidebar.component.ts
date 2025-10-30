@@ -53,7 +53,15 @@ export class RightSidebarComponent {
   constructor(private readonly sanitizer: DomSanitizer) {}
 
   get safeWidgetUrl(): SafeResourceUrl {
-    this._safeWidgetUrl ??= this.sanitizer.bypassSecurityTrustResourceUrl(this.discordConfig.widgetUrl);
+    if (!this._safeWidgetUrl) {
+      // Validate that the URL is a trusted Discord widget URL
+      const url = this.discordConfig.widgetUrl;
+      if (url.startsWith('https://discord.com/widget?')) {
+        this._safeWidgetUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      } else {
+        throw new Error('Unsafe Discord widget URL detected!');
+      }
+    }
     return this._safeWidgetUrl;
   }
 }
