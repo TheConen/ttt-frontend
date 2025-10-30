@@ -1,8 +1,7 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonDirective } from 'primeng/button';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
-import { PageTitleService } from '../../../core/services/page-title.service';
+import { TrackByUtils, BasePageComponent } from '../../../shared/utils';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
 // Component configuration constants
@@ -31,10 +30,9 @@ const MITMACHEN_CONFIG = {
   templateUrl: './mitmachen.component.html',
   styleUrl: './mitmachen.component.css'
 })
-export class MitmachenComponent implements OnInit, OnDestroy {
+export class MitmachenComponent extends BasePageComponent implements OnInit, OnDestroy {
 
   // Dependency injection
-  private readonly pageTitleService = inject(PageTitleService);
   private readonly sanitizationService = inject(SanitizationService);
 
   // TrackBy functions
@@ -61,8 +59,8 @@ export class MitmachenComponent implements OnInit, OnDestroy {
     arma3SyncTips: MITMACHEN_CONFIG.EXTERNAL_LINKS.ARMA3SYNC_TIPS
   } as const;
 
-  ngOnInit(): void {
-    this.pageTitleService.setTitle(MITMACHEN_CONFIG.PAGE_TITLE);
+  override ngOnInit(): void {
+    super.ngOnInit();
   }
 
   ngOnDestroy(): void {

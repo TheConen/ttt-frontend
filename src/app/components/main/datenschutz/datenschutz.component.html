@@ -1,52 +1,45 @@
 <!-- Datenschutz Page -->
-<section class="min-h-screen bg-tttBlack py-12">
-  <div class="ttt-page-container">
-    <!-- Header -->
-    <div class="mb-8 ttt-text-center">
-      <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
-      <p class="ttt-hero-text text-tttGray-200 mb-4">Datenschutzbestimmungen</p>
+<ttt-page-layout [pageTitle]="pageTitle" pageSubtitle="Datenschutzbestimmungen">
+  <!-- Content -->
+  <div class="space-y-8">
+    <!-- Gültigkeitsbereich -->
+    <div class="ttt-content-card">
+      <h2 class="ttt-section-title">Gültigkeitsbereich</h2>
+      <div class="ttt-content-text">
+        <p>Diese Erklärung gilt für alle Subdomains von *.tacticalteam.de, ausgenommen events.tacticalteam.de. Für events.tacticalteam.de gilt die Datenschutzerklärung von
+          <a [href]="externalLinks.slotbot.url" target="_blank" rel="noopener noreferrer" class="ttt-link">
+            {{ externalLinks.slotbot.label }}
+          </a>.
+        </p>
+      </div>
     </div>
 
-    <!-- Content -->
-    <div class="space-y-8">
-      <!-- Gültigkeitsbereich -->
-      <div class="ttt-content-card">
-        <h2 class="ttt-section-title">Gültigkeitsbereich</h2>
-        <div class="ttt-content-text">
-          <p>Diese Erklärung gilt für alle Subdomains von *.tacticalteam.de, ausgenommen events.tacticalteam.de. Für events.tacticalteam.de gilt die Datenschutzerklärung von
-            <a [href]="externalLinks.slotbot.url" target="_blank" rel="noopener noreferrer" class="ttt-link">
-              {{ externalLinks.slotbot.label }}
-            </a>.
-          </p>
-        </div>
+    <!-- Sicherheit und Schutz -->
+    <div class="ttt-content-card">
+      <h2 class="ttt-section-title">Sicherheit und Schutz Ihrer personenbezogenen Daten</h2>
+      <div class="ttt-content-text">
+        <p>Wir betrachten es als unsere vorrangige Aufgabe, die Vertraulichkeit der von Ihnen bereitgestellten personenbezogenen Daten zu wahren und diese vor unbefugten Zugriffen zu schützen. Deshalb wenden wir äußerste Sorgfalt und modernste Sicherheitsstandards an, um einen maximalen Schutz Ihrer personenbezogenen Daten zu gewährleisten.</p>
+        <p>Als Online-Gaming-Community unterliegen wir zwar nicht den Bestimmungen der europäischen Datenschutzgrundverordnung (DSGVO) und den Regelungen des Bundesdatenschutzgesetzes (BDSG). Jedoch haben wir technische und organisatorische Maßnahmen getroffen, die sicherstellen, dass die Vorschriften über den Datenschutz sowohl von uns, als auch von unseren externen Dienstleistern beachtet werden.</p>
       </div>
+    </div>
 
-      <!-- Sicherheit und Schutz -->
-      <div class="ttt-content-card">
-        <h2 class="ttt-section-title">Sicherheit und Schutz Ihrer personenbezogenen Daten</h2>
-        <div class="ttt-content-text">
-          <p>Wir betrachten es als unsere vorrangige Aufgabe, die Vertraulichkeit der von Ihnen bereitgestellten personenbezogenen Daten zu wahren und diese vor unbefugten Zugriffen zu schützen. Deshalb wenden wir äußerste Sorgfalt und modernste Sicherheitsstandards an, um einen maximalen Schutz Ihrer personenbezogenen Daten zu gewährleisten.</p>
-          <p>Als Online-Gaming-Community unterliegen wir zwar nicht den Bestimmungen der europäischen Datenschutzgrundverordnung (DSGVO) und den Regelungen des Bundesdatenschutzgesetzes (BDSG). Jedoch haben wir technische und organisatorische Maßnahmen getroffen, die sicherstellen, dass die Vorschriften über den Datenschutz sowohl von uns, als auch von unseren externen Dienstleistern beachtet werden.</p>
-        </div>
+    <!-- Verantwortlicher -->
+    <div class="ttt-content-card">
+      <h2 class="ttt-section-title">Name und Kontakt des Verantwortlichen gemäß Artikel 4 Abs. 7 DSGVO</h2>
+      <div class="ttt-content-text">
+        <img src="/img/anschrift-kontakt.webp" alt="Anschrift und Kontakt" class="max-w-[220px] h-auto rounded shadow" loading="lazy" />
       </div>
+    </div>
 
-      <!-- Verantwortlicher -->
-      <div class="ttt-content-card">
-        <h2 class="ttt-section-title">Name und Kontakt des Verantwortlichen gemäß Artikel 4 Abs. 7 DSGVO</h2>
-        <div class="ttt-content-text">
-          <img src="/img/anschrift-kontakt.webp" alt="Anschrift und Kontakt" class="max-w-[220px] h-auto rounded shadow" loading="lazy" />
-        </div>
-      </div>
+    <!-- Begriffsbestimmungen -->
+    <div class="ttt-content-card">
+      <h2 class="ttt-section-title">Begriffsbestimmungen</h2>
+      <div class="ttt-content-text">
+        <p>Der Gesetzgeber fordert, dass personenbezogene Daten auf rechtmäßige Weise, nach Treu und Glauben und in einer für die betroffene Person nachvollziehbaren Weise verarbeitet werden („Rechtmäßigkeit, Verarbeitung nach Treu und Glauben, Transparenz"). Um dies zu gewährleisten, informieren wir Sie über die einzelnen gesetzlichen Begriffsbestimmungen, die auch in dieser Datenschutzerklärung verwendet werden:</p>
 
-      <!-- Begriffsbestimmungen -->
-      <div class="ttt-content-card">
-        <h2 class="ttt-section-title">Begriffsbestimmungen</h2>
-        <div class="ttt-content-text">
-          <p>Der Gesetzgeber fordert, dass personenbezogene Daten auf rechtmäßige Weise, nach Treu und Glauben und in einer für die betroffene Person nachvollziehbaren Weise verarbeitet werden („Rechtmäßigkeit, Verarbeitung nach Treu und Glauben, Transparenz"). Um dies zu gewährleisten, informieren wir Sie über die einzelnen gesetzlichen Begriffsbestimmungen, die auch in dieser Datenschutzerklärung verwendet werden:</p>
-
-          <div class="space-y-3">
-            <h3 class="ttt-subsection-title">1. Personenbezogene Daten</h3>
-            <p class="ttt-small-text">„Personenbezogene Daten" sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person beziehen; als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer Kennnummer, zu Standortdaten, zu einer Online-Kennung oder zu einem oder mehreren besonderen Merkmalen identifiziert werden kann.</p>
+        <div class="space-y-3">
+          <h3 class="ttt-subsection-title">1. Personenbezogene Daten</h3>
+          <p class="ttt-small-text">„Personenbezogene Daten" sind alle Informationen, die sich auf eine identifizierte oder identifizierbare natürliche Person beziehen; als identifizierbar wird eine natürliche Person angesehen, die direkt oder indirekt, insbesondere mittels Zuordnung zu einer Kennung wie einem Namen, zu einer Kennnummer, zu Standortdaten, zu einer Online-Kennung oder zu einem oder mehreren besonderen Merkmalen identifiziert werden kann.</p>
 
             <h3 class="ttt-subsection-title">2. Verarbeitung</h3>
             <p class="ttt-small-text">„Verarbeitung" ist jeder, mit oder ohne Hilfe automatisierter Verfahren, ausgeführter Vorgang oder jede solche Vorgangsreihe im Zusammenhang mit personenbezogenen Daten wie das Erheben, das Erfassen, die Organisation, das Ordnen, die Speicherung, die Anpassung oder Veränderung, das Auslesen, das Abfragen, die Verwendung, die Offenlegung durch Übermittlung, Verbreitung oder eine andere Form der Bereitstellung, den Abgleich oder die Verknüpfung, die Einschränkung, das Löschen oder die Vernichtung.</p>
@@ -188,6 +181,5 @@
           <p>This website is not affiliated or authorized by Bohemia Interactive a.s. Bohemia Interactive, ARMA, DAYZ and all associated logos and designs are trademarks or registered trademarks of Bohemia Interactive a.s.</p>
         </div>
       </div>
-    </div>
   </div>
-</section>
+</ttt-page-layout>

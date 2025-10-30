@@ -1,8 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
-import { PageTitleService } from '../../../core/services/page-title.service';
+import { TrackByUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
 interface TimelineEvent {
@@ -20,12 +18,12 @@ interface TimelineEvent {
 @Component({
   selector: 'ttt-chronik',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, PageLayoutComponent],
   templateUrl: './chronik.component.html',
   styleUrl: './chronik.component.css'
 })
 
-export class ChronikComponent implements OnInit {
+export class ChronikComponent extends BasePageComponent implements OnInit {
   timelineEvents: TimelineEvent[] = [
     {
       id: 'genesis',
@@ -189,15 +187,10 @@ export class ChronikComponent implements OnInit {
   readonly pageSubtitle = 'Geschichte des Tactical Training Teams';
 
   // Dependency injection
-  private readonly pageTitleService = inject(PageTitleService);
   private readonly sanitizationService = inject(SanitizationService);
 
   // TrackBy functions
   readonly trackByIndex = TrackByUtils.trackByIndex;
-
-  ngOnInit(): void {
-    this.pageTitleService.setTitle(this.pageTitle);
-  }
 
   // External documentation link (dynamic)
   readonly fictionDocumentationLink = 'https://drive.google.com/file/d/1QpkevojoID6-HfPsp5GIW3OUmUjnfOSd/view';

@@ -16,8 +16,8 @@
     </div>
     <h2 class="mb-2 text-xl font-bold text-tttWhite">Fehler</h2>
     <p class="mb-4 text-tttWhite/70">{{ loadingError }}</p>
-    <button 
-      (click)="retryLoading()" 
+    <button
+      (click)="retryLoading()"
       class="ttt-btn-primary"
       aria-label="Mitgliederdaten erneut laden">
       <i class="pi pi-refresh" aria-hidden="true"></i>
@@ -28,35 +28,25 @@
 
 <!-- Main Content -->
 <div *ngIf="!isLoading && !loadingError">
-  
-  <!-- Header Section -->
-  <section class="bg-tttBlack py-8">
-    <div class="ttt-page-container">
-      <div class="mb-8 ttt-text-center">
-        <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
-        <p class="ttt-hero-text text-tttGray-200 mb-4">{{ pageSubtitle }}</p>
-      </div>
-    </div>
-  </section>
+  <ttt-page-layout [pageTitle]="pageTitle" [pageSubtitle]="pageSubtitle">
+    <!-- Statistics Overview -->
+    <section class="mb-8">
+      <div class="ttt-page-container">
+        <div class="mb-6 ttt-text-center">
+          <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
+            <i class="pi pi-chart-bar text-tttRed"></i>
+            {{ sections.OVERVIEW.TITLE }}
+          </h2>
+          <p class="ttt-description-text">{{ sections.OVERVIEW.SUBTITLE }}</p>
+        </div>
 
-  <!-- Statistics Overview -->
-  <section class="bg-tttBlack py-8">
-    <div class="ttt-page-container">
-      <div class="mb-6 ttt-text-center">
-        <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
-          <i class="pi pi-chart-bar text-tttRed"></i>
-          {{ sections.OVERVIEW.TITLE }}
-        </h2>
-        <p class="ttt-description-text">{{ sections.OVERVIEW.SUBTITLE }}</p>
-      </div>
-      
       <div class="mb-8 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
-        <div 
-          *ngFor="let rank of rankOrder; trackBy: trackByRank" 
+        <div
+          *ngFor="let rank of rankOrder; trackBy: trackByRank"
           class="ttt-content-card text-center transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
           <div class="mb-3 flex justify-center">
-            <img 
-              [src]="getRankInfo(rank).icon" 
+            <img
+              [src]="getRankInfo(rank).icon"
               [alt]="getRankInfo(rank).name + ' Abzeichen'"
               class="h-12 w-12 object-contain transition-transform duration-300 hover:scale-110"
               loading="lazy" />
@@ -68,7 +58,7 @@
           <div class="text-xs text-tttWhite/50">Mitglieder</div>
         </div>
       </div>
-      
+
       <!-- Member Summary -->
       <div class="text-center">
         <div class="inline-flex items-center gap-2 rounded-lg bg-tttRed px-4 py-2">
@@ -92,15 +82,15 @@
 
       <!-- Rank Groups -->
       <div class="space-y-8">
-        <div 
-          *ngFor="let rank of rankOrder; trackBy: trackByRank" 
+        <div
+          *ngFor="let rank of rankOrder; trackBy: trackByRank"
           [class.hidden]="membersByRank[rank].length === 0">
-          
+
           <!-- Rank Header -->
           <div class="mb-6 flex items-center gap-4">
-            <img 
+            <img
               *ngIf="rank === 'offizier'"
-              [src]="getRankInfo(rank).icon" 
+              [src]="getRankInfo(rank).icon"
               [alt]="getRankInfo(rank).name + ' Abzeichen'"
               class="h-6 w-6 object-contain"
               loading="lazy" />
@@ -111,12 +101,12 @@
 
           <!-- Members Grid -->
           <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
-            <div 
+            <div
               *ngFor="let member of membersByRank[rank]; trackBy: trackByMember"
               class="relative">
-              
+
               <!-- Member Card -->
-              <div 
+              <div
                 [class.cursor-pointer]="hasExpandableContent(member)"
                 [class.bg-tttRed/5]="member.isExpanded"
                 [class.border-tttRed/50]="member.isExpanded"
@@ -127,21 +117,21 @@
                 [attr.tabindex]="hasExpandableContent(member) ? 0 : -1"
                 [attr.role]="hasExpandableContent(member) ? 'button' : null"
                 class="group ttt-content-card p-3 text-center transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 relative min-h-[140px] flex flex-col justify-between">
-                
+
                 <div>
                   <!-- Avatar (officers only) -->
                   <div *ngIf="member.rank === 'offizier'" class="relative mx-auto mb-2 flex justify-center">
-                    <div 
+                    <div
                       *ngIf="member.avatar && member.avatar !== ''; else noAvatarTemplate"
                       class="w-12 h-12 rounded-full border-2 overflow-hidden transition-all duration-300"
                       [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50 group-hover:border-' + getRankInfo(member.rank).color.split('-')[1] + '-400'">
-                      <img 
-                        [src]="member.avatar" 
+                      <img
+                        [src]="member.avatar"
                         [alt]="member.name + ' Avatar'"
                         class="w-full h-full object-cover"
                         loading="lazy" />
                     </div>
-                    
+
                     <!-- Avatar fallback -->
                     <ng-template #noAvatarTemplate>
                       <div class="w-12 h-12 rounded-full border-2 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border-yellow-400/50 bg-yellow-400/10">
@@ -163,17 +153,17 @@
 
                 <!-- Compact Stats -->
                 <div class="flex justify-center gap-1 text-xs mb-1">
-                  <span *ngIf="member.medals.length > 0" 
-                        class="w-5 h-5 bg-yellow-400/20 rounded flex items-center justify-center" 
+                  <span *ngIf="member.medals.length > 0"
+                        class="w-5 h-5 bg-yellow-400/20 rounded flex items-center justify-center"
                         [title]="member.medals.length + ' Medaille(n)'">
                     <i class="pi pi-star-fill text-yellow-400 text-xs" aria-hidden="true"></i>
                   </span>
-                  <span *ngIf="member.campaignRibbons.length > 0" 
+                  <span *ngIf="member.campaignRibbons.length > 0"
                         class="w-5 h-5 bg-purple-400/20 rounded flex items-center justify-center"
                         [title]="member.campaignRibbons.length + ' Kampagne(n)'">
                     <i class="pi pi-flag text-purple-400 text-xs" aria-hidden="true"></i>
                   </span>
-                  <span *ngIf="member.abteilungen.length > 0" 
+                  <span *ngIf="member.abteilungen.length > 0"
                         class="w-5 h-5 bg-blue-400/20 rounded flex items-center justify-center"
                         [title]="member.abteilungen.length + ' Abteilung(en)'">
                     <i class="pi pi-briefcase text-blue-400 text-xs" aria-hidden="true"></i>
@@ -186,7 +176,7 @@
                 </p>
 
                 <!-- Expand Indicator -->
-                <div *ngIf="hasExpandableContent(member)" 
+                <div *ngIf="hasExpandableContent(member)"
                      class="mt-1 flex justify-center">
                   <i class="pi text-xs text-tttGray-500 transition-transform duration-300"
                      [class.pi-chevron-down]="!member.isExpanded"
@@ -200,18 +190,18 @@
           <div *ngFor="let member of membersByRank[rank]; trackBy: trackByMember">
             <div *ngIf="member.isExpanded && hasExpandableContent(member)"
                  class="mb-4 ttt-content-card p-4 border-tttRed/50 bg-tttRed/5">
-              
+
               <!-- Member Header -->
               <div class="flex items-center gap-3 mb-4 pb-3 border-b border-tttGray-700/50">
                 <div class="w-16 h-16 flex-shrink-0">
                   <div *ngIf="member.avatar && member.avatar !== ''; else expandedNoAvatarTemplate"
                        class="w-16 h-16 rounded-full border-2 overflow-hidden"
                        [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50'">
-                    <img [src]="member.avatar" 
+                    <img [src]="member.avatar"
                          [alt]="member.name"
                          class="w-full h-full object-cover" />
                   </div>
-                  
+
                   <!-- Non-officer fallback -->
                   <ng-template #expandedNoAvatarTemplate>
                     <div class="w-16 h-16 rounded-full border-2 flex items-center justify-center border-yellow-400/50 bg-yellow-400/10">
@@ -238,7 +228,7 @@
               </div>
 
               <div class="grid md:grid-cols-3 gap-4">
-                  
+
                 <!-- Medals -->
                 <div *ngIf="member.medals.length > 0" class="space-y-2">
                   <h5 class="text-sm font-semibold text-tttWhite flex items-center gap-2">
@@ -248,7 +238,7 @@
                   <div class="space-y-2">
                     <div *ngFor="let medal of member.medals; trackBy: trackByMedal"
                          class="flex items-center gap-2 p-2 rounded-lg bg-tttGray-800/50 border border-tttGray-600/30">
-                      <img [src]="medal.image" 
+                      <img [src]="medal.image"
                            [alt]="medal.name"
                            class="w-6 h-6 object-contain" />
                       <div class="min-w-0 flex-1">
@@ -268,7 +258,7 @@
                   <div class="space-y-2">
                     <div *ngFor="let ribbon of getSortedCampaignRibbons(member.campaignRibbons); trackBy: trackByCampaignRibbon"
                          class="flex items-center gap-2 p-2 rounded-lg bg-tttGray-800/50 border border-tttGray-600/30">
-                      <img [src]="ribbon.image" 
+                      <img [src]="ribbon.image"
                              [alt]="ribbon.name"
                              class="w-6 h-6 object-contain" />
                       <div class="min-w-0 flex-1">
@@ -288,7 +278,7 @@
                   <div class="space-y-2">
                     <div *ngFor="let abt of member.abteilungen; trackBy: trackByAbteilung"
                          class="flex items-center gap-2 p-2 rounded-lg bg-tttGray-800/50 border border-tttGray-600/30">
-                      <img [src]="abt.icon" 
+                      <img [src]="abt.icon"
                            [alt]="abt.name"
                            class="w-6 h-6 object-contain" />
                       <div class="min-w-0 flex-1">
@@ -305,4 +295,5 @@
       </div>
     </div>
   </section>
+  </ttt-page-layout>
 </div>

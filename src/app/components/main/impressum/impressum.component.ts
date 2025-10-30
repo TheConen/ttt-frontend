@@ -1,19 +1,14 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PageTitleService } from '../../../core/services/page-title.service';
+import { BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
 
 @Component({
   selector: 'ttt-impressum',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageLayoutComponent],
   templateUrl: './impressum.component.html',
   styleUrl: './impressum.component.css'
 })
-export class ImpressumComponent implements OnInit {
+export class ImpressumComponent extends BasePageComponent {
   readonly pageTitle = 'Impressum';
-  private readonly pageTitleService = inject(PageTitleService);
-
-  ngOnInit(): void {
-    this.pageTitleService.setTitle(this.pageTitle);
-  }
 }
