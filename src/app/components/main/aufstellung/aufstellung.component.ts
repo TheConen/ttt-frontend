@@ -1,7 +1,6 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TrackByUtils, KeyboardNavigationUtils } from '../../../shared/utils';
-import { PageTitleService } from '../../../core/services/page-title.service';
+import { TrackByUtils, KeyboardNavigationUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
 // Configuration constants
@@ -135,14 +134,13 @@ interface RankInfo {
 @Component({
   selector: 'ttt-aufstellung',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageLayoutComponent],
   templateUrl: './aufstellung.component.html',
   styleUrl: './aufstellung.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AufstellungComponent implements OnInit {
+export class AufstellungComponent extends BasePageComponent implements OnInit {
   // Services
-  private readonly pageTitleService = inject(PageTitleService);
   private readonly sanitizationService = inject(SanitizationService);
   // TODO: Inject member service when available
   // private readonly memberService = inject(MemberService);
@@ -170,8 +168,8 @@ export class AufstellungComponent implements OnInit {
     return (seed * 9301 + 49297) % 233280 / 233280;
   }
 
-  ngOnInit(): void {
-    this.pageTitleService.setTitle(AUFSTELLUNG_CONFIG.PAGE_TITLE);
+  override ngOnInit(): void {
+    super.ngOnInit();
     this.loadMembers();
   }
 

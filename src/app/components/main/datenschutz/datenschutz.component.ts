@@ -1,21 +1,16 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PageTitleService } from '../../../core/services/page-title.service';
+import { BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
 
 @Component({
   selector: 'ttt-datenschutz',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, PageLayoutComponent],
   templateUrl: './datenschutz.component.html',
   styleUrl: './datenschutz.component.css'
 })
-export class DatenschutzComponent implements OnInit {
+export class DatenschutzComponent extends BasePageComponent {
   readonly pageTitle = 'Datenschutzerklärung';
-  private readonly pageTitleService = inject(PageTitleService);
-
-  ngOnInit(): void {
-    this.pageTitleService.setTitle(this.pageTitle);
-  }
 
   // External links that might change
   readonly externalLinks = {

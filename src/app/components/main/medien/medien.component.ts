@@ -1,8 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { TrackByUtils, KeyboardNavigationUtils } from '../../../shared/utils';
-import { PageTitleService } from '../../../core/services/page-title.service';
+import { TrackByUtils, KeyboardNavigationUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
 interface LiveStream {
@@ -18,17 +17,17 @@ interface LiveStream {
 @Component({
   selector: 'ttt-medien',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, PageLayoutComponent],
   templateUrl: './medien.component.html',
   styleUrl: './medien.component.css'
 })
-export class MedienComponent implements OnInit {
+export class MedienComponent extends BasePageComponent implements OnInit {
   readonly pageTitle = 'Medien';
-  private readonly pageTitleService = inject(PageTitleService);
+  readonly pageSubtitle = 'Streams, Videos und Community-Kanäle des Tactical Training Teams';
   private readonly sanitizationService = inject(SanitizationService);
 
-  ngOnInit(): void {
-    this.pageTitleService.setTitle(this.pageTitle);
+  override ngOnInit(): void {
+    super.ngOnInit();
     // Simulate loading live streams
     this.loadLiveStreams();
   }
