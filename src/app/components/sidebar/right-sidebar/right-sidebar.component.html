@@ -1,0 +1,34 @@
+<aside class="md:w-64 bg-tttGray-900 border-l border-tttGray-800">
+  <div class="p-6">
+    <h3 class="mb-4 text-lg font-bold text-tttWhite flex items-center gap-2">
+      <i [class]="discordIcon.class"></i>
+      Live Discord
+    </h3>
+    <div class="space-y-3">
+      <!-- Discord Widget -->
+      <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 overflow-hidden">
+        <iframe
+          [src]="safeWidgetUrl"
+          width="100%"
+          height="400"
+          sandbox="allow-popups allow-same-origin allow-scripts"
+          class="w-full border-0"
+          [title]="discordConfig.widgetTitle">
+        </iframe>
+      </div>
+
+      <!-- Fallback Discord Link -->
+      <div class="rounded-lg bg-tttGray-800 border border-tttGray-700 p-4">
+        <div class="text-center">
+          <p class="text-sm text-tttGray-300 mb-3">Widget lädt nicht?</p>
+          <a [href]="discordConfig.directUrl"
+             target="_blank"
+             [ngClass]="'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium ' + discordIcon.colors.primary + ' ' + discordIcon.colors.text + ' ' + discordIcon.colors.hover + ' transition-colors'">
+            <i class="pi pi-discord text-tttWhite"></i>
+            Discord beitreten
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
