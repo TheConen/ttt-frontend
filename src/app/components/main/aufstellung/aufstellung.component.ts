@@ -124,12 +124,12 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
   isLoading = false;
   loadingError: string | null = null;
 
-  // Mock data generation - will be removed with backend integration
+  // Temporary mock data seed; remove when real backend data is available
   private readonly mockDataSeed = 12345;
 
   /**
-   * Deterministic mock random generator - replaces Math.random() for testing
-   * Uses seed-based approach to avoid cryptographic weakness warnings
+   * Deterministic mock random generator used for predictable test data.
+   * Seed-based implementation to keep results stable across runs.
    */
   private mockRandom(index = 0): number {
     const seed = this.mockDataSeed + index;
@@ -325,7 +325,7 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
   ];
 
   private generateRandomDepartments(): Abteilung[] {
-    // Mock data generation - uses deterministic approach for testing
+    // Generate deterministic mock departments for testing
     const numGroups = Math.floor(this.mockRandom(1) * 2) + 1;
     const shuffled = [...this.allDepartments].sort((a, b) =>
       a.name.localeCompare(b.name) * (this.mockRandom(2) > 0.5 ? 1 : -1)
@@ -333,7 +333,7 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
     return shuffled.slice(0, numGroups);
   }
 
-  // Load members (dummy data - will be replaced with backend call)
+  // Load members (placeholder - replaced by backend call when available)
   retryLoading(): void {
     this.loadMembers();
   }
@@ -375,7 +375,8 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
 
 
   /**
-   * Liefert die Abteilungen für ein Mitglied, um verschachtelte Ternary-Logik zu vermeiden und Duplikate zu verhindern.
+   * Return departments for a member. Keeps logic explicit and avoids nested
+   * ternary operators while preventing duplicate entries.
    */
   private getAbteilungenForMember(base: { name: string; hasDetails: boolean }): Abteilung[] {
     if (!base.hasDetails) return [];
@@ -384,7 +385,8 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
   }
 
   /**
-   * Utility: Prüft, ob ein Mitglied 'SpecOp0' ist (für alle Medaillen, Ribbons, Abteilungen).
+   * Utility: returns true when the member is the special test user 'SpecOp0'.
+   * Used to provide full mock details for this specific test account.
    */
   private isSpecOp0(name: string): boolean {
     return name === 'SpecOp0';

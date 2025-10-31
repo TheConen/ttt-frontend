@@ -6,7 +6,7 @@ import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 import { MemberService } from '../../../core/services/member.service';
 
-// Type for banner slides
+// Banner slide type
 interface BannerSlide {
     image: string;
     title?: string;
@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private readonly sanitizationService = inject(SanitizationService);
     private readonly memberService = inject(MemberService);
 
-    // Community statistics for the stats section (dynamic)
+    // Community stats (updated from API)
     communityStats: { value: string; label: string; color: string }[] = [
         { value: '...', label: 'Mitglieder', color: 'text-tttGreen' },
         { value: '2013', label: 'Gegründet', color: 'text-tttGreen' },
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.startSlider();
     }
 
-    // Accessibility: strip HTML tags for aria-labels
+    // Utility: strip HTML tags for aria-labels
     getCleanTitle(title: string): string {
         return this.sanitizationService.stripHtml(title);
     }

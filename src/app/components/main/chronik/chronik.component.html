@@ -1,9 +1,9 @@
-<!-- TTT-Chronik Page -->
+<!-- TTT chronicle page -->
 <ttt-page-layout [pageTitle]="pageTitle" [pageSubtitle]="pageSubtitle">
-  <!-- Warum gibt es ein TTT? Section -->
+  <!-- Why TTT? section -->
   <div class="mb-8">
     <div class="ttt-content-card py-6 px-6">
-      <!-- Section Header -->
+  <!-- Section header -->
       <div class="mb-4 border-b border-tttGray-700 pb-3">
         <div class="flex items-center gap-3 mb-2">
           <i class="pi pi-question-circle text-tttRed text-xl"></i>
@@ -12,7 +12,7 @@
         <p class="text-sm text-tttRed">Die Entstehungsgeschichte unserer Community</p>
       </div>
 
-      <!-- Content -->
+  <!-- Content -->
       <div class="text-base text-tttGray-300 space-y-4 leading-relaxed">
         <p>Das Tactical Training Team (TTT) ist der Nachfolger des Projekts "GT-Kommando", das Ende 2012 entwickelt wurde. Ursprünglich entstand GT-Kommando aus dem Frust über mangelnde Koordination in der Community. Es sollte ein Arma-Grundlagentraining basierend auf militärischen Unterlagen entstehen.</p>
 
@@ -31,7 +31,7 @@
       </div>
   </div>
 
-  <!-- Timeline Section -->
+  <!-- Timeline section -->
   <div class="mb-8">
     <div class="mb-6 ttt-text-center">
       <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
@@ -41,7 +41,7 @@
       <p class="ttt-description-text">Meilensteine des Tactical Training Teams</p>
     </div>
 
-    <!-- Timeline Container - Sehr kompakte Karten mit Ausklapp-Effekt -->
+  <!-- Timeline container - compact cards with expandable details -->
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 items-stretch">
       <div *ngFor="let event of timelineEvents; trackBy: trackByIndex" class="relative h-full">
         <button
@@ -80,7 +80,7 @@
                [class.pi-chevron-up]="event.expanded" aria-hidden="true"></i>
           </div>
         </button>
-        <!-- Expanded Details -->
+  <!-- Expanded details -->
         <div *ngIf="event.expanded" class="absolute z-10 left-0 right-0 mt-2 ttt-content-card p-3 border-tttRed/70 bg-tttRed/10 shadow-xl animate-fadeIn">
           <button (click)="toggleEventDetails(event)"
                   class="absolute top-2 right-2 w-6 h-6 rounded-full bg-tttGray-800/70 flex items-center justify-center hover:bg-tttRed/30 transition-all duration-200"
@@ -103,10 +103,10 @@
     </div>
   </div>
 
-  <!-- Mission Briefing - Fiktive Geschichte -->
+  <!-- Mission briefing - fictional story -->
   <div class="mb-8">
     <div class="ttt-content-card py-4 px-5 group relative hover:border-tttRed/50 hover:bg-tttRed/5 transition-all duration-300">
-      <!-- Section Header -->
+  <!-- Section header -->
       <div class="mb-3 border-b border-tttRed/30 pb-2 group-hover:border-tttRed/50 transition-colors duration-300">
         <div class="flex items-center gap-2 mb-2">
           <i class="pi pi-shield text-tttRed group-hover:scale-110 transition-transform duration-300"></i>
@@ -115,7 +115,7 @@
         <p class="text-sm text-tttRed group-hover:text-tttRed-300 transition-colors duration-300">Abteilung 22 - Operative Geschichtsschreibung</p>
       </div>
 
-      <!-- Fiktive Geschichte Content -->
+  <!-- Fictional story content -->
       <div class="text-sm text-tttGray-300 space-y-3 group-hover:text-tttGray-200 transition-colors duration-300">
         <div class="mt-4 flex items-center gap-2">
           <a [href]="fictionDocumentationLink"
@@ -127,7 +127,7 @@
         </div>
       </div>
 
-      <!-- Hover Glow Effect -->
+  <!-- Hover glow effect -->
       <div class="absolute inset-0 rounded-xl bg-gradient-to-br from-tttRed/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
     </div>
   </div>
