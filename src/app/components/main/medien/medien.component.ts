@@ -28,11 +28,11 @@ export class MedienComponent extends BasePageComponent implements OnInit {
     });
   }
 
-  // External links that might change
+  // External links (configurable)
   readonly externalLinks = {
     youtube: 'https://www.youtube.com/@tacticalteamde',
     twitch: 'https://www.twitch.tv/tacticaltrainingteam',
-  kick: 'https://kick.com/tacticaltrainingteam',
+    kick: 'https://kick.com/tacticaltrainingteam',
     x: 'https://x.com/TTT_ArmA',
     mastodon: 'https://mastodon.social/@tacticaltrainingteam',
     bluesky: 'https://bsky.app/profile/tacticalteam.bsky.social',
@@ -50,21 +50,8 @@ export class MedienComponent extends BasePageComponent implements OnInit {
   readonly trackByIndex = TrackByUtils.trackByIndex;
 
   private loadLiveStreams(): void {
-    // Simulate API call to Twitch
-    // In a real implementation, you would call the Twitch API here
-    // For now, we'll simulate some live streams (empty for demo)
-    this.liveStreams = [
-      // Uncomment to simulate live streams:
-      // {
-      //   id: 'stream1',
-      //   channelName: 'TacticalTeamMember1',
-      //   title: 'TTT Mission: Operation Schwarze Adler',
-      //   viewers: 42,
-      //   thumbnail: '/img/medien/placeholder.webp',
-      //   url: 'https://twitch.tv/tacticalmember1',
-      //   isLive: true
-      // }
-    ];
+    // Placeholder for simulated streams; real data comes from MedienService.
+    this.liveStreams = [];
   }
 
   // Utility method for external links (with proper security check)
@@ -108,5 +95,5 @@ export class MedienComponent extends BasePageComponent implements OnInit {
     secondary: 'inline-flex items-center gap-2 rounded-lg border border-tttWhite/30 bg-tttWhite/10 px-4 py-2 text-sm font-bold text-tttWhite transition-all duration-300 hover:bg-tttWhite/20'
   } as const;
 
-  // Button styling methods
+  // Button styling methods (constants above)
 }

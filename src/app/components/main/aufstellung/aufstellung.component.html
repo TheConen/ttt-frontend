@@ -1,6 +1,6 @@
-<!-- Aufstellung Component -->
+<!-- Roster component -->
 
-<!-- Loading State -->
+<!-- Loading state -->
 <div *ngIf="isLoading" class="flex min-h-96 items-center justify-center">
   <div class="text-center">
     <div class="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-tttGray-300 border-t-tttRed"></div>
@@ -8,7 +8,7 @@
   </div>
 </div>
 
-<!-- Error State -->
+<!-- Error state -->
 <div *ngIf="loadingError && !isLoading" class="flex min-h-96 items-center justify-center">
   <div class="text-center">
     <div class="mb-4 flex justify-center">
@@ -26,10 +26,10 @@
   </div>
 </div>
 
-<!-- Main Content -->
+<!-- Main content -->
 <div *ngIf="!isLoading && !loadingError">
   <ttt-page-layout [pageTitle]="pageTitle" [pageSubtitle]="pageSubtitle">
-    <!-- Statistics Overview -->
+  <!-- Statistics overview -->
     <section class="mb-8">
       <div class="ttt-page-container">
         <div class="mb-6 ttt-text-center">
@@ -59,7 +59,7 @@
         </div>
       </div>
 
-      <!-- Member Summary -->
+  <!-- Member summary -->
       <div class="text-center">
         <div class="inline-flex items-center gap-2 rounded-lg bg-tttRed px-4 py-2">
           <i class="pi pi-users text-lg text-tttWhite" aria-hidden="true"></i>
@@ -69,7 +69,7 @@
     </div>
   </section>
 
-  <!-- Member Roster -->
+  <!-- Member roster -->
   <section class="bg-tttGray-900 py-8">
     <div class="ttt-page-container">
       <div class="mb-6 ttt-text-center">
@@ -80,13 +80,13 @@
         <p class="ttt-description-text">{{ sections.ROSTER.SUBTITLE }}</p>
       </div>
 
-      <!-- Rank Groups -->
+          <!-- Rank groups -->
       <div class="space-y-8">
         <div
           *ngFor="let rank of rankOrder; trackBy: trackByRank"
           [class.hidden]="membersByRank[rank].length === 0">
 
-          <!-- Rank Header -->
+          <!-- Rank header -->
           <div class="mb-6 flex items-center gap-4">
             <img
               *ngIf="rank === 'offizier'"
@@ -99,13 +99,13 @@
             <span class="text-sm font-medium text-tttWhite/70">{{ membersByRank[rank].length }} Mitglieder</span>
           </div>
 
-          <!-- Members Grid -->
+          <!-- Members grid -->
           <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
             <div
               *ngFor="let member of membersByRank[rank]; trackBy: trackByMember"
               class="relative">
 
-              <!-- Member Card -->
+              <!-- Member card -->
               <div
                 [class.cursor-pointer]="hasExpandableContent(member)"
                 [class.bg-tttRed/5]="member.isExpanded"
@@ -140,7 +140,7 @@
                     </ng-template>
                   </div>
 
-                  <!-- Member Info -->
+                  <!-- Member info -->
                   <h4 class="text-sm font-bold text-tttWhite group-hover:text-tttRed transition-colors duration-300 mb-1 truncate"
                       [class.mt-2]="member.rank !== 'offizier'">
                     {{ member.name }}
@@ -151,7 +151,7 @@
                   </span>
                 </div>
 
-                <!-- Compact Stats -->
+                <!-- Compact stats -->
                 <div class="flex justify-center gap-1 text-xs mb-1">
                   <span *ngIf="member.medals.length > 0"
                         class="w-5 h-5 bg-yellow-400/20 rounded flex items-center justify-center"
@@ -175,7 +175,7 @@
                   {{ getMemberYear(member.memberSince) }}
                 </p>
 
-                <!-- Expand Indicator -->
+                <!-- Expand indicator -->
                 <div *ngIf="hasExpandableContent(member)"
                      class="mt-1 flex justify-center">
                   <i class="pi text-xs text-tttGray-500 transition-transform duration-300"
@@ -186,12 +186,12 @@
             </div>
           </div>
 
-          <!-- Expanded Details -->
+          <!-- Expanded details -->
           <div *ngFor="let member of membersByRank[rank]; trackBy: trackByMember">
             <div *ngIf="member.isExpanded && hasExpandableContent(member)"
                  class="mb-4 ttt-content-card p-4 border-tttRed/50 bg-tttRed/5">
 
-              <!-- Member Header -->
+              <!-- Member header -->
               <div class="flex items-center gap-3 mb-4 pb-3 border-b border-tttGray-700/50">
                 <div class="w-16 h-16 flex-shrink-0">
                   <div *ngIf="member.avatar && member.avatar !== ''; else expandedNoAvatarTemplate"
