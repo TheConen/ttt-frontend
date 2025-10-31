@@ -3,16 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { TrackByUtils, KeyboardNavigationUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
 import { SanitizationService } from '../../../core/services/sanitization.service';
-
-interface LiveStream {
-  id: string;
-  url: string;
-  channelName: string;
-  title: string;
-  viewers: number;
-  thumbnail: string;
-  isLive: boolean;
-}
+import { TwitchStream } from '../../../shared/types/medien.types';
+import { MedienService } from '../../../core/services/medien.service';
 
 @Component({
   selector: 'ttt-medien',
@@ -25,15 +17,16 @@ export class MedienComponent extends BasePageComponent implements OnInit {
   readonly pageTitle = 'Medien';
   readonly pageSubtitle = 'Streams, Videos und Community-Kanäle des Tactical Training Teams';
   private readonly sanitizationService = inject(SanitizationService);
+  private readonly medienService = inject(MedienService);
+
+  liveStreams: TwitchStream[] = [];
 
   override ngOnInit(): void {
     super.ngOnInit();
-    // Simulate loading live streams
-    this.loadLiveStreams();
+    this.medienService.getTwitchStreams().subscribe(streams => {
+      this.liveStreams = streams;
+    });
   }
-
-  // Live streams data (dynamic)
-  liveStreams: LiveStream[] = [];
 
   // External links that might change
   readonly externalLinks = {
@@ -53,7 +46,7 @@ export class MedienComponent extends BasePageComponent implements OnInit {
   } as const;
 
   // TrackBy functions
-  readonly trackByLiveStream = TrackByUtils.trackByProperty<LiveStream>('id');
+  readonly trackByLiveStream = TrackByUtils.trackByProperty<TwitchStream>('id');
   readonly trackByIndex = TrackByUtils.trackByIndex;
 
   private loadLiveStreams(): void {

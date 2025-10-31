@@ -1,38 +1,58 @@
+
+import { SlotbotEvent } from '../../shared/types/events.types';
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-
-export interface SlotbotEvent {
-  id: string;
-  title: string;
-  date: string; // ISO date
-  startTime: string; // e.g. '19:00'
-  durationHours: number; // duration expressed in hours
-  type: string;
-  eventUrl?: string; // Optional: URL to event page
-}
+import { ApiService } from './api.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class EventsService {
   // Use environment variable when available; fallback to local API prefix
   // NOTE: replace with import from environment when backend is configured
-  private readonly baseUrl = typeof (globalThis as any).__TTT_API_BASE__ === 'string' ? (globalThis as any).__TTT_API_BASE__ : '/api/v1';
-
-  private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.apiBaseUrl;
+  private readonly api = inject(ApiService);
 
   /**
    * Get upcoming events (compact format expected from backend)
    */
   getUpcomingEvents(limit = 3): Observable<SlotbotEvent[]> {
-    // Backend endpoint to provide slotbot events to frontend
     const url = `${this.baseUrl}/events/upcoming?limit=${limit}`;
-    return this.http.get<{ events: SlotbotEvent[] }>(url).pipe(
+    return this.api.get<{ events: SlotbotEvent[] }>(url).pipe(
       map(res => res?.events ?? []),
-      catchError(err => {
-        console.error('Error fetching upcoming events:', err);
-        // Fallback to empty list so UI remains stable
-        return of([] as SlotbotEvent[]);
+      catchError(() => {
+        // Dummy fallback data
+        const now = Date.now();
+        const dummyEvents: SlotbotEvent[] = [
+          {
+            id: '25350',
+            title: 'SGA Medic 3.0 Beta [Training][Beta]',
+            date: new Date(now).toISOString(),
+            startTime: '19:30',
+            durationHours: 4,
+            type: 'Training',
+            eventUrl: 'https://events.tacticalteam.de/events/25350'
+          },
+          {
+            id: '25351',
+            title: 'Operation Hill Jumper Teil 1 [Coop][Beta]',
+            date: new Date(now + 86400000).toISOString(),
+            startTime: '19:30',
+            durationHours: 4,
+            type: 'Coop',
+            eventUrl: 'https://events.tacticalteam.de/events/25351'
+          },
+          {
+            id: '25352',
+            title: 'Übungsunterbrechung [Coop]',
+            date: new Date(now + 2 * 86400000).toISOString(),
+            startTime: '19:30',
+            durationHours: 4,
+            type: 'Coop',
+            eventUrl: 'https://events.tacticalteam.de/events/25352'
+          }
+        ];
+        return of(dummyEvents);
       })
     );
   }

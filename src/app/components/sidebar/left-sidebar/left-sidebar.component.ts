@@ -1,7 +1,8 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
-import { Observable, of } from 'rxjs';
-import { SlotbotEvent } from '../../../core/services/events.service';
+import { Observable } from 'rxjs';
+import { SlotbotEvent } from '../../../shared/types/events.types';
+import { EventsService } from '../../../core/services/events.service';
 
 @Component({
   selector: 'ttt-left-sidebar',
@@ -12,34 +13,6 @@ import { SlotbotEvent } from '../../../core/services/events.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LeftSidebarComponent {
-  // Dummy-Events für die Eventliste (später aus Service laden)
-  readonly events$: Observable<SlotbotEvent[]> = of([
-    {
-      id: '25350',
-      title: 'SGA Medic 3.0 Beta [Training][Beta]',
-      date: new Date().toISOString(),
-      startTime: '19:30',
-      durationHours: 4,
-      type: 'Training',
-      eventUrl: 'https://events.tacticalteam.de/events/25350'
-    },
-    {
-      id: '25351',
-      title: 'Operation Hill Jumper Teil 1 [Coop][Beta]',
-      date: new Date(Date.now() + 86400000).toISOString(),
-      startTime: '19:30',
-      durationHours: 4,
-      type: 'Coop',
-      eventUrl: 'https://events.tacticalteam.de/events/25351'
-    },
-    {
-      id: '25352',
-      title: 'Übungsunterbrechung [Coop]',
-      date: new Date(Date.now() + 2 * 86400000).toISOString(),
-      startTime: '19:30',
-      durationHours: 4,
-      type: 'Coop',
-      eventUrl: 'https://events.tacticalteam.de/events/25352'
-    }
-  ]);
+  private readonly eventsService = inject(EventsService);
+  readonly events$: Observable<SlotbotEvent[]> = this.eventsService.getUpcomingEvents(3);
 }

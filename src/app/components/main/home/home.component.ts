@@ -4,11 +4,13 @@ import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { PageTitleService } from '../../../core/services/page-title.service';
 import { SanitizationService } from '../../../core/services/sanitization.service';
+import { MemberService } from '../../../core/services/member.service';
 
+// Type for banner slides
 interface BannerSlide {
     image: string;
-    title: string;
-    subtitle: string;
+    title?: string;
+    subtitle?: string;
 }
 
 @Component({
@@ -20,12 +22,13 @@ interface BannerSlide {
 export class HomeComponent implements OnInit, OnDestroy {
     private readonly pageTitleService = inject(PageTitleService);
     private readonly sanitizationService = inject(SanitizationService);
+    private readonly memberService = inject(MemberService);
 
-    // Community statistics for the stats section
-    readonly communityStats = [
-        { value: '80+', label: 'Mitglieder', color: 'text-tttGreen' },
+    // Community statistics for the stats section (dynamic)
+    communityStats: { value: string; label: string; color: string }[] = [
+        { value: '...', label: 'Mitglieder', color: 'text-tttGreen' },
         { value: '2013', label: 'Gegründet', color: 'text-tttGreen' },
-        { value: '2x', label: 'Events/Woche', color: 'text-tttGreen' }
+        { value: '2', label: 'Events/Woche', color: 'text-tttGreen' }
     ];
 
     readonly bannerSlides: BannerSlide[] = [
@@ -52,6 +55,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.pageTitleService.setBaseTitle();
         this.startSlider();
+        // Load member stats
+        this.memberService.getMemberStats().subscribe(stats => {
+            const total = Object.values(stats).reduce((sum, n) => sum + n, 0);
+            this.communityStats[0].value = total.toString();
+        });
     }
 
     ngOnDestroy(): void {

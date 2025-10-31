@@ -24,7 +24,7 @@
             <button
                 *ngFor="let slide of bannerSlides; let i = index"
                 (click)="goToImage(i)"
-                [attr.aria-label]="'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)"
+                    [attr.aria-label]="'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title || '')"
                 [attr.aria-current]="i === currentImageIndex ? 'true' : 'false'"
                 class="h-3 w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-tttRed focus:ring-offset-2"
                 [class.bg-tttRed]="i === currentImageIndex"
