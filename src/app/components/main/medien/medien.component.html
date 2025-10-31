@@ -22,7 +22,7 @@
       rel="noopener noreferrer">
         <!-- Stream Thumbnail -->
         <div class="relative mb-4">
-          <img [src]="stream.thumbnail"
+          <img [src]="stream.thumbnailUrl"
                [alt]="stream.title"
                class="w-full h-48 object-cover rounded-lg" />
           <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent rounded-lg"></div>
@@ -35,7 +35,7 @@
           <div class="absolute bottom-3 left-3">
             <span class="inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium bg-black/70 text-white">
               <i class="pi pi-eye"></i>
-              {{ stream.viewers }}
+              {{ stream.viewerCount }}
             </span>
           </div>
         </div>
@@ -46,7 +46,7 @@
           </h3>
           <p class="text-sm text-tttGray-300">
             <i class="pi pi-user mr-1"></i>
-            {{ stream.channelName }}
+            {{ stream.userName }}
           </p>
         </div>
     </a>

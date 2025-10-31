@@ -9,15 +9,6 @@ interface DiscordConfig {
   widgetTitle: string;
 }
 
-interface DiscordIcon {
-  class: string;
-  colors: {
-    primary: string;
-    hover: string;
-    text: string;
-  };
-}
-
 @Component({
   selector: 'ttt-right-sidebar',
   standalone: true,

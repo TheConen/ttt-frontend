@@ -1,81 +1,172 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
 
-// TODO: Move these interfaces to a shared types file when backend is ready
-export interface Member {
-  id: string;
-  name: string;
-  rank: RankType;
-  avatar: string;
-  memberSince: string;
-  medals: Medal[];
-  campaignRibbons: CampaignRibbon[];
-  abteilungen: Abteilung[];
-}
+import {
+  Member,
+  Medal,
+  CampaignRibbon,
+  Abteilung,
+  RankType,
+  MemberResponse,
+  MemberStatsResponse
+} from '../../shared/types/member.types';
 
-export interface Medal {
-  id: string;
-  name: string;
-  image: string;
-  description: string;
-}
-
-export interface CampaignRibbon {
-  id: string;
-  name: string;
-  image: string;
-  campaign: string;
-  year: string;
-}
-
-export interface Abteilung {
-  id: string;
-  name: string;
-  icon: string;
-  description: string;
-}
-
-export type RankType = 'offizier' | 'unteroffizier' | 'veteran' | 'soldat' | 'rekrut' | 'gast';
-
-// Backend API Response interfaces
-interface MemberResponse {
-  members: Member[];
-  total: number;
-  lastUpdated: string;
-}
-
-interface MemberStatsResponse {
-  stats: Record<RankType, number>;
-  totalMembers: number;
-  activeMembers: number;
-}
+import { Injectable, inject } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { map, catchError, timeout } from 'rxjs/operators';
+import { ApiService } from './api.service';
+import { environment } from '../../../environments/environment';
 
 /**
  * Service for managing TTT member data
  * This service will handle all backend communication for the Aufstellung component
- * 
+ *
  * TODO: Implement when backend API is available
  */
 @Injectable({
   providedIn: 'root'
 })
 export class MemberService {
-  private readonly baseUrl = '/api/v1'; // TODO: Configure from environment
-  
-  constructor(private readonly http: HttpClient) {}
+  private readonly baseUrl = environment.apiBaseUrl;
+  private readonly api = inject(ApiService);
 
   /**
    * Get all active members with their details
    * @returns Observable<Member[]>
    */
   getAllMembers(): Observable<Member[]> {
-    return this.http.get<MemberResponse>(`${this.baseUrl}/members`).pipe(
-      map(response => response.members),
-      catchError(error => {
-        console.error('Error fetching members:', error);
-        throw error;
+    return this.api.get<MemberResponse>(`${this.baseUrl}/members`).pipe(
+      timeout(2000),
+      map((response: MemberResponse) => response.members),
+      catchError(() => {
+        // Dummy fallback data with details for the UI
+        const dummyMembers: Member[] = [
+          {
+            id: 'member-1',
+            name: 'TheConen',
+            rank: 'offizier',
+            avatar: '/img/aufstellung/offizier-kopf.webp',
+            memberSince: '2015-01-01',
+            medals: [
+              { id: 'medal-1', name: 'Medal of Honor', image: '/img/aufstellung/medals/medal-mdh.png', description: 'Für besondere Verdienste' }
+            ],
+            campaignRibbons: [
+              { id: 'ribbon-1', name: 'Aspis Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-aspis.png', campaign: 'Operation Aspis', year: '2020' }
+            ],
+            abteilungen: [
+              { id: 'abt-1', name: 'Missionsbau', icon: '/img/aufstellung/group/group-missionsbau-icon.png', description: 'Wissensvermittlung & Multiplikation im Missionsbau' }
+            ]
+          },
+          {
+            id: 'member-2',
+            name: 'SpecOp0',
+            rank: 'offizier',
+            avatar: '/img/aufstellung/offizier-kopf.webp',
+            memberSince: '2016-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-3',
+            name: 'Reimchen',
+            rank: 'unteroffizier',
+            avatar: '',
+            memberSince: '2018-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-4',
+            name: 'rockn_roller',
+            rank: 'unteroffizier',
+            avatar: '',
+            memberSince: '2019-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-5',
+            name: 'GSG9_abzocker',
+            rank: 'veteran',
+            avatar: '',
+            memberSince: '2017-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-6',
+            name: 'Speutzi',
+            rank: 'veteran',
+            avatar: '',
+            memberSince: '2018-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-7',
+            name: 'Corben',
+            rank: 'soldat',
+            avatar: '',
+            memberSince: '2022-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-8',
+            name: 'SchmerzKeks',
+            rank: 'soldat',
+            avatar: '',
+            memberSince: '2023-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-9',
+            name: 'Epsilon',
+            rank: 'rekrut',
+            avatar: '',
+            memberSince: '2024-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-10',
+            name: 'Addi995',
+            rank: 'rekrut',
+            avatar: '',
+            memberSince: '2024-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-11',
+            name: 'Mynx',
+            rank: 'gast',
+            avatar: '',
+            memberSince: '2024-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          },
+          {
+            id: 'member-12',
+            name: 'Leroy',
+            rank: 'gast',
+            avatar: '',
+            memberSince: '2024-01-01',
+            medals: [],
+            campaignRibbons: [],
+            abteilungen: []
+          }
+        ];
+        return of(dummyMembers);
       })
     );
   }
@@ -85,11 +176,18 @@ export class MemberService {
    * @returns Observable<Record<RankType, number>>
    */
   getMemberStats(): Observable<Record<RankType, number>> {
-    return this.http.get<MemberStatsResponse>(`${this.baseUrl}/members/stats`).pipe(
-      map(response => response.stats),
-      catchError(error => {
-        console.error('Error fetching member stats:', error);
-        throw error;
+    return this.api.get<MemberStatsResponse>(`${this.baseUrl}/members/stats`).pipe(
+      map((response: MemberStatsResponse) => response.stats),
+      catchError(() => {
+        // Dummy fallback: same distribution as dummy members
+        return of({
+          offizier: 2,
+          unteroffizier: 2,
+          veteran: 2,
+          soldat: 2,
+          rekrut: 2,
+          gast: 2
+        } as Record<RankType, number>);
       })
     );
   }
@@ -100,12 +198,7 @@ export class MemberService {
    * @returns Observable<Member>
    */
   getMemberById(memberId: string): Observable<Member> {
-    return this.http.get<Member>(`${this.baseUrl}/members/${memberId}`).pipe(
-      catchError(error => {
-        console.error(`Error fetching member ${memberId}:`, error);
-        throw error;
-      })
-    );
+    return this.api.get<Member>(`${this.baseUrl}/members/${memberId}`);
   }
 
   /**
@@ -114,12 +207,8 @@ export class MemberService {
    * @returns Observable<Member[]>
    */
   getMembersByRank(rank: RankType): Observable<Member[]> {
-    return this.http.get<MemberResponse>(`${this.baseUrl}/members?rank=${rank}`).pipe(
-      map(response => response.members),
-      catchError(error => {
-        console.error(`Error fetching members with rank ${rank}:`, error);
-        throw error;
-      })
+    return this.api.get<MemberResponse>(`${this.baseUrl}/members?rank=${rank}`).pipe(
+      map((response: MemberResponse) => response.members)
     );
   }
 
@@ -130,12 +219,7 @@ export class MemberService {
    * @returns Observable<Member>
    */
   updateMember(memberId: string, updates: Partial<Member>): Observable<Member> {
-    return this.http.patch<Member>(`${this.baseUrl}/members/${memberId}`, updates).pipe(
-      catchError(error => {
-        console.error(`Error updating member ${memberId}:`, error);
-        throw error;
-      })
-    );
+    return this.api.patch<Member>(`${this.baseUrl}/members/${memberId}`, updates);
   }
 
   /**
@@ -143,12 +227,7 @@ export class MemberService {
    * @returns Observable<Medal[]>
    */
   getAvailableMedals(): Observable<Medal[]> {
-    return this.http.get<Medal[]>(`${this.baseUrl}/medals`).pipe(
-      catchError(error => {
-        console.error('Error fetching medals:', error);
-        throw error;
-      })
-    );
+    return this.api.get<Medal[]>(`${this.baseUrl}/medals`);
   }
 
   /**
@@ -156,12 +235,7 @@ export class MemberService {
    * @returns Observable<CampaignRibbon[]>
    */
   getAvailableCampaignRibbons(): Observable<CampaignRibbon[]> {
-    return this.http.get<CampaignRibbon[]>(`${this.baseUrl}/campaign-ribbons`).pipe(
-      catchError(error => {
-        console.error('Error fetching campaign ribbons:', error);
-        throw error;
-      })
-    );
+    return this.api.get<CampaignRibbon[]>(`${this.baseUrl}/campaign-ribbons`);
   }
 
   /**
@@ -169,11 +243,6 @@ export class MemberService {
    * @returns Observable<Abteilung[]>
    */
   getAvailableAbteilungen(): Observable<Abteilung[]> {
-    return this.http.get<Abteilung[]>(`${this.baseUrl}/abteilungen`).pipe(
-      catchError(error => {
-        console.error('Error fetching abteilungen:', error);
-        throw error;
-      })
-    );
+    return this.api.get<Abteilung[]>(`${this.baseUrl}/abteilungen`);
   }
 }

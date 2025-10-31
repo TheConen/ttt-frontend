@@ -52,7 +52,7 @@ describe('MedienComponent', () => {
     expect(component.externalLinks).toBeDefined();
     expect(component.externalLinks.youtube).toBe('https://www.youtube.com/@tacticalteamde');
     expect(component.externalLinks.twitch).toBe('https://www.twitch.tv/tacticaltrainingteam');
-    expect(component.externalLinks.trovo).toBe('https://trovo.live/tacticalteam');
+    expect(component.externalLinks.kick).toBe('https://kick.com/tacticaltrainingteam');
     expect(component.externalLinks.x).toBe('https://x.com/TTT_ArmA');
     expect(component.externalLinks.mastodon).toBe('https://mastodon.social/@tacticaltrainingteam');
     expect(component.externalLinks.bluesky).toBe('https://bsky.app/profile/tacticalteam.bsky.social');

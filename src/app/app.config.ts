@@ -1,4 +1,5 @@
 import { ApplicationConfig, provideZoneChangeDetection, APP_INITIALIZER } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -17,19 +18,20 @@ function initializeCSP(cspService: CSPService) {
 }
 
 export const appConfig: ApplicationConfig = {
-    providers: [
-        provideZoneChangeDetection({ eventCoalescing: true }),
-        provideRouter(routes),
-        provideAnimationsAsync(),
-        providePrimeNG({
-            theme: tttPrimeNgTheme,
-        }),
-        // Initialize CSP on app startup
-        {
-          provide: APP_INITIALIZER,
-          useFactory: initializeCSP,
-          deps: [CSPService],
-          multi: true
-        }
-    ],
+  providers: [
+    provideZoneChangeDetection({ eventCoalescing: true }),
+    provideRouter(routes),
+    provideAnimationsAsync(),
+    providePrimeNG({
+      theme: tttPrimeNgTheme,
+    }),
+    provideHttpClient(),
+    // Initialize CSP on app startup
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeCSP,
+      deps: [CSPService],
+      multi: true
+    }
+  ],
 };
