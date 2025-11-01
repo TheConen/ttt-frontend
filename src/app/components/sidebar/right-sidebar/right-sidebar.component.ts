@@ -18,7 +18,6 @@ interface DiscordConfig {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RightSidebarComponent {
-  // Discord widget configuration - using trusted static URL
   readonly discordConfig: DiscordConfig = {
     serverId: '121399943393968128',
     theme: 'dark',
@@ -26,6 +25,7 @@ export class RightSidebarComponent {
     directUrl: 'https://discord.tacticalteam.de',
     widgetTitle: 'TTT Discord Server'
   };
+
   readonly discordIcon = {
     class: 'pi pi-discord text-tttRed mr-2',
     colors: {

@@ -186,16 +186,10 @@ export class ChronikComponent extends BasePageComponent implements OnInit {
   readonly pageTitle = 'TTT-Chronik';
   readonly pageSubtitle = 'Geschichte des Tactical Training Teams';
 
-  // Dependency injection
   private readonly sanitizationService = inject(SanitizationService);
-
-  // TrackBy functions
   readonly trackByIndex = TrackByUtils.trackByIndex;
-
-  // External documentation link (dynamic)
   readonly fictionDocumentationLink = 'https://drive.google.com/file/d/1QpkevojoID6-HfPsp5GIW3OUmUjnfOSd/view';
 
-  // Template helper methods
   private readonly eventTypeConfig = {
     anniversary: { color: 'border-tttRed bg-tttRed text-tttWhite', label: 'Jubiläum' },
     milestone: { color: 'border-blue-500 bg-blue-500/20 text-blue-300', label: 'Meilenstein' },
@@ -217,7 +211,6 @@ export class ChronikComponent extends BasePageComponent implements OnInit {
     return `pi ${icon} text-inherit`;
   }
 
-  // Helper method to strip HTML tags for accessibility
   getCleanTitle(title: string): string {
     return this.sanitizationService.stripHtml(title);
   }

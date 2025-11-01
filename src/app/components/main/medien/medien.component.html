@@ -12,7 +12,7 @@
 
     <!-- Live Streams Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <a *ngFor="let stream of liveStreams; trackBy: trackByLiveStream"
+    <a *ngFor="let stream of liveStreams$ | async; trackBy: trackByLiveStream"
       class="ttt-content-card group hover:border-tttRed/50 transition-all duration-300 cursor-pointer"
       (click)="openExternalLink(stream.url, $event)"
       (keydown)="handleKeyboardNavigation(stream.url, $event)"
@@ -53,7 +53,7 @@
     </div>
 
     <!-- No Live Streams Message -->
-    <div *ngIf="liveStreams.length === 0" class="text-center py-12">
+    <div *ngIf="(liveStreams$ | async)?.length === 0" class="text-center py-12">
       <div class="mb-4">
         <i class="pi pi-video text-4xl text-tttGray-600"></i>
       </div>

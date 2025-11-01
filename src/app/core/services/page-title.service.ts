@@ -8,10 +8,6 @@ export class PageTitleService {
   private readonly baseTitle = 'Tactical Training Team';
   private readonly titleService = inject(Title);
 
-  /**
-   * Sets the page title with the base title
-   * @param pageTitle - The specific page title (e.g., 'Impressum', 'Datenschutz')
-   */
   setTitle(pageTitle?: string): void {
     if (pageTitle) {
       this.titleService.setTitle(`${pageTitle} - ${this.baseTitle}`);
@@ -20,16 +16,10 @@ export class PageTitleService {
     }
   }
 
-  /**
-   * Sets only the base title (for home page)
-   */
   setBaseTitle(): void {
     this.titleService.setTitle(this.baseTitle);
   }
 
-  /**
-   * Gets the current title
-   */
   getTitle(): string {
     return this.titleService.getTitle();
   }

@@ -124,13 +124,8 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
   isLoading = false;
   loadingError: string | null = null;
 
-  // Temporary mock data seed; remove when real backend data is available
   private readonly mockDataSeed = 12345;
 
-  /**
-   * Deterministic mock random generator used for predictable test data.
-   * Seed-based implementation to keep results stable across runs.
-   */
   private mockRandom(index = 0): number {
     const seed = this.mockDataSeed + index;
     return (seed * 9301 + 49297) % 233280 / 233280;
@@ -393,14 +388,29 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
   }
 
   toggleMemberDetails(member: Member): void {
-    if (member.isExpanded) {
-      member.isExpanded = false;
-      return;
-    }
+    const wasExpanded = member.isExpanded;
+
+    // Close all other members
     for (const m of this.members) {
       m.isExpanded = false;
     }
-    member.isExpanded = true;
+
+    // Toggle current member
+    member.isExpanded = !wasExpanded;
+
+    // Scroll to member card on mobile when expanding
+    if (member.isExpanded && globalThis.window !== undefined) {
+      setTimeout(() => {
+        const element = globalThis.document.getElementById(`member-${member.id}`);
+        if (element) {
+          const offsetTop = element.getBoundingClientRect().top + globalThis.window.scrollY - 80;
+          globalThis.window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+        }
+      }, 100);
+    }
+
+    // Trigger change detection
+    this.cdr.detectChanges();
   }
 
   // Keyboard navigation handler for member details toggle

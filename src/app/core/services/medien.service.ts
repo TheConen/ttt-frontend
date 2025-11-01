@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, retry } from 'rxjs/operators';
 import { TwitchStream } from '../../shared/types/medien.types';
 import { ApiService } from './api.service';
 import { environment } from '../../../environments/environment';
@@ -14,11 +14,11 @@ export class MedienService {
   private readonly api = inject(ApiService);
 
   /**
-   * Get current Twitch livestreams (dummy implementation, replace with backend call)
+   * Get current Twitch livestreams with retry strategy
    */
   getTwitchStreams(): Observable<TwitchStream[]> {
-    // Try backend, fallback to dummy
     return this.api.get<TwitchStream[]>(`${this.baseUrl}/twitch/streams`).pipe(
+      retry({ count: 2, delay: 1000 }),
       catchError(() => {
         return of([
           {

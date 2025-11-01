@@ -4,7 +4,6 @@ import { ButtonDirective } from 'primeng/button';
 import { TrackByUtils, BasePageComponent } from '../../../shared/utils';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
-// Component configuration constants
 const MITMACHEN_CONFIG = {
   PAGE_TITLE: 'Mitmachen - Werde Teil des TTT',
   SECURITY: {
@@ -23,6 +22,7 @@ const MITMACHEN_CONFIG = {
 
 @Component({
   selector: 'ttt-mitmachen',
+  standalone: true,
   imports: [
     CommonModule,
     ButtonDirective
@@ -32,25 +32,20 @@ const MITMACHEN_CONFIG = {
 })
 export class MitmachenComponent extends BasePageComponent implements OnInit, OnDestroy {
 
-  // Dependency injection
   private readonly sanitizationService = inject(SanitizationService);
 
-  // TrackBy functions
   readonly trackByIndex = TrackByUtils.trackByIndex;
 
-  // Component data
   readonly pageTitle = 'Mitmachen beim TTT';
   readonly pageSubtitle = 'Wir veranstalten regelmäßig Events für Arma 3 und Arma Reforger – von Training über Missionen bis zu taktischen Gefechten ist alles dabei.';
   readonly eventSchedule = 'dienstags und freitags von 19:30 bis 23:30 Uhr';
 
-  // Security utility functions
   readonly securityUtils = {
     sanitizeHtml: (html: string) => this.sanitizationService.sanitizeHtml(html),
     stripHtml: (html: string) => this.sanitizationService.stripHtml(html),
     isSafeUrl: (url: string) => this.sanitizationService.isSafeUrl(url)
   };
 
-  // External links that might change
   readonly externalLinks = {
     discord: MITMACHEN_CONFIG.EXTERNAL_LINKS.DISCORD,
     events: MITMACHEN_CONFIG.EXTERNAL_LINKS.EVENTS,
@@ -66,8 +61,6 @@ export class MitmachenComponent extends BasePageComponent implements OnInit, OnD
   ngOnDestroy(): void {
     localStorage.removeItem('lastLinkAccess');
   }
-
-  // External link handler
   private openExternalLink(url: string): void {
     try {
       if (!this.sanitizationService.isSafeUrl(url)) {

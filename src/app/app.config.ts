@@ -1,37 +1,24 @@
-import { ApplicationConfig, provideZoneChangeDetection, APP_INITIALIZER } from '@angular/core';
-import { provideHttpClient } from '@angular/common/http';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-
 import { routes } from './app.routes';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideClientHydration } from '@angular/platform-browser';
 import { providePrimeNG } from 'primeng/config';
 import { tttPrimeNgTheme } from './themes.config';
-import { CSPService } from './core/services/csp.service';
+import { CSPInitService } from './core/services/csp-init.service';
+import { securityInterceptor } from './core/interceptors/security.interceptor';
 
-/**
- * Initialize CSP on app startup
- */
-function initializeCSP(cspService: CSPService) {
-  return () => {
-    cspService.updateCSP();
-  };
-}
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideAnimationsAsync(),
+    provideClientHydration(),
     providePrimeNG({
       theme: tttPrimeNgTheme,
     }),
-    provideHttpClient(),
-    // Initialize CSP on app startup
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeCSP,
-      deps: [CSPService],
-      multi: true
-    }
+  provideHttpClient(withInterceptors([securityInterceptor])),
+    // CSPInitService is injected at app start for CSP initialization
+    CSPInitService
   ],
 };
