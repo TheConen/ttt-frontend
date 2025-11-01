@@ -39,7 +39,6 @@ pnpm run build
 - Angular 20
 - PrimeNG 20
 - TailwindCSS 4
-- TypeScript
 
 ## Running end-to-end tests
 
