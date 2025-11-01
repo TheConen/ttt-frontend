@@ -6,6 +6,7 @@ import { ButtonDirective } from 'primeng/button';
 
 @Component({
     selector: 'ttt-header',
+    standalone: true,
     imports: [RouterLink, Menubar, ButtonDirective],
     templateUrl: './header.component.html',
     styleUrl: './header.component.css',
@@ -91,13 +92,13 @@ export class HeaderComponent implements OnInit {
                         target: '_blank',
                         rel: 'noopener noreferrer'
                     },
+                    {
+                        label: 'Intern',
+                        icon: 'pi pi-user',
+                        styleClass: 'font-heading',
+                        routerLink: ['/intern']
+                    },
                 ],
-            },
-            {
-                label: '',
-                icon: 'pi pi-user',
-                styleClass: 'font-heading',
-                routerLink: ['/intern']
             },
         ];
     }

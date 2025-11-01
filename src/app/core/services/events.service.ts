@@ -2,26 +2,24 @@
 import { SlotbotEvent } from '../../shared/types/events.types';
 import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, retry } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { environment } from '../../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class EventsService {
-  // Use environment variable when available; fallback to local API prefix
-  // NOTE: replace with import from environment when backend is configured
   private readonly baseUrl = environment.apiBaseUrl;
   private readonly api = inject(ApiService);
 
   /**
-   * Get upcoming events (compact format expected from backend)
+   * Get upcoming events with retry strategy
    */
   getUpcomingEvents(limit = 3): Observable<SlotbotEvent[]> {
     const url = `${this.baseUrl}/events/upcoming?limit=${limit}`;
     return this.api.get<{ events: SlotbotEvent[] }>(url).pipe(
+      retry({ count: 2, delay: 1000 }),
       map(res => res?.events ?? []),
       catchError(() => {
-        // Dummy fallback data
         const now = Date.now();
         const dummyEvents: SlotbotEvent[] = [
           {

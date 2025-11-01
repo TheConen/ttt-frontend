@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'ttt-footer',
+    standalone: true,
     imports: [CommonModule, RouterLink],
     templateUrl: './footer.component.html',
     styleUrl: './footer.component.css',

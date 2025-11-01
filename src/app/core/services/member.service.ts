@@ -11,15 +11,12 @@ import {
 
 import { Injectable, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { map, catchError, timeout } from 'rxjs/operators';
+import { map, catchError, timeout, retry } from 'rxjs/operators';
 import { ApiService } from './api.service';
 import { environment } from '../../../environments/environment';
 
 /**
  * Service for managing TTT member data
- * This service will handle all backend communication for the Aufstellung component
- *
- * TODO: Implement when backend API is available
  */
 @Injectable({
   providedIn: 'root'
@@ -29,15 +26,14 @@ export class MemberService {
   private readonly api = inject(ApiService);
 
   /**
-   * Get all active members with their details
-   * @returns Observable<Member[]>
+   * Get all active members with retry and timeout strategy
    */
   getAllMembers(): Observable<Member[]> {
     return this.api.get<MemberResponse>(`${this.baseUrl}/members`).pipe(
-      timeout(2000),
+      timeout(5000),
+      retry({ count: 2, delay: 1000 }),
       map((response: MemberResponse) => response.members),
       catchError(() => {
-        // Dummy fallback data with details for the UI
         const dummyMembers: Member[] = [
           {
             id: 'member-1',
@@ -61,9 +57,20 @@ export class MemberService {
             rank: 'offizier',
             avatar: '/img/aufstellung/offizier-kopf.webp',
             memberSince: '2016-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
+            medals: [
+              { id: 'medal-2', name: 'Medal of Honor', image: '/img/aufstellung/medals/medal-mdh.png', description: 'Für besondere Verdienste' },
+              { id: 'medal-3', name: 'Training Gold', image: '/img/aufstellung/medals/medal-gold-training.png', description: 'Abzeichen für Trainingsleistungen (Gold)' }
+            ],
+            campaignRibbons: [
+              { id: 'ribbon-2', name: 'Aspis Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-aspis.png', campaign: 'Operation Aspis', year: '2020' },
+              { id: 'ribbon-3', name: 'Beth Nahrin Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-beth-nahrin.png', campaign: 'Operation Beth Nahrin', year: '2021' },
+              { id: 'ribbon-4', name: 'Paradiso Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-paradiso.png', campaign: 'Operation Paradiso', year: '2023' }
+            ],
+            abteilungen: [
+              { id: 'abt-1', name: 'Missionsbau', icon: '/img/aufstellung/group/group-missionsbau-icon.png', description: 'Wissensvermittlung & Multiplikation im Missionsbau' },
+              { id: 'abt-2', name: 'Medien & PR', icon: '/img/aufstellung/group/group-pr-icon.png', description: 'Social Media und Öffentlichkeitsarbeit' },
+              { id: 'abt-3', name: 'Technik', icon: '/img/aufstellung/group/group-technik-icon.png', description: 'Server-Administration und technische Wartung' }
+            ]
           },
           {
             id: 'member-3',
@@ -172,14 +179,13 @@ export class MemberService {
   }
 
   /**
-   * Get member statistics by rank
-   * @returns Observable<Record<RankType, number>>
+   * Get member statistics by rank with retry strategy
    */
   getMemberStats(): Observable<Record<RankType, number>> {
     return this.api.get<MemberStatsResponse>(`${this.baseUrl}/members/stats`).pipe(
+      retry({ count: 2, delay: 1000 }),
       map((response: MemberStatsResponse) => response.stats),
       catchError(() => {
-        // Dummy fallback: same distribution as dummy members
         return of({
           offizier: 2,
           unteroffizier: 2,

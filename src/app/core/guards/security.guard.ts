@@ -1,21 +1,17 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 
-// Security configuration constants
 const SECURITY_CONFIG = {
   MIN_ROUTE_INTERVAL: 100,
   RADIX: 10
 } as const;
 
 /**
- * Security guard to prevent unauthorized access
+ * Route guard with XSS protection and rate limiting
  */
 export const securityGuard: CanActivateFn = (route) => {
   const router = inject(Router);
 
-  // Basic security checks
-  
-  // 1. Check for suspicious route parameters
   const suspiciousPatterns = [
     /<script/i,
     /javascript:/i,
@@ -34,7 +30,6 @@ export const securityGuard: CanActivateFn = (route) => {
     return false;
   }
 
-    // 2. Rate limiting check (simple implementation)
   const now = Date.now();
   const lastAccess = localStorage.getItem('lastRouteAccess');
 
@@ -48,10 +43,9 @@ export const securityGuard: CanActivateFn = (route) => {
 
   localStorage.setItem('lastRouteAccess', now.toString());
 
-  // 3. Check for valid routes only
   const validRoutes = ['', 'impressum', 'datenschutz', 'chronik', 'mitmachen', 'medien', 'aufstellung'];
   const currentRoute = route.routeConfig?.path || '';
-  
+
   if (!validRoutes.includes(currentRoute)) {
     console.warn('Invalid route detected, redirecting to home');
     router.navigate(['/']);
