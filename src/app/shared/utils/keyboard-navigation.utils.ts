@@ -10,7 +10,7 @@ export class KeyboardNavigationUtils {
   static handleActivation(
     event: KeyboardEvent,
     callback: () => void,
-  preventDefault = true
+    preventDefault = true
   ): void {
     if (event.key === 'Enter' || event.key === ' ') {
       if (preventDefault) {

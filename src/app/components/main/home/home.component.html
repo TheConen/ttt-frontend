@@ -1,28 +1,44 @@
-
-
-
 <!-- Hero Section with Background Slider (no absolute/fixed) -->
 <section class="h-80 overflow-hidden">
     <!-- Background Image Slider -->
     <div class="w-full h-full relative">
         <div class="w-full h-full">
-          <!-- Static hero background image (slider removed) -->
-          <img src="/img/home-banner/home-banner1.webp"
-              alt="TTT Hero Banner"
-              class="w-full h-full object-cover" style="position: absolute; inset: 0;" />
+            <div *ngFor="let slide of bannerSlides; let i = index"
+                     class="w-full h-full transition-opacity duration-1000 ease-in-out"
+                     [class.opacity-100]="i === currentImageIndex"
+                     [class.opacity-0]="i !== currentImageIndex"
+                     style="position: absolute; inset: 0;" >
+                <img [src]="slide.image"
+                         [alt]="slide.title + ' - ' + slide.subtitle"
+                         class="w-full h-full object-cover" />
+            </div>
             <!-- Dark overlay for better text readability -->
-            <div class="w-full h-full ttt-gradient-overlay" style="position: absolute; inset: 0;"></div>
+            <div class="w-full h-full bg-gradient-to-r from-black/70 via-black/50 to-black/70" style="position: absolute; inset: 0;"></div>
         </div>
         <!-- Slide Indicators -->
-        <!-- Slide indicators removed (no dynamic hero slider) -->
+        <fieldset class="flex justify-center space-x-2 border-0 p-0 m-0 mt-4">
+            <legend class="sr-only">Banner-Navigation</legend>
+            <button
+                *ngFor="let slide of bannerSlides; let i = index"
+                (click)="goToImage(i)"
+                [attr.aria-label]="'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)"
+                [attr.aria-current]="i === currentImageIndex ? 'true' : 'false'"
+                class="h-3 w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-tttRed focus:ring-offset-2"
+                [class.bg-tttRed]="i === currentImageIndex"
+                [class.bg-tttWhite/40]="i !== currentImageIndex"
+                [class.scale-125]="i === currentImageIndex">
+            </button>
+        </fieldset>
         <!-- Content Overlay -->
         <div class="absolute inset-0 flex h-full items-center z-10 pointer-events-none">
             <div class="ttt-hero-container pointer-events-auto">
-                <h1 class="ttt-hero-title">
-                    Tactical Training Team
+                <h1 class="ttt-hero-title"
+                        [attr.aria-label]="getCleanTitle(bannerSlides[currentImageIndex].title || 'Tactical Training Team')">
+                    <span [innerHTML]="bannerSlides[currentImageIndex].title || 'Tactical Training Team'"></span>
+                    <span class="sr-only" *ngIf="!bannerSlides[currentImageIndex].title">Tactical Training Team</span>
                 </h1>
                 <p class="ttt-hero-text">
-                    Willkommen beim TTT – deiner deutschsprachigen MilSim-Community für Arma 3 & Reforger.
+                    {{ bannerSlides[currentImageIndex].subtitle }}
                 </p>
             </div>
         </div>

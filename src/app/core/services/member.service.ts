@@ -26,155 +26,103 @@ export class MemberService {
   private readonly api = inject(ApiService);
 
   /**
+   * Helper method to handle API calls with retry and timeout strategy
+   */
+  private handleApiCall<T, R>(
+    url: string,
+    mapFn: (response: T) => R,
+    fallbackValue: R,
+    options: { timeout?: number; retries?: number; retryDelay?: number } = {}
+  ): Observable<R> {
+    const { timeout: timeoutMs = 5000, retries = 2, retryDelay = 1000 } = options;
+
+    return this.api.get<T>(url).pipe(
+      timeout(timeoutMs),
+      retry({ count: retries, delay: retryDelay }),
+      map(mapFn),
+      catchError(() => of(fallbackValue))
+    );
+  }
+
+  /**
+   * Create a basic member object with minimal data
+   */
+  private createBasicMember(id: string, name: string, rank: RankType, memberSince: string): Member {
+    return {
+      id,
+      name,
+      rank,
+      avatar: '',
+      memberSince,
+      medals: [],
+      campaignRibbons: [],
+      abteilungen: []
+    };
+  }
+
+  /**
+   * Get dummy member data for fallback
+   */
+  private getDummyMembers(): Member[] {
+    return [
+      {
+        id: 'member-1',
+        name: 'TheConen',
+        rank: 'offizier',
+        avatar: '/img/aufstellung/offizier-kopf.webp',
+        memberSince: '2015-01-01',
+        medals: [
+          { id: 'medal-1', name: 'Medal of Honor', image: '/img/aufstellung/medals/medal-mdh.png', description: 'Für besondere Verdienste' }
+        ],
+        campaignRibbons: [
+          { id: 'ribbon-1', name: 'Aspis Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-aspis.png', campaign: 'Operation Aspis', year: '2020' }
+        ],
+        abteilungen: [
+          { id: 'abt-1', name: 'Missionsbau', icon: '/img/aufstellung/group/group-missionsbau-icon.png', description: 'Wissensvermittlung & Multiplikation im Missionsbau' }
+        ]
+      },
+      {
+        id: 'member-2',
+        name: 'SpecOp0',
+        rank: 'offizier',
+        avatar: '/img/aufstellung/offizier-kopf.webp',
+        memberSince: '2016-01-01',
+        medals: [
+          { id: 'medal-2', name: 'Medal of Honor', image: '/img/aufstellung/medals/medal-mdh.png', description: 'Für besondere Verdienste' },
+          { id: 'medal-3', name: 'Training Gold', image: '/img/aufstellung/medals/medal-gold-training.png', description: 'Abzeichen für Trainingsleistungen (Gold)' }
+        ],
+        campaignRibbons: [
+          { id: 'ribbon-2', name: 'Aspis Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-aspis.png', campaign: 'Operation Aspis', year: '2020' },
+          { id: 'ribbon-3', name: 'Beth Nahrin Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-beth-nahrin.png', campaign: 'Operation Beth Nahrin', year: '2021' },
+          { id: 'ribbon-4', name: 'Paradiso Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-paradiso.png', campaign: 'Operation Paradiso', year: '2023' }
+        ],
+        abteilungen: [
+          { id: 'abt-1', name: 'Missionsbau', icon: '/img/aufstellung/group/group-missionsbau-icon.png', description: 'Wissensvermittlung & Multiplikation im Missionsbau' },
+          { id: 'abt-2', name: 'Medien & PR', icon: '/img/aufstellung/group/group-pr-icon.png', description: 'Social Media und Öffentlichkeitsarbeit' },
+          { id: 'abt-3', name: 'Technik', icon: '/img/aufstellung/group/group-technik-icon.png', description: 'Server-Administration und technische Wartung' }
+        ]
+      },
+      this.createBasicMember('member-3', 'Reimchen', 'unteroffizier', '2018-01-01'),
+      this.createBasicMember('member-4', 'rockn_roller', 'unteroffizier', '2019-01-01'),
+      this.createBasicMember('member-5', 'GSG9_abzocker', 'veteran', '2017-01-01'),
+      this.createBasicMember('member-6', 'Speutzi', 'veteran', '2018-01-01'),
+      this.createBasicMember('member-7', 'Corben', 'soldat', '2022-01-01'),
+      this.createBasicMember('member-8', 'SchmerzKeks', 'soldat', '2023-01-01'),
+      this.createBasicMember('member-9', 'Epsilon', 'rekrut', '2024-01-01'),
+      this.createBasicMember('member-10', 'Addi995', 'rekrut', '2024-01-01'),
+      this.createBasicMember('member-11', 'Mynx', 'gast', '2024-01-01'),
+      this.createBasicMember('member-12', 'Leroy', 'gast', '2024-01-01')
+    ];
+  }
+
+  /**
    * Get all active members with retry and timeout strategy
    */
   getAllMembers(): Observable<Member[]> {
-    return this.api.get<MemberResponse>(`${this.baseUrl}/members`).pipe(
-      timeout(5000),
-      retry({ count: 2, delay: 1000 }),
-      map((response: MemberResponse) => response.members),
-      catchError(() => {
-        const dummyMembers: Member[] = [
-          {
-            id: 'member-1',
-            name: 'TheConen',
-            rank: 'offizier',
-            avatar: '/img/aufstellung/offizier-kopf.webp',
-            memberSince: '2015-01-01',
-            medals: [
-              { id: 'medal-1', name: 'Medal of Honor', image: '/img/aufstellung/medals/medal-mdh.png', description: 'Für besondere Verdienste' }
-            ],
-            campaignRibbons: [
-              { id: 'ribbon-1', name: 'Aspis Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-aspis.png', campaign: 'Operation Aspis', year: '2020' }
-            ],
-            abteilungen: [
-              { id: 'abt-1', name: 'Missionsbau', icon: '/img/aufstellung/group/group-missionsbau-icon.png', description: 'Wissensvermittlung & Multiplikation im Missionsbau' }
-            ]
-          },
-          {
-            id: 'member-2',
-            name: 'SpecOp0',
-            rank: 'offizier',
-            avatar: '/img/aufstellung/offizier-kopf.webp',
-            memberSince: '2016-01-01',
-            medals: [
-              { id: 'medal-2', name: 'Medal of Honor', image: '/img/aufstellung/medals/medal-mdh.png', description: 'Für besondere Verdienste' },
-              { id: 'medal-3', name: 'Training Gold', image: '/img/aufstellung/medals/medal-gold-training.png', description: 'Abzeichen für Trainingsleistungen (Gold)' }
-            ],
-            campaignRibbons: [
-              { id: 'ribbon-2', name: 'Aspis Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-aspis.png', campaign: 'Operation Aspis', year: '2020' },
-              { id: 'ribbon-3', name: 'Beth Nahrin Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-beth-nahrin.png', campaign: 'Operation Beth Nahrin', year: '2021' },
-              { id: 'ribbon-4', name: 'Paradiso Kampagne', image: '/img/aufstellung/ribbons/ttt_veteran-kampagne-paradiso.png', campaign: 'Operation Paradiso', year: '2023' }
-            ],
-            abteilungen: [
-              { id: 'abt-1', name: 'Missionsbau', icon: '/img/aufstellung/group/group-missionsbau-icon.png', description: 'Wissensvermittlung & Multiplikation im Missionsbau' },
-              { id: 'abt-2', name: 'Medien & PR', icon: '/img/aufstellung/group/group-pr-icon.png', description: 'Social Media und Öffentlichkeitsarbeit' },
-              { id: 'abt-3', name: 'Technik', icon: '/img/aufstellung/group/group-technik-icon.png', description: 'Server-Administration und technische Wartung' }
-            ]
-          },
-          {
-            id: 'member-3',
-            name: 'Reimchen',
-            rank: 'unteroffizier',
-            avatar: '',
-            memberSince: '2018-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-4',
-            name: 'rockn_roller',
-            rank: 'unteroffizier',
-            avatar: '',
-            memberSince: '2019-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-5',
-            name: 'GSG9_abzocker',
-            rank: 'veteran',
-            avatar: '',
-            memberSince: '2017-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-6',
-            name: 'Speutzi',
-            rank: 'veteran',
-            avatar: '',
-            memberSince: '2018-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-7',
-            name: 'Corben',
-            rank: 'soldat',
-            avatar: '',
-            memberSince: '2022-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-8',
-            name: 'SchmerzKeks',
-            rank: 'soldat',
-            avatar: '',
-            memberSince: '2023-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-9',
-            name: 'Epsilon',
-            rank: 'rekrut',
-            avatar: '',
-            memberSince: '2024-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-10',
-            name: 'Addi995',
-            rank: 'rekrut',
-            avatar: '',
-            memberSince: '2024-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-11',
-            name: 'Mynx',
-            rank: 'gast',
-            avatar: '',
-            memberSince: '2024-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          },
-          {
-            id: 'member-12',
-            name: 'Leroy',
-            rank: 'gast',
-            avatar: '',
-            memberSince: '2024-01-01',
-            medals: [],
-            campaignRibbons: [],
-            abteilungen: []
-          }
-        ];
-        return of(dummyMembers);
-      })
+    return this.handleApiCall<MemberResponse, Member[]>(
+      `${this.baseUrl}/members`,
+      (response) => response.members,
+      this.getDummyMembers()
     );
   }
 
@@ -182,19 +130,20 @@ export class MemberService {
    * Get member statistics by rank with retry strategy
    */
   getMemberStats(): Observable<Record<RankType, number>> {
-    return this.api.get<MemberStatsResponse>(`${this.baseUrl}/members/stats`).pipe(
-      retry({ count: 2, delay: 1000 }),
-      map((response: MemberStatsResponse) => response.stats),
-      catchError(() => {
-        return of({
-          offizier: 2,
-          unteroffizier: 2,
-          veteran: 2,
-          soldat: 2,
-          rekrut: 2,
-          gast: 2
-        } as Record<RankType, number>);
-      })
+    const fallbackStats: Record<RankType, number> = {
+      offizier: 2,
+      unteroffizier: 2,
+      veteran: 2,
+      soldat: 2,
+      rekrut: 2,
+      gast: 2
+    };
+
+    return this.handleApiCall<MemberStatsResponse, Record<RankType, number>>(
+      `${this.baseUrl}/members/stats`,
+      (response) => response.stats,
+      fallbackStats,
+      { timeout: 5000, retries: 2, retryDelay: 1000 }
     );
   }
 
