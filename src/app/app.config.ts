@@ -8,17 +8,16 @@ import { tttPrimeNgTheme } from './themes.config';
 import { CSPInitService } from './core/services/csp-init.service';
 import { securityInterceptor } from './core/interceptors/security.interceptor';
 
-
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
-    provideClientHydration(),
-    providePrimeNG({
-      theme: tttPrimeNgTheme,
-    }),
-  provideHttpClient(withInterceptors([securityInterceptor])),
-    // CSPInitService is injected at app start for CSP initialization
-    CSPInitService
-  ],
+    providers: [
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideRouter(routes),
+        provideClientHydration(),
+        providePrimeNG({
+            theme: tttPrimeNgTheme,
+        }),
+        provideHttpClient(withInterceptors([securityInterceptor])),
+        // CSPInitService is injected at app start for CSP initialization
+        CSPInitService,
+    ],
 };

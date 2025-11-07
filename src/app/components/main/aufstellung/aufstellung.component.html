@@ -1,38 +1,38 @@
 <!-- Roster component -->
+<ttt-page-layout [pageTitle]="pageTitle" [pageSubtitle]="pageSubtitle">
 
-<!-- Loading state -->
-<div *ngIf="isLoading" class="flex min-h-96 items-center justify-center">
-  <div class="text-center">
-    <div class="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-tttGray-300 border-t-tttRed"></div>
-    <p class="text-tttWhite/70">Mitgliederdaten werden geladen...</p>
-  </div>
-</div>
-
-<!-- Error state -->
-<div *ngIf="loadingError && !isLoading" class="flex min-h-96 items-center justify-center">
-  <div class="text-center">
-    <div class="mb-4 flex justify-center">
-      <i class="pi pi-exclamation-triangle text-4xl text-tttRed" aria-hidden="true"></i>
+  <!-- Loading state -->
+  <div *ngIf="isLoading" class="flex min-h-96 items-center justify-center">
+    <div class="text-center">
+      <div class="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-tttGray-300 border-t-tttRed"></div>
+      <p class="text-tttWhite/70">Mitgliederdaten werden geladen...</p>
     </div>
-    <h2 class="mb-2 text-xl font-bold text-tttWhite">Fehler</h2>
-    <p class="mb-4 text-tttWhite/70">{{ loadingError }}</p>
-    <button
-      (click)="retryLoading()"
-      class="ttt-btn-primary"
-      aria-label="Mitgliederdaten erneut laden">
-      <i class="pi pi-refresh" aria-hidden="true"></i>
-      <span>Erneut versuchen</span>
-    </button>
   </div>
-</div>
 
-<!-- Main content -->
-<div *ngIf="!isLoading && !loadingError">
-  <ttt-page-layout [pageTitle]="pageTitle" [pageSubtitle]="pageSubtitle">
+  <!-- Error state -->
+  <div *ngIf="loadingError && !isLoading" class="flex min-h-96 items-center justify-center">
+    <div class="text-center">
+      <div class="mb-4 flex justify-center">
+        <i class="pi pi-exclamation-triangle text-4xl text-tttRed" aria-hidden="true"></i>
+      </div>
+      <h2 class="mb-2 text-xl font-bold text-tttWhite">Fehler</h2>
+      <p class="mb-4 text-tttWhite/70">{{ loadingError }}</p>
+      <button
+        (click)="retryLoading()"
+        class="ttt-btn-primary"
+        aria-label="Mitgliederdaten erneut laden">
+        <i class="pi pi-refresh" aria-hidden="true"></i>
+        <span>Erneut versuchen</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main content -->
+  <div *ngIf="!isLoading && !loadingError">
   <!-- Statistics overview -->
-    <section class="mb-8">
+    <section class="mb-6">
       <div class="ttt-page-container">
-        <div class="mb-6 ttt-text-center">
+        <div class="mb-4 ttt-text-center">
           <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
             <i class="pi pi-chart-bar text-tttRed"></i>
             {{ sections.OVERVIEW.TITLE }}
@@ -40,30 +40,30 @@
           <p class="ttt-description-text">{{ sections.OVERVIEW.SUBTITLE }}</p>
         </div>
 
-      <div class="mb-8 grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-6">
+      <div class="mb-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
         <div
           *ngFor="let rank of rankOrder; trackBy: trackByRank"
-          class="ttt-content-card text-center transition-all duration-300 hover:border-tttRed/30 hover:shadow-xl hover:shadow-tttRed/10">
-          <div class="mb-3 flex justify-center">
+          class="rounded-lg border border-tttWhite/10 bg-tttGray-800/50 p-3 text-center backdrop-blur-sm transition-all duration-300 hover:border-tttRed/30 hover:shadow-lg hover:shadow-tttRed/10">
+          <div class="mb-2 flex justify-center">
             <img
               [src]="getRankInfo(rank).icon"
               [alt]="getRankInfo(rank).name + ' Abzeichen'"
-              class="h-12 w-12 object-contain transition-transform duration-300 hover:scale-110"
+              class="h-8 w-8 object-contain transition-transform duration-300 hover:scale-110"
               loading="lazy" />
           </div>
-          <h3 class="ttt-card-title">{{ getRankInfo(rank).name }}</h3>
-          <div class="ttt-stat-value" [class]="getRankInfo(rank).color">
+          <h3 class="mb-1 text-sm font-semibold text-tttWhite">{{ getRankInfo(rank).name }}</h3>
+          <div class="mb-0.5 text-2xl font-bold" [class]="getRankInfo(rank).color">
             {{ memberStats[rank] }}
           </div>
-          <div class="text-xs text-tttWhite/50">Mitglieder</div>
+          <div class="text-[10px] text-tttWhite/50">Mitglieder</div>
         </div>
       </div>
 
   <!-- Member summary -->
       <div class="text-center">
-        <div class="inline-flex items-center gap-2 rounded-lg bg-tttRed px-4 py-2">
-          <i class="pi pi-users text-lg text-tttWhite" aria-hidden="true"></i>
-          <span class="text-lg font-bold text-tttWhite">{{ totalMembers }} aktive Mitglieder</span>
+        <div class="inline-flex items-center gap-2 rounded-lg bg-tttRed px-3 py-1.5">
+          <i class="pi pi-users text-base text-tttWhite" aria-hidden="true"></i>
+          <span class="text-base font-bold text-tttWhite">{{ totalMembers }} aktive Mitglieder</span>
         </div>
       </div>
     </div>
@@ -108,16 +108,22 @@
               <!-- Member card -->
               <div
                 [id]="'member-' + member.id"
+                class="group ttt-content-card p-3 text-center transition-all duration-300
+                       hover:border-tttRed/50 hover:bg-tttRed/5 relative min-h-[140px]
+                       flex flex-col justify-between"
                 [class.cursor-pointer]="hasExpandableContent(member)"
                 [class.bg-tttRed/5]="member.isExpanded"
                 [class.border-tttRed/50]="member.isExpanded"
                 (click)="hasExpandableContent(member) ? toggleMemberDetails(member) : null"
                 (keydown)="handleMemberKeyboardNavigation(member, $event)"
-                [attr.aria-label]="hasExpandableContent(member) ? 'Details für ' + member.name + (member.isExpanded ? ' ausblenden' : ' anzeigen') : null"
+                [attr.aria-label]="
+                  hasExpandableContent(member)
+                    ? 'Details für ' + member.name + (member.isExpanded ? ' ausblenden' : ' anzeigen')
+                    : null
+                "
                 [attr.aria-expanded]="member.isExpanded"
                 [attr.tabindex]="hasExpandableContent(member) ? 0 : -1"
-                [attr.role]="hasExpandableContent(member) ? 'button' : null"
-                class="group ttt-content-card p-3 text-center transition-all duration-300 hover:border-tttRed/50 hover:bg-tttRed/5 relative min-h-[140px] flex flex-col justify-between">
+                [attr.role]="hasExpandableContent(member) ? 'button' : null">
 
                 <div>
                   <!-- Avatar (officers only) -->
@@ -295,5 +301,6 @@
       </div>
     </div>
   </section>
-  </ttt-page-layout>
-</div>
+  </div>
+
+</ttt-page-layout>

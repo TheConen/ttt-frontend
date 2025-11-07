@@ -9,46 +9,46 @@ import { AufstellungComponent } from './components/main/aufstellung/aufstellung.
 import { securityGuard } from './core/guards/security.guard';
 
 export const routes: Routes = [
-  { 
-    path: '', 
-    component: HomeComponent, 
-    pathMatch: 'full',
-    canActivate: [securityGuard]
-  },
-  { 
-    path: 'impressum', 
-    component: ImpressumComponent,
-    canActivate: [securityGuard]
-  },
-  { 
-    path: 'datenschutz', 
-    component: DatenschutzComponent,
-    canActivate: [securityGuard]
-  },
-  { 
-    path: 'chronik', 
-    component: ChronikComponent,
-    canActivate: [securityGuard]
-  },
-  { 
-    path: 'mitmachen', 
-    component: MitmachenComponent,
-    canActivate: [securityGuard]
-  },
-  { 
-    path: 'medien', 
-    component: MedienComponent,
-    canActivate: [securityGuard]
-  },
-  { 
-    path: 'aufstellung', 
-    component: AufstellungComponent,
-    canActivate: [securityGuard]
-  },
-  // Wildcard route - redirect unknown routes to home
-  { 
-    path: '**', 
-    redirectTo: '',
-    pathMatch: 'full'
-  }
+    {
+        path: '',
+        component: HomeComponent,
+        pathMatch: 'full',
+        canActivate: [securityGuard],
+    },
+    {
+        path: 'impressum',
+        component: ImpressumComponent,
+        canActivate: [securityGuard],
+    },
+    {
+        path: 'datenschutz',
+        component: DatenschutzComponent,
+        canActivate: [securityGuard],
+    },
+    {
+        path: 'chronik',
+        component: ChronikComponent,
+        canActivate: [securityGuard],
+    },
+    {
+        path: 'mitmachen',
+        component: MitmachenComponent,
+        canActivate: [securityGuard],
+    },
+    {
+        path: 'medien',
+        component: MedienComponent,
+        canActivate: [securityGuard],
+    },
+    {
+        path: 'aufstellung',
+        component: AufstellungComponent,
+        canActivate: [securityGuard],
+    },
+    // Wildcard route - redirect unknown routes to home
+    {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full',
+    },
 ];
