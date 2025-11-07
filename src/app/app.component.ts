@@ -9,9 +9,8 @@ import { RightSidebarComponent } from './components/sidebar/right-sidebar/right-
 @Component({
     selector: 'ttt-root',
     standalone: true,
-  imports: [RouterOutlet, CommonModule, HeaderComponent, FooterComponent, LeftSidebarComponent, RightSidebarComponent],
+    imports: [RouterOutlet, CommonModule, HeaderComponent, FooterComponent, LeftSidebarComponent, RightSidebarComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css',
 })
-export class AppComponent {
-}
+export class AppComponent {}

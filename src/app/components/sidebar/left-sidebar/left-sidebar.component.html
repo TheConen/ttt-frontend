@@ -1,37 +1,49 @@
-<nav class="md:w-64 bg-tttGray-900 border-r border-tttGray-800">
-  <div class="p-6">
-    <h3 class="mb-4 text-lg font-bold text-tttWhite flex items-center gap-2 hidden md:flex">
-      <i class="pi pi-calendar text-tttRed"></i>
-      Nächste Events
-    </h3>
-    <div class="space-y-3">
-      <!-- Upcoming events (ohne Widget-Box) -->
-      <ul class="flex flex-row gap-2 overflow-x-auto md:flex-col md:gap-0 md:overflow-x-visible">
-        <li *ngFor="let ev of events$ | async" class="min-w-[12rem] max-w-[14rem] flex-shrink-0 md:min-w-0 md:max-w-none md:flex-shrink md:mb-2">
-          <a [href]="ev.eventUrl" target="_blank" rel="noopener noreferrer"
-             class="ttt-content-card block group focus:outline-none relative p-3 transition-all duration-300 border border-tttGray-700 hover:border-tttRed/50 hover:bg-tttRed/10 hover:shadow-xl"
-             [attr.aria-describedby]="'evt-'+ev.id">
-            <div class="truncate">
-              <div class="font-medium text-tttWhite text-sm truncate" [attr.title]="ev.title">
-                {{ ev.title }}
-              </div>
-              <div class="text-xs text-tttGray-400">
-                {{ ev.date | date:'dd.MM.yyyy' }} • {{ ev.startTime }} • {{ ev.durationHours }} h
-              </div>
-            </div>
-            <!-- Tooltip bleibt erhalten -->
-            <div role="tooltip" [id]="'evt-'+ev.id"
-                class="hidden group-hover:block group-focus:block focus-within:block absolute left-0 top-full mt-2 w-[min(20rem,90vw)] max-w-xs ttt-content-card border border-tttRed/40 bg-tttRed/5 text-tttWhite p-4 rounded-xl shadow-xl z-50 whitespace-normal backdrop-blur-sm">
-              <div class="text-sm font-bold text-tttWhite">{{ ev.title }}</div>
-              <div class="text-xs text-tttRed mt-1 font-semibold">{{ ev.date | date:'dd.MM.yyyy' }} • {{ ev.startTime }} • {{ ev.durationHours }} h</div>
-              <div class="mt-2">
-                <span class="inline-block text-xs rounded px-2 py-1 bg-tttRed text-tttWhite font-bold">{{ ev.type }}</span>
-              </div>
-            </div>
-          </a>
-        </li>
-        <li *ngIf="(events$ | async)?.length === 0" class="text-sm text-tttGray-400">Keine anstehenden Events</li>
-      </ul>
+<nav class="bg-tttGray-900 border-tttGray-800 border-r md:w-64">
+    <div class="p-6">
+        <h3 class="text-tttWhite mb-4 flex hidden items-center gap-2 text-lg font-bold md:flex">
+            <i class="pi pi-calendar text-tttRed"></i>
+            Nächste Events
+        </h3>
+        <div class="space-y-3">
+            <!-- Upcoming events (ohne Widget-Box) -->
+            <ul class="flex flex-row gap-2 overflow-x-auto md:flex-col md:gap-0 md:overflow-x-visible">
+                <li
+                    *ngFor="let ev of events$ | async"
+                    class="max-w-[14rem] min-w-[12rem] flex-shrink-0 md:mb-2 md:max-w-none md:min-w-0 md:flex-shrink"
+                >
+                    <a
+                        [href]="ev.eventUrl"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ttt-content-card group border-tttGray-700 hover:border-tttRed/50 hover:bg-tttRed/10 relative block border p-3 transition-all duration-300 hover:shadow-xl focus:outline-none"
+                        [attr.aria-describedby]="'evt-' + ev.id"
+                    >
+                        <div class="truncate">
+                            <div class="text-tttWhite truncate text-sm font-medium" [attr.title]="ev.title">
+                                {{ ev.title }}
+                            </div>
+                            <div class="text-tttGray-400 text-xs">
+                                {{ ev.date | date: "dd.MM.yyyy" }} • {{ ev.startTime }} • {{ ev.durationHours }} h
+                            </div>
+                        </div>
+                        <!-- Tooltip bleibt erhalten -->
+                        <div
+                            role="tooltip"
+                            [id]="'evt-' + ev.id"
+                            class="ttt-content-card border-tttRed/40 bg-tttRed/5 text-tttWhite absolute top-full left-0 z-50 mt-2 hidden w-[min(20rem,90vw)] max-w-xs rounded-xl border p-4 whitespace-normal shadow-xl backdrop-blur-sm group-hover:block group-focus:block focus-within:block"
+                        >
+                            <div class="text-tttWhite text-sm font-bold">{{ ev.title }}</div>
+                            <div class="text-tttRed mt-1 text-xs font-semibold">
+                                {{ ev.date | date: "dd.MM.yyyy" }} • {{ ev.startTime }} • {{ ev.durationHours }} h
+                            </div>
+                            <div class="mt-2">
+                                <span class="bg-tttRed text-tttWhite inline-block rounded px-2 py-1 text-xs font-bold">{{ ev.type }}</span>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li *ngIf="(events$ | async)?.length === 0" class="text-tttGray-400 text-sm">Keine anstehenden Events</li>
+            </ul>
+        </div>
     </div>
-  </div>
 </nav>

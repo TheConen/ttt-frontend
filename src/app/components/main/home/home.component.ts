@@ -21,37 +21,32 @@ interface BannerSlide {
     styleUrl: './home.component.css',
 })
 export class HomeComponent extends BasePageComponent implements OnInit, OnDestroy {
-    protected readonly pageTitle = 'Willkommen';
+    // Services
     private readonly sanitizationService = inject(SanitizationService);
     private readonly memberService = inject(MemberService);
 
-    communityStats: { value: string; label: string; color: string }[] = [
-        { value: '...', label: 'Mitglieder', color: 'text-tttGreen' },
-        { value: '2013', label: 'Gegründet', color: 'text-tttGreen' },
-        { value: '2', label: 'Events/Woche', color: 'text-tttGreen' }
-    ];
-
+    // Public readonly properties
+    protected readonly pageTitle = 'Willkommen';
     readonly bannerSlides: BannerSlide[] = [
         {
             image: '/img/home-banner/home-banner1.webp',
             title: 'TACTICAL TRAINING <span class="text-tttRed">TEAM</span>',
-            subtitle: 'Als eine der größeren Arma-Gemeinschaften im deutschsprachigen Raum bieten wir dir das volle Paket: Von Ausbildung und Training bis hin zu Events und Kampagnen ist alles dabei.'
+            subtitle:
+                'Als eine der größeren Arma-Gemeinschaften im deutschsprachigen Raum bieten wir dir das volle Paket: Von Ausbildung und Training bis hin zu Events und Kampagnen ist alles dabei.',
         },
         {
             image: '/img/home-banner/home-banner2.webp',
             title: 'REALISTISCHES <span class="text-tttRed">MILSIM</span>',
-            subtitle: 'Erlebe authentische militärische Simulation in Arma 3 und Arma Reforger mit taktischem Tiefgang und koordinierten Großoperationen.'
+            subtitle:
+                'Erlebe authentische militärische Simulation in Arma 3 und Arma Reforger mit taktischem Tiefgang und koordinierten Großoperationen.',
         },
         {
             image: '/img/home-banner/home-banner3.webp',
             title: 'STARKE <span class="text-tttRed">COMMUNITY</span>',
-            subtitle: 'Über 80 aktive Community-Mitglieder, regelmäßige Missionen und eine europaweite vernetzte MilSim-Community erwarten dich.'
-        }
+            subtitle:
+                'Über 80 aktive Community-Mitglieder, regelmäßige Missionen und eine europaweite vernetzte MilSim-Community erwarten dich.',
+        },
     ];
-    currentImageIndex = 0;
-    private sliderInterval?: ReturnType<typeof setInterval>;
-    private readonly slideInterval = 8000;
-
     readonly galleryImages = [
         {
             itemImageSrc: '/img/home-gallery/gallery-img1.webp',
@@ -87,10 +82,22 @@ export class HomeComponent extends BasePageComponent implements OnInit, OnDestro
         },
     ];
 
+    // Public mutable properties
+    communityStats: { value: string; label: string; color: string }[] = [
+        { value: '...', label: 'Mitglieder', color: 'text-tttGreen' },
+        { value: '2013', label: 'Gegründet', color: 'text-tttGreen' },
+        { value: '2', label: 'Events/Woche', color: 'text-tttGreen' },
+    ];
+    currentImageIndex = 0;
+
+    // Private properties
+    private sliderInterval?: ReturnType<typeof setInterval>;
+    private readonly slideInterval = 8000;
+
+    // Lifecycle hooks
     override ngOnInit(): void {
-        super.ngOnInit();
         this.startSlider();
-        this.memberService.getMemberStats().subscribe(stats => {
+        this.memberService.getMemberStats().subscribe((stats) => {
             const total = Object.values(stats).reduce((sum, n) => sum + n, 0);
             this.communityStats[0].value = total.toString();
         });
@@ -106,9 +113,7 @@ export class HomeComponent extends BasePageComponent implements OnInit, OnDestro
     }
 
     previousImage(): void {
-        this.currentImageIndex = this.currentImageIndex === 0
-            ? this.bannerSlides.length - 1
-            : this.currentImageIndex - 1;
+        this.currentImageIndex = this.currentImageIndex === 0 ? this.bannerSlides.length - 1 : this.currentImageIndex - 1;
         this.restartSlider();
     }
 

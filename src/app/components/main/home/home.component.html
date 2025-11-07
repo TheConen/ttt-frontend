@@ -20,13 +20,17 @@
             <legend class="sr-only">Banner-Navigation</legend>
             <button
                 *ngFor="let slide of bannerSlides; let i = index"
+                type="button"
                 (click)="goToImage(i)"
-                [attr.aria-label]="'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)"
-                [attr.aria-current]="i === currentImageIndex ? 'true' : 'false'"
-                class="h-3 w-3 rounded-full transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-tttRed focus:ring-offset-2"
+                class="h-3 w-3 rounded-full transition-all duration-300
+                       focus:outline-none focus:ring-2 focus:ring-tttRed focus:ring-offset-2"
                 [class.bg-tttRed]="i === currentImageIndex"
                 [class.bg-tttWhite/40]="i !== currentImageIndex"
-                [class.scale-125]="i === currentImageIndex">
+                [class.scale-125]="i === currentImageIndex"
+                [attr.aria-label]="
+                    'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)
+                "
+                [attr.aria-current]="i === currentImageIndex ? 'true' : 'false'">
             </button>
         </fieldset>
         <!-- Content Overlay -->

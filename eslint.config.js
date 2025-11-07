@@ -23,7 +23,7 @@ module.exports = tseslint.config(
             'no-script-url': 'error',
             'no-unsafe-innerHTML': 'off', // We handle this with sanitization service
             '@typescript-eslint/no-explicit-any': 'warn',
-            
+
             '@angular-eslint/directive-selector': [
                 'error',
                 {
