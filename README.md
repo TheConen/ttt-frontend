@@ -7,13 +7,20 @@ Angular 20 application for Tactical Training Team website.
 ```
 src/app/
 ├── core/
-│   ├── services/          # Singleton services
-│   ├── guards/           # Route guards
-│   ├── interceptors/     # HTTP interceptors
-│   └── config/          # Application configuration
+│   ├── services/          # Singleton services (API, CSP, events, medien, members)
+│   ├── guards/           # Route guards (security)
+│   ├── interceptors/     # HTTP interceptors (security)
+│   └── config/          # Application configuration (CSP)
 ├── shared/
-│   └── utils/           # Utility functions
-└── components/          # Feature components
+│   ├── components/       # Shared components (base-page, page-layout)
+│   ├── types/           # TypeScript type definitions
+│   └── utils/           # Utility functions (keyboard navigation, trackBy)
+├── components/
+│   ├── header/          # Header component
+│   ├── footer/          # Footer component
+│   ├── sidebar/         # Left and right sidebars
+│   └── main/            # Main content pages (home, aufstellung, chronik, medien, etc.)
+└── environments/        # Environment configurations
 ```
 
 ## Development
@@ -33,16 +40,29 @@ pnpm run build
 
 - [Security](docs/security.md) - Security implementation details
 - [CSP Management](docs/csp-management.md) - Content Security Policy configuration
+- [Backend Overview](docs/backend-overview.md) - Backend API integration
 
 ## Technology Stack
 
-- Angular 20
-- PrimeNG 20
-- TailwindCSS 4
+- **Angular 20** - Frontend framework
+- **PrimeNG 20** - UI component library with @primeuix/themes
+- **TailwindCSS 4** - Utility-first CSS framework
+- **RxJS 7** - Reactive programming library
+- **TypeScript 5.9** - Type-safe JavaScript
 
-## Running end-to-end tests
+## Testing
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+```bash
+pnpm run test        # Run unit tests
+pnpm run lint        # Run ESLint
+```
+
+## Code Quality
+
+```bash
+pnpm run prettier        # Format code
+pnpm run prettier:check  # Check code formatting
+```
 
 ## Further help
 
