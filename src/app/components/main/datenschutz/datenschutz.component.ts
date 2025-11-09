@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
+import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 
 @Component({
     selector: 'ttt-datenschutz',
