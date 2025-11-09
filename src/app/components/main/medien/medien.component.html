@@ -13,39 +13,43 @@
         <!-- Live Streams Grid -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             @for (stream of liveStreams$ | async; track stream.id) {
-              <a class="ttt-content-card group hover:border-tttRed/50 cursor-pointer transition-all duration-300" [attr.aria-label]="'Live Stream öffnen: ' + stream.title"
-                [href]="stream.url"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <!-- Stream Thumbnail -->
-                <div class="relative mb-4">
-                    <img [src]="stream.thumbnailUrl" [alt]="stream.title" class="h-48 w-full rounded-lg object-cover" />
-                    <div class="absolute inset-0 rounded-lg bg-gradient-to-t from-black/60 to-transparent"></div>
-                    <div class="absolute top-3 left-3">
-                        <span class="inline-flex items-center gap-1 rounded-full bg-red-500/90 px-2 py-1 text-xs font-medium text-white">
-                            <i class="pi pi-circle-fill animate-pulse"></i>
-                            LIVE
-                        </span>
+                <a
+                    class="ttt-content-card group hover:border-tttRed/50 cursor-pointer transition-all duration-300"
+                    [attr.aria-label]="'Live Stream öffnen: ' + stream.title"
+                    [href]="stream.url"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    <!-- Stream Thumbnail -->
+                    <div class="relative mb-4">
+                        <img [src]="stream.thumbnailUrl" [alt]="stream.title" class="h-48 w-full rounded-lg object-cover" />
+                        <div class="absolute inset-0 rounded-lg bg-gradient-to-t from-black/60 to-transparent"></div>
+                        <div class="absolute top-3 left-3">
+                            <span
+                                class="inline-flex items-center gap-1 rounded-full bg-red-500/90 px-2 py-1 text-xs font-medium text-white"
+                            >
+                                <i class="pi pi-circle-fill animate-pulse"></i>
+                                LIVE
+                            </span>
+                        </div>
+                        <div class="absolute bottom-3 left-3">
+                            <span class="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-xs font-medium text-white">
+                                <i class="pi pi-eye"></i>
+                                {{ stream.viewerCount }}
+                            </span>
+                        </div>
                     </div>
-                    <div class="absolute bottom-3 left-3">
-                        <span class="inline-flex items-center gap-1 rounded-full bg-black/70 px-2 py-1 text-xs font-medium text-white">
-                            <i class="pi pi-eye"></i>
-                            {{ stream.viewerCount }}
-                        </span>
+                    <!-- Stream Info -->
+                    <div class="space-y-2">
+                        <h3 class="text-tttWhite group-hover:text-tttRed line-clamp-2 text-lg font-bold transition-colors">
+                            {{ stream.title }}
+                        </h3>
+                        <p class="text-tttGray-300 text-sm">
+                            <i class="pi pi-user mr-1"></i>
+                            {{ stream.userName }}
+                        </p>
                     </div>
-                </div>
-                <!-- Stream Info -->
-                <div class="space-y-2">
-                    <h3 class="text-tttWhite group-hover:text-tttRed line-clamp-2 text-lg font-bold transition-colors">
-                        {{ stream.title }}
-                    </h3>
-                    <p class="text-tttGray-300 text-sm">
-                        <i class="pi pi-user mr-1"></i>
-                        {{ stream.userName }}
-                    </p>
-                </div>
-              </a>
+                </a>
             }
         </div>
 
@@ -74,7 +78,13 @@
         <!-- Media Platforms Grid -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             <!-- YouTube -->
-            <a [href]=externalLinks.youtube target="_blank" rel="noopener noreferrer" class="ttt-content-card group text-left transition-all duration-300 hover:border-red-400/50 hover:bg-red-400/10 block" aria-label="YouTube Kanal öffnen">
+            <a
+                [href]="externalLinks.youtube"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block text-left transition-all duration-300 hover:border-red-400/50 hover:bg-red-400/10"
+                aria-label="YouTube Kanal öffnen"
+            >
                 <div class="flex items-start gap-4">
                     <div class="flex-shrink-0">
                         <div
@@ -95,7 +105,13 @@
             </a>
 
             <!-- Twitch -->
-            <a [href]=externalLinks.twitch target="_blank" rel="noopener noreferrer" class="ttt-content-card group text-left transition-all duration-300 hover:border-purple-400/50 hover:bg-purple-400/10 block" aria-label="Twitch Kanal öffnen">
+            <a
+                [href]="externalLinks.twitch"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block text-left transition-all duration-300 hover:border-purple-400/50 hover:bg-purple-400/10"
+                aria-label="Twitch Kanal öffnen"
+            >
                 <div class="flex items-start gap-4">
                     <div class="flex-shrink-0">
                         <div
@@ -116,7 +132,13 @@
             </a>
 
             <!-- Kick -->
-            <a [href]=externalLinks.kick target="_blank" rel="noopener noreferrer" class="ttt-content-card group text-left transition-all duration-300 hover:border-green-400/50 hover:bg-green-400/10 block" aria-label="Kick Kanal öffnen">
+            <a
+                [href]="externalLinks.kick"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block text-left transition-all duration-300 hover:border-green-400/50 hover:bg-green-400/10"
+                aria-label="Kick Kanal öffnen"
+            >
                 <div class="flex items-start gap-4">
                     <div class="flex-shrink-0">
                         <div
@@ -151,7 +173,13 @@
         <!-- Social Media Grid -->
         <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
             <!-- X (Twitter) -->
-            <a [href]=externalLinks.x target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-400/50 hover:bg-blue-400/10 block" aria-label="Social Media öffnen: X (Twitter)">
+            <a
+                [href]="externalLinks.x"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-400/50 hover:bg-blue-400/10"
+                aria-label="Social Media öffnen: X (Twitter)"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -166,7 +194,13 @@
             </a>
 
             <!-- Mastodon -->
-            <a [href]=externalLinks.mastodon target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-purple-400/50 hover:bg-purple-400/10 block" aria-label="Social Media öffnen: Mastodon">
+            <a
+                [href]="externalLinks.mastodon"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-purple-400/50 hover:bg-purple-400/10"
+                aria-label="Social Media öffnen: Mastodon"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -181,7 +215,13 @@
             </a>
 
             <!-- Bluesky -->
-            <a [href]=externalLinks.bluesky target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-500/50 hover:bg-blue-500/10 block" aria-label="Social Media öffnen: Bluesky">
+            <a
+                [href]="externalLinks.bluesky"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-500/50 hover:bg-blue-500/10"
+                aria-label="Social Media öffnen: Bluesky"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -196,7 +236,13 @@
             </a>
 
             <!-- Instagram -->
-            <a [href]=externalLinks.instagram target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-pink-400/50 hover:bg-pink-400/10 block" aria-label="Social Media öffnen: Instagram">
+            <a
+                [href]="externalLinks.instagram"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-pink-400/50 hover:bg-pink-400/10"
+                aria-label="Social Media öffnen: Instagram"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -211,7 +257,13 @@
             </a>
 
             <!-- TikTok -->
-            <a [href]=externalLinks.tiktok target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-black/50 hover:bg-black/10 block" aria-label="Social Media öffnen: TikTok">
+            <a
+                [href]="externalLinks.tiktok"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-black/50 hover:bg-black/10"
+                aria-label="Social Media öffnen: TikTok"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -226,7 +278,13 @@
             </a>
 
             <!-- Steam -->
-            <a [href]=externalLinks.steam target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-600/50 hover:bg-blue-600/10 block" aria-label="Steam Gruppe öffnen">
+            <a
+                [href]="externalLinks.steam"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-600/50 hover:bg-blue-600/10"
+                aria-label="Steam Gruppe öffnen"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -241,7 +299,13 @@
             </a>
 
             <!-- Reddit -->
-            <a [href]=externalLinks.reddit target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-orange-500/50 hover:bg-orange-500/10 block" aria-label="Reddit Subreddit öffnen">
+            <a
+                [href]="externalLinks.reddit"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-orange-500/50 hover:bg-orange-500/10"
+                aria-label="Reddit Subreddit öffnen"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -256,7 +320,13 @@
             </a>
 
             <!-- GitHub -->
-            <a [href]=externalLinks.github target="_blank" rel="noopener noreferrer" class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-gray-400/50 hover:bg-gray-400/10 block" aria-label="GitHub Repository öffnen">
+            <a
+                [href]="externalLinks.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group block flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-gray-400/50 hover:bg-gray-400/10"
+                aria-label="GitHub Repository öffnen"
+            >
                 <div class="mb-3 flex justify-center">
                     <div
                         class="bg-tttGray-700/50 flex h-12 w-12 items-center justify-center rounded-full transition-transform group-hover:scale-110"
@@ -285,7 +355,13 @@
         <!-- Corporate Resources Grid -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
             <!-- Corporate Design Wiki -->
-            <a href="https://wiki.tacticalteam.de/Corporate-Design" target="_blank" rel="noopener noreferrer" class="ttt-content-card group hover:border-tttRed/50 hover:bg-tttRed/10 text-left transition-all duration-300 block" aria-label="Corporate Design Wiki öffnen">
+            <a
+                href="https://wiki.tacticalteam.de/Corporate-Design"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group hover:border-tttRed/50 hover:bg-tttRed/10 block text-left transition-all duration-300"
+                aria-label="Corporate Design Wiki öffnen"
+            >
                 <div class="flex items-start gap-4">
                     <div class="flex-shrink-0">
                         <div
@@ -308,7 +384,13 @@
             </a>
 
             <!-- Logo Downloads -->
-            <a href="https://drive.google.com/drive/folders/1ABC123" target="_blank" rel="noopener noreferrer" class="ttt-content-card group hover:border-tttGray-400/50 hover:bg-tttGray-400/10 text-left transition-all duration-300 block" aria-label="Logo Downloads öffnen">
+            <a
+                href="https://drive.google.com/drive/folders/1ABC123"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="ttt-content-card group hover:border-tttGray-400/50 hover:bg-tttGray-400/10 block text-left transition-all duration-300"
+                aria-label="Logo Downloads öffnen"
+            >
                 <div class="flex items-start gap-4">
                     <div class="flex-shrink-0">
                         <div
