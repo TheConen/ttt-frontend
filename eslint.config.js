@@ -21,7 +21,7 @@ module.exports = tseslint.config(
             'no-implied-eval': 'error',
             'no-new-func': 'error',
             'no-script-url': 'error',
-            'no-unsafe-innerHTML': 'off', // We handle this with sanitization service
+            'no-unsafe-innerHTML': 'off', // Angular handles sanitization automatically
             '@typescript-eslint/no-explicit-any': 'warn',
 
             '@angular-eslint/directive-selector': [

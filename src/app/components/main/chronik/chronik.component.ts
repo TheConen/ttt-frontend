@@ -1,9 +1,6 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
-import { SanitizationService } from '../../../core/services/sanitization.service';
 
 interface TimelineEvent {
     id: string;
@@ -24,14 +21,10 @@ interface TimelineEvent {
     templateUrl: './chronik.component.html',
     styleUrl: './chronik.component.css',
 })
-export class ChronikComponent extends BasePageComponent implements OnInit {
-    // Services
-    private readonly sanitizationService = inject(SanitizationService);
-
+export class ChronikComponent {
     // Public readonly properties
     readonly pageTitle = 'Chronik';
     readonly pageSubtitle = 'Geschichte des Tactical Training Teams';
-    readonly trackByIndex = TrackByUtils.trackByIndex;
     readonly fictionDocumentationLink = 'https://drive.google.com/file/d/1QpkevojoID6-HfPsp5GIW3OUmUjnfOSd/view';
 
     // Private readonly properties
@@ -187,7 +180,8 @@ export class ChronikComponent extends BasePageComponent implements OnInit {
     }
 
     getCleanTitle(title: string): string {
-        return this.sanitizationService.stripHtml(title);
+        const doc = new DOMParser().parseFromString(title, 'text/html');
+        return doc.body.textContent || '';
     }
 
     // Private methods

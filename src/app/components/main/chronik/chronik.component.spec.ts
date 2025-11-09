@@ -1,44 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { PageTitleService } from '../../../core/services/page-title.service';
 
 import { ChronikComponent } from './chronik.component';
 
 describe('ChronikComponent', () => {
     let component: ChronikComponent;
     let fixture: ComponentFixture<ChronikComponent>;
-    let pageTitleService: jasmine.SpyObj<PageTitleService>;
 
     beforeEach(async () => {
-        const pageTitleSpy = jasmine.createSpyObj('PageTitleService', ['setTitle']);
-
         await TestBed.configureTestingModule({
             imports: [ChronikComponent],
-            providers: [{ provide: PageTitleService, useValue: pageTitleSpy }],
         }).compileComponents();
 
         fixture = TestBed.createComponent(ChronikComponent);
         component = fixture.componentInstance;
-        pageTitleService = TestBed.inject(PageTitleService) as jasmine.SpyObj<PageTitleService>;
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
     });
 
-    it('should set page title on init', () => {
-        component.ngOnInit();
-        expect(pageTitleService.setTitle).toHaveBeenCalledWith('TTT-Chronik');
-    });
-
     it('should have timeline events defined', () => {
         fixture.detectChanges();
         expect(component.timelineEvents).toBeDefined();
         expect(component.timelineEvents.length).toBeGreaterThan(0);
-    });
-
-    it('should provide trackBy functions', () => {
-        expect(component.trackByIndex).toBeDefined();
-        expect(typeof component.trackByIndex).toBe('function');
     });
 
     it('should render timeline events', () => {

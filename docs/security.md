@@ -1,32 +1,22 @@
 # Security Documentation
 
-## Content Security Policy (CSP)
+## Security Headers
 
-### Implementation
-
-- Service: `src/app/core/services/csp.service.ts`
-- Configuration: `src/app/core/config/csp.config.ts`
-- Initialization: Automatic via `APP_INITIALIZER`
-
-### Security Headers
-
+Configured in `src/index.html`:
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `X-XSS-Protection: 1; mode=block`
 - `Referrer-Policy: strict-origin-when-cross-origin`
 - `Permissions-Policy: camera=(), microphone=(), geolocation=()`
 
-### HTML Sanitization
-
-- Service: `SanitizationService`
-- Methods: `sanitizeHtml()`, `stripHtml()`, `isSafeUrl()`
-- Used for: Dynamic HTML content, URL validation
-
 ### Route Protection
 
-- Guard: `SecurityGuard`
-- Features: Parameter validation, rate limiting, route validation
-- Applied to: All application routes
+- Guard: `SecurityGuard` (`src/app/core/guards/security.guard.ts`)
+- Features:
+  - XSS pattern detection in route parameters
+  - Rate limiting (100ms minimum between route changes)
+- Applied to: All application routes via `canActivate`
+- Note: Route validation removed (redundant with Angular router's wildcard route)
 
 ### HTTP Security
 

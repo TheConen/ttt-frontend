@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface DiscordConfig {
@@ -15,7 +15,6 @@ interface DiscordConfig {
     imports: [CommonModule],
     templateUrl: './right-sidebar.component.html',
     styleUrl: './right-sidebar.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RightSidebarComponent {
     readonly discordConfig: DiscordConfig = {

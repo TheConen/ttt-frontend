@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ButtonDirective } from 'primeng/button';
 import { GalleriaModule } from 'primeng/galleria';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
-import { SanitizationService } from '../../../core/services/sanitization.service';
 import { MemberService } from '../../../core/services/member.service';
 
 interface BannerSlide {
@@ -20,13 +18,11 @@ interface BannerSlide {
     templateUrl: './home.component.html',
     styleUrl: './home.component.css',
 })
-export class HomeComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
     // Services
-    private readonly sanitizationService = inject(SanitizationService);
     private readonly memberService = inject(MemberService);
 
     // Public readonly properties
-    protected readonly pageTitle = 'Willkommen';
     readonly bannerSlides: BannerSlide[] = [
         {
             image: '/img/home-banner/home-banner1.webp',
@@ -95,7 +91,7 @@ export class HomeComponent extends BasePageComponent implements OnInit, OnDestro
     private readonly slideInterval = 8000;
 
     // Lifecycle hooks
-    override ngOnInit(): void {
+    ngOnInit(): void {
         this.startSlider();
         this.memberService.getMemberStats().subscribe((stats) => {
             const total = Object.values(stats).reduce((sum, n) => sum + n, 0);
@@ -145,6 +141,7 @@ export class HomeComponent extends BasePageComponent implements OnInit, OnDestro
     }
 
     getCleanTitle(title: string): string {
-        return this.sanitizationService.stripHtml(title);
+        const doc = new DOMParser().parseFromString(title, 'text/html');
+        return doc.body.textContent || '';
     }
 }

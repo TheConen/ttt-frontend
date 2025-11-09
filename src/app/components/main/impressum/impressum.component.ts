@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 
 @Component({
@@ -10,6 +9,6 @@ import { PageLayoutComponent } from '../../../shared/components/page-layout/page
     templateUrl: './impressum.component.html',
     styleUrl: './impressum.component.css',
 })
-export class ImpressumComponent extends BasePageComponent {
+export class ImpressumComponent {
     readonly pageTitle = 'Impressum';
 }

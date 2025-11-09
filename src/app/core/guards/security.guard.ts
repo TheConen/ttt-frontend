@@ -36,14 +36,5 @@ export const securityGuard: CanActivateFn = (route) => {
 
     localStorage.setItem('lastRouteAccess', now.toString());
 
-    const validRoutes = ['', 'impressum', 'datenschutz', 'chronik', 'mitmachen', 'medien', 'aufstellung'];
-    const currentRoute = route.routeConfig?.path || '';
-
-    if (!validRoutes.includes(currentRoute)) {
-        console.warn('Invalid route detected, redirecting to home');
-        router.navigate(['/']);
-        return false;
-    }
-
     return true;
 };

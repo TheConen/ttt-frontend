@@ -1,9 +1,6 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonDirective } from 'primeng/button';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
-import { SanitizationService } from '../../../core/services/sanitization.service';
 
 const MITMACHEN_CONFIG = {
     PAGE_TITLE: 'Mitmachen - Werde Teil des TTT',
@@ -28,21 +25,11 @@ const MITMACHEN_CONFIG = {
     templateUrl: './mitmachen.component.html',
     styleUrl: './mitmachen.component.css',
 })
-export class MitmachenComponent extends BasePageComponent implements OnInit, OnDestroy {
-    // Services
-    private readonly sanitizationService = inject(SanitizationService);
-
+export class MitmachenComponent implements OnDestroy {
     // Public readonly properties
-    readonly pageTitle = 'Mitmachen beim TTT';
     readonly pageSubtitle =
         'Wir veranstalten regelmäßig Events für Arma 3 und Arma Reforger – von Training über Missionen bis zu taktischen Gefechten ist alles dabei.';
     readonly eventSchedule = 'dienstags und freitags von 19:30 bis 23:30 Uhr';
-    readonly trackByIndex = TrackByUtils.trackByIndex;
-    readonly securityUtils = {
-        sanitizeHtml: (html: string) => this.sanitizationService.sanitizeHtml(html),
-        stripHtml: (html: string) => this.sanitizationService.stripHtml(html),
-        isSafeUrl: (url: string) => this.sanitizationService.isSafeUrl(url),
-    };
 
     readonly externalLinks = {
         discord: MITMACHEN_CONFIG.EXTERNAL_LINKS.DISCORD,
@@ -53,10 +40,6 @@ export class MitmachenComponent extends BasePageComponent implements OnInit, OnD
     } as const;
 
     // Lifecycle hooks
-    override ngOnInit(): void {
-        super.ngOnInit();
-    }
-
     ngOnDestroy(): void {
         localStorage.removeItem('lastLinkAccess');
     }
@@ -71,11 +54,6 @@ export class MitmachenComponent extends BasePageComponent implements OnInit, OnD
     // Private methods
     private openExternalLink(url: string): void {
         try {
-            if (!this.sanitizationService.isSafeUrl(url)) {
-                console.warn('Attempted to open unsafe URL:', url);
-                return;
-            }
-
             // Rate limiting check
             const now = Date.now();
             const lastLinkAccess = localStorage.getItem('lastLinkAccess');

@@ -1,11 +1,8 @@
-import { Component, OnInit, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 import { ActivableDirective } from '../../../shared/directives/activable.directive';
-import { SanitizationService } from '../../../core/services/sanitization.service';
-import { Member as BackendMember, Medal, CampaignRibbon, Abteilung, RankType } from '../../../shared/types/member.types';
+import { Member as BackendMember, CampaignRibbon, RankType } from '../../../shared/types/member.types';
 import { MemberService } from '../../../core/services/member.service';
 
 // Configuration constants
@@ -111,12 +108,9 @@ type Member = BackendMember & { isExpanded?: boolean };
     imports: [CommonModule, PageLayoutComponent, ActivableDirective],
     templateUrl: './aufstellung.component.html',
     styleUrl: './aufstellung.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AufstellungComponent extends BasePageComponent implements OnInit {
-    private readonly sanitizationService = inject(SanitizationService);
+export class AufstellungComponent implements OnInit {
     private readonly memberService = inject(MemberService);
-    private readonly cdr = inject(ChangeDetectorRef);
 
     readonly pageTitle = AUFSTELLUNG_CONFIG.PAGE_TITLE;
     readonly pageSubtitle = AUFSTELLUNG_CONFIG.PAGE_SUBTITLE;
@@ -127,22 +121,9 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
     isLoading = false;
     loadingError: string | null = null;
 
-    override ngOnInit(): void {
-        super.ngOnInit();
+    ngOnInit(): void {
         this.loadMembers();
     }
-
-    readonly trackByRank = TrackByUtils.trackByIndex;
-    readonly trackByMember = TrackByUtils.trackByProperty<Member>('id');
-    readonly trackByMedal = TrackByUtils.trackByProperty<Medal>('id');
-    readonly trackByCampaignRibbon = TrackByUtils.trackByProperty<CampaignRibbon>('id');
-    readonly trackByAbteilung = TrackByUtils.trackByProperty<Abteilung>('id');
-
-    readonly securityUtils = {
-        sanitizeHtml: (html: string) => this.sanitizationService.sanitizeHtml(html),
-        stripHtml: (html: string) => this.sanitizationService.stripHtml(html),
-        isSafeUrl: (url: string) => this.sanitizationService.isSafeUrl(url),
-    };
 
     readonly rankInfo: Record<RankType, RankInfo> = {
         offizier: {
@@ -253,12 +234,10 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
                 this.members = members.map((m) => ({ ...m, isExpanded: false }));
                 this.computeMemberData();
                 this.isLoading = false;
-                this.cdr.detectChanges();
             },
             error: () => {
                 this.loadingError = 'Fehler beim Laden der Mitgliederdaten';
                 this.isLoading = false;
-                this.cdr.detectChanges();
             },
         });
     }
@@ -299,11 +278,15 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
                 }
             }, 100);
         }
-
-        // Trigger change detection
-        this.cdr.detectChanges();
     }
 
+    // Keyboard navigation handler for Space key (prevents page scroll)
+    handleMemberSpaceKey(member: Member, event: Event): void {
+        if (this.hasExpandableContent(member)) {
+            event.preventDefault();
+            this.toggleMemberDetails(member);
+        }
+    }
 
     getRankInfo(rank: RankType): RankInfo {
         return this.rankInfo[rank];

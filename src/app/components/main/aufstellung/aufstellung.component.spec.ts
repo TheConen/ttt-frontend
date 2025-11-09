@@ -1,37 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AufstellungComponent } from './aufstellung.component';
-import { PageTitleService } from '../../../core/services/page-title.service';
-import { SanitizationService } from '../../../core/services/sanitization.service';
 
 describe('AufstellungComponent', () => {
     let component: AufstellungComponent;
     let fixture: ComponentFixture<AufstellungComponent>;
-    let mockPageTitleService: jasmine.SpyObj<PageTitleService>;
 
     beforeEach(async () => {
-        const pageServiceSpy = jasmine.createSpyObj('PageTitleService', ['setTitle']);
-        const sanitizationServiceSpy = jasmine.createSpyObj('SanitizationService', ['sanitizeHtml', 'stripHtml', 'isSafeUrl']);
-
         await TestBed.configureTestingModule({
             imports: [AufstellungComponent],
-            providers: [
-                { provide: PageTitleService, useValue: pageServiceSpy },
-                { provide: SanitizationService, useValue: sanitizationServiceSpy },
-            ],
         }).compileComponents();
 
         fixture = TestBed.createComponent(AufstellungComponent);
         component = fixture.componentInstance;
-        mockPageTitleService = TestBed.inject(PageTitleService) as jasmine.SpyObj<PageTitleService>;
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it('should set page title on init', () => {
-        component.ngOnInit();
-        expect(mockPageTitleService.setTitle).toHaveBeenCalledWith('Aufstellung');
     });
 
     it('should load dummy members', () => {
@@ -108,17 +92,4 @@ describe('AufstellungComponent', () => {
         expect(rekrutInfo.priority).toBe(5);
     });
 
-    it('should provide security utils', () => {
-        expect(component.securityUtils.sanitizeHtml).toBeDefined();
-        expect(component.securityUtils.stripHtml).toBeDefined();
-        expect(component.securityUtils.isSafeUrl).toBeDefined();
-    });
-
-    it('should provide trackBy functions from utility class', () => {
-        expect(component.trackByRank).toBeDefined();
-        expect(component.trackByMember).toBeDefined();
-        expect(component.trackByMedal).toBeDefined();
-        expect(component.trackByCampaignRibbon).toBeDefined();
-        expect(component.trackByAbteilung).toBeDefined();
-    });
 });

@@ -7,10 +7,8 @@
         <div class="space-y-3">
             <!-- Upcoming events (ohne Widget-Box) -->
             <ul class="flex flex-row gap-2 overflow-x-auto md:flex-col md:gap-0 md:overflow-x-visible">
-                <li
-                    *ngFor="let ev of events$ | async"
-                    class="max-w-[14rem] min-w-[12rem] flex-shrink-0 md:mb-2 md:max-w-none md:min-w-0 md:flex-shrink"
-                >
+                @for (ev of events$ | async; track ev.id) {
+                    <li class="max-w-[14rem] min-w-[12rem] flex-shrink-0 md:mb-2 md:max-w-none md:min-w-0 md:flex-shrink">
                     <a
                         [href]="ev.eventUrl"
                         target="_blank"
@@ -42,7 +40,9 @@
                         </div>
                     </a>
                 </li>
-                <li *ngIf="(events$ | async)?.length === 0" class="text-tttGray-400 text-sm">Keine anstehenden Events</li>
+                } @empty {
+                    <li class="text-tttGray-400 text-sm">Keine anstehenden Events</li>
+                }
             </ul>
         </div>
     </div>

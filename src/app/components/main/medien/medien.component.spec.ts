@@ -1,48 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { MedienComponent } from './medien.component';
-import { PageTitleService } from '../../../core/services/page-title.service';
-import { SanitizationService } from '../../../core/services/sanitization.service';
-import { TwitchStream } from '../../../shared/types/medien.types';
 
 describe('MedienComponent', () => {
     let component: MedienComponent;
     let fixture: ComponentFixture<MedienComponent>;
-    let mockPageTitleService: jasmine.SpyObj<PageTitleService>;
-    let mockSanitizationService: jasmine.SpyObj<SanitizationService>;
-
-    // Test constants for security validation
-    const SECURITY_TEST_URLS = {
-        XSS_ATTEMPT: ['javascript', 'alert("xss")'].join(':'),
-    } as const;
 
     beforeEach(async () => {
-        const pageTitleSpy = jasmine.createSpyObj('PageTitleService', ['setTitle']);
-        const sanitizationSpy = jasmine.createSpyObj('SanitizationService', ['isSafeUrl']);
-
         await TestBed.configureTestingModule({
             imports: [MedienComponent],
-            providers: [
-                { provide: PageTitleService, useValue: pageTitleSpy },
-                { provide: SanitizationService, useValue: sanitizationSpy },
-                provideRouter([]),
-            ],
+            providers: [provideRouter([])],
         }).compileComponents();
 
         fixture = TestBed.createComponent(MedienComponent);
         component = fixture.componentInstance;
-        mockPageTitleService = TestBed.inject(PageTitleService) as jasmine.SpyObj<PageTitleService>;
-        mockSanitizationService = TestBed.inject(SanitizationService) as jasmine.SpyObj<SanitizationService>;
 
         fixture.detectChanges();
     });
 
     it('should create', () => {
         expect(component).toBeTruthy();
-    });
-
-    it('should set page title on init', () => {
-        expect(mockPageTitleService.setTitle).toHaveBeenCalledWith('Medien');
     });
 
     it('should have correct page title', () => {
@@ -66,33 +43,16 @@ describe('MedienComponent', () => {
         expect(component.externalLinks.files).toBe('https://files.tacticalteam.de/s/36FWSHsGNwaXLHg');
     });
 
-    it('should open external links safely', () => {
+    it('should open external links', () => {
         const mockEvent = new Event('click');
         spyOn(mockEvent, 'preventDefault');
         spyOn(globalThis, 'open');
-        mockSanitizationService.isSafeUrl.and.returnValue(true);
 
         const testUrl = 'https://example.com';
         component.openExternalLink(testUrl, mockEvent);
 
         expect(mockEvent.preventDefault).toHaveBeenCalled();
-        expect(mockSanitizationService.isSafeUrl).toHaveBeenCalledWith(testUrl);
         expect(globalThis.open).toHaveBeenCalledWith(testUrl, '_blank', 'noopener,noreferrer');
-    });
-
-    it('should not open unsafe links', () => {
-        const mockEvent = new Event('click');
-        spyOn(mockEvent, 'preventDefault');
-        spyOn(globalThis, 'open');
-        mockSanitizationService.isSafeUrl.and.returnValue(false);
-
-        // Security test: Verify XSS prevention with potentially dangerous URL
-        const unsafeUrl = SECURITY_TEST_URLS.XSS_ATTEMPT;
-        component.openExternalLink(unsafeUrl, mockEvent);
-
-        expect(mockEvent.preventDefault).toHaveBeenCalled();
-        expect(mockSanitizationService.isSafeUrl).toHaveBeenCalledWith(unsafeUrl);
-        expect(globalThis.open).not.toHaveBeenCalled();
     });
 
     it('should return correct platform styling', () => {
@@ -109,23 +69,5 @@ describe('MedienComponent', () => {
 
     it('should have live streams as observable', () => {
         expect(component.liveStreams$).toBeDefined();
-    });
-
-    it('should have trackBy functions', () => {
-        const testLiveStream: TwitchStream = {
-            id: 'test',
-            userName: 'testuser',
-            url: 'test',
-            title: 'test',
-            viewerCount: 0,
-            thumbnailUrl: 'test',
-            isLive: true,
-            startedAt: '2024-01-01T00:00:00Z',
-        };
-        const trackByLiveStreamResult = component.trackByLiveStream(0, testLiveStream);
-        expect(trackByLiveStreamResult).toBe('test');
-
-        const trackByIndexResult = component.trackByIndex(5);
-        expect(trackByIndexResult).toBe(5);
     });
 });
