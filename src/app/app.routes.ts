@@ -1,54 +1,47 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from './components/main/home/home.component';
-import { ImpressumComponent } from './components/main/impressum/impressum.component';
-import { DatenschutzComponent } from './components/main/datenschutz/datenschutz.component';
-import { ChronikComponent } from './components/main/chronik/chronik.component';
-import { MitmachenComponent } from './components/main/mitmachen/mitmachen.component';
-import { MedienComponent } from './components/main/medien/medien.component';
-import { AufstellungComponent } from './components/main/aufstellung/aufstellung.component';
 import { securityGuard } from './core/guards/security.guard';
 
 export const routes: Routes = [
     {
         path: '',
-        component: HomeComponent,
+        loadComponent: () => import('./components/main/home/home.component').then((m) => m.HomeComponent),
         title: 'Tactical Training Team',
         pathMatch: 'full',
         canActivate: [securityGuard],
     },
     {
         path: 'impressum',
-        component: ImpressumComponent,
+        loadComponent: () => import('./components/main/impressum/impressum.component').then((m) => m.ImpressumComponent),
         title: 'Impressum - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'datenschutz',
-        component: DatenschutzComponent,
+        loadComponent: () => import('./components/main/datenschutz/datenschutz.component').then((m) => m.DatenschutzComponent),
         title: 'Datenschutz - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'chronik',
-        component: ChronikComponent,
+        loadComponent: () => import('./components/main/chronik/chronik.component').then((m) => m.ChronikComponent),
         title: 'Chronik - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'mitmachen',
-        component: MitmachenComponent,
+        loadComponent: () => import('./components/main/mitmachen/mitmachen.component').then((m) => m.MitmachenComponent),
         title: 'Mitmachen - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'medien',
-        component: MedienComponent,
+        loadComponent: () => import('./components/main/medien/medien.component').then((m) => m.MedienComponent),
         title: 'Medien - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'aufstellung',
-        component: AufstellungComponent,
+        loadComponent: () => import('./components/main/aufstellung/aufstellung.component').then((m) => m.AufstellungComponent),
         title: 'Aufstellung - Tactical Training Team',
         canActivate: [securityGuard],
     },
