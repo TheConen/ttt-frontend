@@ -1,5 +1,1 @@
 pnpm-lock.yaml
-
-# Angular templates with complex attribute bindings that cause Prettier parser issues
-src/app/components/main/aufstellung/aufstellung.component.html
-src/app/components/main/home/home.component.html
