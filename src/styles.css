@@ -1,6 +1,7 @@
 /* Global styles and Tailwind CSS v4 setup */
 @import "primeicons/primeicons.css";
 @import "tailwindcss";
+@plugin "tailwindcss-primeui";
 
 /* Tailwind v4: define design tokens with @theme to preserve the custom theme */
 @theme {
