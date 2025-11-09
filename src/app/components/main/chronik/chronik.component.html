@@ -63,7 +63,8 @@
 
             <!-- Timeline container - compact cards with expandable details -->
             <div class="grid grid-cols-2 items-stretch gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
-                <div *ngFor="let event of timelineEvents; trackBy: trackByIndex" class="relative h-full">
+                @for (event of timelineEvents; track event.id) {
+                  <div class="relative h-full">
                     <button
                         type="button"
                         class="group ttt-content-card hover:border-tttRed/40 hover:bg-tttRed/5 relative flex h-full min-h-[110px] flex-col justify-between p-2 text-left shadow-md transition-all duration-200"
@@ -114,11 +115,11 @@
                         </div>
                     </button>
                     <!-- Expanded details -->
-                    <div
-                        *ngIf="event.expanded"
-                        class="ttt-content-card border-tttRed/70 bg-tttRed/10 animate-fadeIn absolute right-0 left-0 z-10 mt-2 p-3 shadow-xl"
-                    >
-                        <button
+                    @if (event.expanded) {
+                        <div
+                            class="ttt-content-card border-tttRed/70 bg-tttRed/10 animate-fadeIn absolute right-0 left-0 z-10 mt-2 p-3 shadow-xl"
+                        >
+                            <button
                             (click)="toggleEventDetails(event)"
                             class="bg-tttGray-800/70 hover:bg-tttRed/30 absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full transition-all duration-200"
                             tabindex="-1"
@@ -126,17 +127,23 @@
                         >
                             <i class="pi pi-times text-tttGray-400 text-sm" aria-hidden="true"></i>
                         </button>
-                        <div *ngIf="event.details && event.details.length > 0">
+                        @if (event.details && event.details.length > 0) {
+                          <div>
                             <h4 class="text-tttWhite mb-1 text-xs font-semibold tracking-wide uppercase">Weitere Details:</h4>
                             <ul class="space-y-1">
-                                <li *ngFor="let detail of event.details" class="text-tttGray-400 flex items-start gap-2 text-xs">
+                                @for (detail of event.details; track detail) {
+                                  <li class="text-tttGray-400 flex items-start gap-2 text-xs">
                                     <i class="pi pi-angle-right text-tttRed mt-0.5 flex-shrink-0 text-xs"></i>
                                     <span>{{ detail }}</span>
-                                </li>
+                                  </li>
+                                }
                             </ul>
+                          </div>
+                        }
                         </div>
-                    </div>
-                </div>
+                    }
+                  </div>
+                }
             </div>
         </div>
     </div>

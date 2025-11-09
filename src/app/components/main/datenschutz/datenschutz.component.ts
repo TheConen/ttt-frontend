@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 
 @Component({
@@ -10,7 +9,7 @@ import { PageLayoutComponent } from '../../../shared/components/page-layout/page
     templateUrl: './datenschutz.component.html',
     styleUrl: './datenschutz.component.css',
 })
-export class DatenschutzComponent extends BasePageComponent {
+export class DatenschutzComponent {
     readonly pageTitle = 'Datenschutzerklärung';
 
     // External links that might change

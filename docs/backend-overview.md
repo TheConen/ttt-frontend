@@ -47,8 +47,7 @@ Notes:
 ### Security / HTTP middleware
 
 - `securityInterceptor` (`src/app/core/interceptors/security.interceptor.ts`) runs for HTTP requests and enforces simple rules (e.g. block http requests in https context, add headers).
-- `securityGuard` (`src/app/core/guards/security.guard.ts`) is used for route-level checks (parameter validation, simple rate limiting, allowed routes list).
-- `SanitizationService` (`src/app/core/services/sanitization.service.ts`) provides `sanitizeHtml`, `stripHtml`, and `isSafeUrl` utilities used before injecting dynamic HTML or opening external links.
+- `securityGuard` (`src/app/core/guards/security.guard.ts`) is used for route-level checks (parameter validation, simple rate limiting).
 
 ## Data types (shared)
 

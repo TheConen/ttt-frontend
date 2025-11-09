@@ -14,7 +14,7 @@ src/app/
 ├── shared/
 │   ├── components/       # Shared components (base-page, page-layout)
 │   ├── types/           # TypeScript type definitions
-│   └── utils/           # Utility functions (keyboard navigation, trackBy)
+│   └── utils/           # Barrel exports for shared utilities
 ├── components/
 │   ├── header/          # Header component
 │   ├── footer/          # Footer component

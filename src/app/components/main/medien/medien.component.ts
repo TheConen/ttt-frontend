@@ -3,10 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { TrackByUtils } from '../../../shared/utils/trackby.utils';
-import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
-import { SanitizationService } from '../../../core/services/sanitization.service';
 import { TwitchStream } from '../../../shared/types/medien.types';
 import { MedienService } from '../../../core/services/medien.service';
 
@@ -17,16 +14,13 @@ import { MedienService } from '../../../core/services/medien.service';
     templateUrl: './medien.component.html',
     styleUrl: './medien.component.css',
 })
-export class MedienComponent extends BasePageComponent {
+export class MedienComponent {
     // Services
-    private readonly sanitizationService = inject(SanitizationService);
     private readonly medienService = inject(MedienService);
 
     // Public readonly properties
     readonly pageTitle = 'Medien';
     readonly pageSubtitle = 'Streams, Videos und Community-Kanäle des Tactical Training Teams';
-    readonly trackByLiveStream = TrackByUtils.trackByProperty<TwitchStream>('id');
-    readonly trackByIndex = TrackByUtils.trackByIndex;
     readonly liveStreams$: Observable<TwitchStream[]> = this.medienService.getTwitchStreams().pipe(
         retry({ count: 2, delay: 1000 }),
         catchError(() => of([]))
@@ -66,16 +60,7 @@ export class MedienComponent extends BasePageComponent {
     // Public methods
     openExternalLink(url: string, event: Event): void {
         event.preventDefault();
-        if (this.sanitizationService.isSafeUrl(url)) {
-            window.open(url, '_blank', 'noopener,noreferrer');
-        }
-    }
-
-    handleKeyboardNavigation(url: string, event: KeyboardEvent): void {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault();
-            this.openExternalLink(url, event);
-        }
+        window.open(url, '_blank', 'noopener,noreferrer');
     }
 
     getPlatformStyling(platform: string): string {

@@ -12,16 +12,15 @@
 
         <!-- Live Streams Grid -->
         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <a
-                *ngFor="let stream of liveStreams$ | async; trackBy: trackByLiveStream"
+            @for (stream of liveStreams$ | async; track stream.id) {
+              <a
                 class="ttt-content-card group hover:border-tttRed/50 cursor-pointer transition-all duration-300"
                 (click)="openExternalLink(stream.url, $event)"
-                (keydown)="handleKeyboardNavigation(stream.url, $event)"
                 [attr.aria-label]="'Live Stream öffnen: ' + stream.title"
                 [href]="stream.url"
                 target="_blank"
                 rel="noopener noreferrer"
-            >
+              >
                 <!-- Stream Thumbnail -->
                 <div class="relative mb-4">
                     <img [src]="stream.thumbnailUrl" [alt]="stream.title" class="h-48 w-full rounded-lg object-cover" />
@@ -49,17 +48,20 @@
                         {{ stream.userName }}
                     </p>
                 </div>
-            </a>
+              </a>
+            }
         </div>
 
         <!-- No Live Streams Message -->
-        <div *ngIf="(liveStreams$ | async)?.length === 0" class="py-12 text-center">
-            <div class="mb-4">
-                <i class="pi pi-video text-tttGray-600 text-4xl"></i>
+        @if ((liveStreams$ | async)?.length === 0) {
+            <div class="py-12 text-center">
+                <div class="mb-4">
+                    <i class="pi pi-video text-tttGray-600 text-4xl"></i>
+                </div>
+                <h3 class="text-tttWhite mb-2 text-xl font-bold">Keine Live Streams</h3>
+                <p class="text-tttGray-400">Derzeit sind keine Live-Übertragungen aktiv.</p>
             </div>
-            <h3 class="text-tttWhite mb-2 text-xl font-bold">Keine Live Streams</h3>
-            <p class="text-tttGray-400">Derzeit sind keine Live-Übertragungen aktiv.</p>
-        </div>
+        }
     </div>
 
     <!-- Media Platforms Section -->
@@ -79,7 +81,6 @@
                 type="button"
                 class="ttt-content-card group text-left transition-all duration-300 hover:border-red-400/50 hover:bg-red-400/10"
                 (click)="openExternalLink(externalLinks.youtube, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.youtube, $event)"
                 aria-label="YouTube Kanal öffnen"
             >
                 <div class="flex items-start gap-4">
@@ -106,7 +107,6 @@
                 type="button"
                 class="ttt-content-card group text-left transition-all duration-300 hover:border-purple-400/50 hover:bg-purple-400/10"
                 (click)="openExternalLink(externalLinks.twitch, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.twitch, $event)"
                 aria-label="Twitch Kanal öffnen"
             >
                 <div class="flex items-start gap-4">
@@ -133,7 +133,6 @@
                 type="button"
                 class="ttt-content-card group text-left transition-all duration-300 hover:border-green-400/50 hover:bg-green-400/10"
                 (click)="openExternalLink(externalLinks.kick, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.kick, $event)"
                 aria-label="Kick Kanal öffnen"
             >
                 <div class="flex items-start gap-4">
@@ -174,7 +173,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-400/50 hover:bg-blue-400/10"
                 (click)="openExternalLink(externalLinks.x, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.x, $event)"
                 aria-label="Social Media öffnen: X (Twitter)"
             >
                 <div class="mb-3 flex justify-center">
@@ -195,7 +193,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-purple-400/50 hover:bg-purple-400/10"
                 (click)="openExternalLink(externalLinks.mastodon, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.mastodon, $event)"
                 aria-label="Social Media öffnen: Mastodon"
             >
                 <div class="mb-3 flex justify-center">
@@ -216,7 +213,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-500/50 hover:bg-blue-500/10"
                 (click)="openExternalLink(externalLinks.bluesky, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.bluesky, $event)"
                 aria-label="Social Media öffnen: Bluesky"
             >
                 <div class="mb-3 flex justify-center">
@@ -237,7 +233,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-pink-400/50 hover:bg-pink-400/10"
                 (click)="openExternalLink(externalLinks.instagram, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.instagram, $event)"
                 aria-label="Social Media öffnen: Instagram"
             >
                 <div class="mb-3 flex justify-center">
@@ -258,7 +253,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-black/50 hover:bg-black/10"
                 (click)="openExternalLink(externalLinks.tiktok, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.tiktok, $event)"
                 aria-label="Social Media öffnen: TikTok"
             >
                 <div class="mb-3 flex justify-center">
@@ -279,7 +273,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-blue-600/50 hover:bg-blue-600/10"
                 (click)="openExternalLink(externalLinks.steam, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.steam, $event)"
                 aria-label="Steam Gruppe öffnen"
             >
                 <div class="mb-3 flex justify-center">
@@ -300,7 +293,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-orange-500/50 hover:bg-orange-500/10"
                 (click)="openExternalLink(externalLinks.reddit, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.reddit, $event)"
                 aria-label="Reddit Subreddit öffnen"
             >
                 <div class="mb-3 flex justify-center">
@@ -321,7 +313,6 @@
                 type="button"
                 class="ttt-content-card group flex h-full cursor-pointer flex-col text-center transition-all duration-300 hover:border-gray-400/50 hover:bg-gray-400/10"
                 (click)="openExternalLink(externalLinks.github, $event)"
-                (keydown)="handleKeyboardNavigation(externalLinks.github, $event)"
                 aria-label="GitHub Repository öffnen"
             >
                 <div class="mb-3 flex justify-center">
@@ -356,7 +347,6 @@
                 type="button"
                 class="ttt-content-card group hover:border-tttRed/50 hover:bg-tttRed/10 text-left transition-all duration-300"
                 (click)="openExternalLink('https://wiki.tacticalteam.de/Corporate-Design', $event)"
-                (keydown)="handleKeyboardNavigation('https://wiki.tacticalteam.de/Corporate-Design', $event)"
                 aria-label="Corporate Design Wiki öffnen"
             >
                 <div class="flex items-start gap-4">
@@ -385,7 +375,6 @@
                 type="button"
                 class="ttt-content-card group hover:border-tttGray-400/50 hover:bg-tttGray-400/10 text-left transition-all duration-300"
                 (click)="openExternalLink('https://drive.google.com/drive/folders/1ABC123', $event)"
-                (keydown)="handleKeyboardNavigation('https://drive.google.com/drive/folders/1ABC123', $event)"
                 aria-label="Logo Downloads öffnen"
             >
                 <div class="flex items-start gap-4">

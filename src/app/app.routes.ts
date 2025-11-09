@@ -12,37 +12,44 @@ export const routes: Routes = [
     {
         path: '',
         component: HomeComponent,
+        title: 'Tactical Training Team',
         pathMatch: 'full',
         canActivate: [securityGuard],
     },
     {
         path: 'impressum',
         component: ImpressumComponent,
+        title: 'Impressum - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'datenschutz',
         component: DatenschutzComponent,
+        title: 'Datenschutz - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'chronik',
         component: ChronikComponent,
+        title: 'Chronik - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'mitmachen',
         component: MitmachenComponent,
+        title: 'Mitmachen - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'medien',
         component: MedienComponent,
+        title: 'Medien - Tactical Training Team',
         canActivate: [securityGuard],
     },
     {
         path: 'aufstellung',
         component: AufstellungComponent,
+        title: 'Aufstellung - Tactical Training Team',
         canActivate: [securityGuard],
     },
     // Wildcard route - redirect unknown routes to home
