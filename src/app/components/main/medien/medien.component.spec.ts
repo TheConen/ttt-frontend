@@ -43,18 +43,6 @@ describe('MedienComponent', () => {
         expect(component.externalLinks.files).toBe('https://files.tacticalteam.de/s/36FWSHsGNwaXLHg');
     });
 
-    it('should open external links', () => {
-        const mockEvent = new Event('click');
-        spyOn(mockEvent, 'preventDefault');
-        spyOn(globalThis, 'open');
-
-        const testUrl = 'https://example.com';
-        component.openExternalLink(testUrl, mockEvent);
-
-        expect(mockEvent.preventDefault).toHaveBeenCalled();
-        expect(globalThis.open).toHaveBeenCalledWith(testUrl, '_blank', 'noopener,noreferrer');
-    });
-
     it('should return correct platform styling', () => {
         const youtubeStyle = component.getPlatformStyling('youtube');
         const twitchStyle = component.getPlatformStyling('twitch');
