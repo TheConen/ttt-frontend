@@ -115,9 +115,11 @@
                 class="group ttt-content-card p-3 text-center transition-all duration-300
                        hover:border-tttRed/50 hover:bg-tttRed/5 relative min-h-[140px]
                        flex flex-col justify-between"
-                [class.cursor-pointer]="hasExpandableContent(member)"
-                [class.bg-tttRed/5]="member.isExpanded"
-                [class.border-tttRed/50]="member.isExpanded"
+                [ngClass]="{
+                  'cursor-pointer': hasExpandableContent(member),
+                  'bg-tttRed/5': member.isExpanded,
+                  'border-tttRed/50': member.isExpanded
+                }"
                 [tttActivable]="hasExpandableContent(member)"
                 [activableRole]="'button'"
                 [activableAriaLabel]="
