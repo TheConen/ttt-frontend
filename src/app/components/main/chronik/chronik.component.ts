@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 
+type TimelineEventType = 'anniversary' | 'milestone' | 'system';
+
 interface TimelineEvent {
     id: string;
     title: string;
     date: string;
-    type: string;
+    type: TimelineEventType;
     icon: string;
     color: string;
     description: string;
@@ -189,24 +191,19 @@ export class ChronikComponent {
         id: string,
         title: string,
         date: string,
-        type: 'anniversary' | 'milestone' | 'system',
+        type: TimelineEventType,
         icon: string,
         description: string,
         details: string[]
     ): TimelineEvent {
-        const typeColors = {
-            anniversary: 'border-tttRed bg-tttRed text-tttWhite',
-            milestone: 'border-blue-500 bg-blue-500/20 text-blue-300',
-            system: 'border-orange-500 bg-orange-500/20 text-orange-300',
-        };
-
+        const cfg = this.eventTypeConfig[type as keyof typeof this.eventTypeConfig] ?? this.eventTypeConfig.default;
         return {
             id,
             title,
             date,
             type,
             icon,
-            color: typeColors[type],
+            color: cfg.color,
             description,
             details,
             expanded: false,
