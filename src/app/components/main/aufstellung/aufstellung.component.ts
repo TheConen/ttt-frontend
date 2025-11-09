@@ -1,6 +1,7 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TrackByUtils, KeyboardNavigationUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
+import { ActivableDirective } from '../../../shared/directives/activable.directive';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 import { Member as BackendMember, Medal, CampaignRibbon, Abteilung, RankType } from '../../../shared/types/member.types';
 import { MemberService } from '../../../core/services/member.service';
@@ -105,7 +106,7 @@ type Member = BackendMember & { isExpanded?: boolean };
 @Component({
     selector: 'ttt-aufstellung',
     standalone: true,
-    imports: [CommonModule, PageLayoutComponent],
+    imports: [CommonModule, PageLayoutComponent, ActivableDirective],
     templateUrl: './aufstellung.component.html',
     styleUrl: './aufstellung.component.css',
     changeDetection: ChangeDetectionStrategy.OnPush,
@@ -347,5 +348,25 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
 
     getRankBadgeExpandedClasses(rank: RankType): string {
         return this.getRankBadgeClassesBase(rank, 'text-sm px-2 py-1 rounded font-medium');
+    }
+
+    // Classes for avatar border/hover by rank (use static strings for Tailwind JIT)
+    getAvatarBorderClasses(rank: RankType): Record<string, boolean> {
+        switch (rank) {
+            case 'offizier':
+                return { 'border-yellow-400/50': true, 'group-hover:border-yellow-400': true };
+            case 'unteroffizier':
+                return { 'border-gray-400/50': true, 'group-hover:border-gray-400': true };
+            case 'veteran':
+                return { 'border-green-400/50': true, 'group-hover:border-green-400': true };
+            case 'soldat':
+                return { 'border-blue-600/50': true, 'group-hover:border-blue-600': true };
+            case 'rekrut':
+                return { 'border-blue-300/50': true, 'group-hover:border-blue-300': true };
+            case 'gast':
+                return { 'border-gray-300/50': true, 'group-hover:border-gray-300': true };
+            default:
+                return { 'border-gray-400/50': true, 'group-hover:border-gray-400': true };
+        }
     }
 }

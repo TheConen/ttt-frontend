@@ -111,19 +111,16 @@
                 class="group ttt-content-card p-3 text-center transition-all duration-300
                        hover:border-tttRed/50 hover:bg-tttRed/5 relative min-h-[140px]
                        flex flex-col justify-between"
-                [class.cursor-pointer]="hasExpandableContent(member)"
-                [class.bg-tttRed/5]="member.isExpanded"
-                [class.border-tttRed/50]="member.isExpanded"
-                (click)="hasExpandableContent(member) ? toggleMemberDetails(member) : null"
-                (keydown)="handleMemberKeyboardNavigation(member, $event)"
-                [attr.aria-label]="
+                [ngClass]="{ 'cursor-pointer': hasExpandableContent(member), 'bg-tttRed/5': member.isExpanded, 'border-tttRed/50': member.isExpanded }"
+                [tttActivable]="hasExpandableContent(member)"
+                [activableRole]="'button'"
+                [activableAriaLabel]="
                   hasExpandableContent(member)
                     ? 'Details für ' + member.name + (member.isExpanded ? ' ausblenden' : ' anzeigen')
                     : null
                 "
-                [attr.aria-expanded]="member.isExpanded"
-                [attr.tabindex]="hasExpandableContent(member) ? 0 : -1"
-                [attr.role]="hasExpandableContent(member) ? 'button' : null">
+                (activableActivate)="toggleMemberDetails(member)"
+                [attr.aria-expanded]="member.isExpanded">
 
                 <div>
                   <!-- Avatar (officers only) -->
@@ -131,7 +128,7 @@
                     <div
                       *ngIf="member.avatar && member.avatar !== ''; else noAvatarTemplate"
                       class="w-12 h-12 rounded-full border-2 overflow-hidden transition-all duration-300"
-                      [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50 group-hover:border-' + getRankInfo(member.rank).color.split('-')[1] + '-400'">
+                      [ngClass]="getAvatarBorderClasses(member.rank)">
                       <img
                         [src]="member.avatar"
                         [alt]="member.name + ' Avatar'"
@@ -201,7 +198,7 @@
                     <div class="w-16 h-16 flex-shrink-0">
                       <div *ngIf="member.avatar && member.avatar !== ''; else expandedNoAvatarTemplate"
                            class="w-16 h-16 rounded-full border-2 overflow-hidden"
-                           [class]="'border-' + getRankInfo(member.rank).color.split('-')[1] + '-400/50'">
+                           [ngClass]="getAvatarBorderClasses(member.rank)">
                         <img [src]="member.avatar"
                              [alt]="member.name"
                              class="w-full h-full object-cover" />
