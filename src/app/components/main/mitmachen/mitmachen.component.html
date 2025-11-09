@@ -76,7 +76,9 @@
                         </div>
                     </div>
 
-                    <button pButton (click)="openDiscord()" class="ttt-btn-primary mt-auto w-full">Discord beitreten</button>
+                    <a [href]="externalLinks.discord" target="_blank" rel="noopener noreferrer" class="ttt-btn-primary mt-auto w-full text-center">
+                        Discord beitreten
+                    </a>
                 </div>
 
                 <!-- Guest -->
@@ -115,7 +117,9 @@
                         </div>
                     </div>
 
-                    <button pButton (click)="openDiscord()" class="ttt-btn-secondary mt-auto w-full">Discord beitreten</button>
+                    <a [href]="externalLinks.discord" target="_blank" rel="noopener noreferrer" class="ttt-btn-secondary mt-auto w-full text-center">
+                        Discord beitreten
+                    </a>
                 </div>
             </div>
         </div>
@@ -280,14 +284,15 @@
                                                 <p class="text-tttGray-300 text-xs">Detaillierte Wiki-Anleitung</p>
                                             </div>
                                         </div>
-                                        <button
-                                            pButton
-                                            (click)="openArma3SyncGuide()"
+                                        <a
+                                            [href]="externalLinks.arma3SyncGuide"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             class="from-tttRed to-tttRed-600 text-tttWhite hover:shadow-tttRed/30 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-bold shadow-lg transition-all duration-300 hover:shadow-xl"
                                         >
                                             <i class="pi pi-file-text text-xs"></i>
                                             Anleitung öffnen
-                                        </button>
+                                        </a>
                                     </div>
                                     <!-- Video-Tutorial -->
                                     <div
@@ -302,14 +307,15 @@
                                                 <p class="text-tttGray-300 text-xs">Schritt-für-Schritt Video</p>
                                             </div>
                                         </div>
-                                        <button
-                                            pButton
-                                            (click)="openArma3SyncVideo()"
+                                        <a
+                                            [href]="externalLinks.arma3SyncVideo"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             class="from-tttRed to-tttRed-600 text-tttWhite hover:shadow-tttRed/30 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-bold shadow-lg transition-all duration-300 hover:shadow-xl"
                                         >
                                             <i class="pi pi-play text-xs"></i>
                                             Video ansehen
-                                        </button>
+                                        </a>
                                     </div>
                                     <!-- Tipps & Tricks -->
                                     <div
@@ -324,14 +330,15 @@
                                                 <p class="text-tttGray-300 text-xs">Hilfreiche Video-Tipps</p>
                                             </div>
                                         </div>
-                                        <button
-                                            pButton
-                                            (click)="openArma3SyncTips()"
+                                        <a
+                                            [href]="externalLinks.arma3SyncTips"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
                                             class="from-tttRed to-tttRed-600 text-tttWhite hover:shadow-tttRed/30 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-bold shadow-lg transition-all duration-300 hover:shadow-xl"
                                         >
                                             <i class="pi pi-lightbulb text-xs"></i>
                                             Tipps ansehen
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -435,9 +442,9 @@
                         </div>
                     </div>
 
-                    <button pButton (click)="openEvents()" class="ttt-btn-secondary mt-auto w-full">
+                    <a [href]="externalLinks.events" target="_blank" rel="noopener noreferrer" class="ttt-btn-secondary mt-auto w-full text-center">
                         Nächstes Einsteiger-Event finden
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Fast Path - Für Veteranen -->
@@ -480,7 +487,9 @@
                         </div>
                     </div>
 
-                    <button pButton (click)="openDiscord()" class="ttt-btn-primary mt-auto w-full">Personal-Abteilung kontaktieren</button>
+                    <a [href]="externalLinks.discord" target="_blank" rel="noopener noreferrer" class="ttt-btn-primary mt-auto w-full text-center">
+                        Personal-Abteilung kontaktieren
+                    </a>
                 </div>
             </div>
         </div>
@@ -495,23 +504,25 @@
             </p>
 
             <div class="mb-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <button
-                    pButton
-                    (click)="openEvents()"
+                <a
+                    [href]="externalLinks.events"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="text-tttRed hover:bg-tttGray-100 inline-flex transform items-center gap-2 rounded-xl bg-white px-8 py-4 text-lg font-bold shadow-lg transition-all duration-300 hover:scale-105"
                 >
                     <i class="pi pi-calendar"></i>
                     Jetzt nachschauen
-                </button>
+                </a>
 
-                <button
-                    pButton
-                    (click)="openDiscord()"
+                <a
+                    [href]="externalLinks.discord"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="hover:text-tttRed inline-flex items-center gap-2 rounded-xl border-2 border-white bg-transparent px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-white"
                 >
                     <i class="pi pi-discord"></i>
                     Discord beitreten
-                </button>
+                </a>
             </div>
 
             <div class="mb-8 flex flex-wrap items-center justify-center gap-6 text-white">

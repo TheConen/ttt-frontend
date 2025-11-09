@@ -42,28 +42,20 @@ export class MedienComponent {
         files: 'https://files.tacticalteam.de/s/36FWSHsGNwaXLHg',
     } as const;
 
-    // Private readonly properties
-    private readonly platformStyles: Record<string, string> = {
-        youtube: 'hover:border-red-500/50 hover:bg-red-500/10',
-        twitch: 'hover:border-purple-500/50 hover:bg-purple-500/10',
-        kick: 'hover:border-green-600/50 hover:bg-green-600/10',
-        x: 'hover:border-blue-400/50 hover:bg-blue-400/10',
-        mastodon: 'hover:border-purple-400/50 hover:bg-purple-400/10',
-        bluesky: 'hover:border-sky-400/50 hover:bg-sky-400/10',
-        instagram: 'hover:border-pink-500/50 hover:bg-pink-500/10',
-        tiktok: 'hover:border-red-400/50 hover:bg-red-400/10',
-        steam: 'hover:border-blue-300/50 hover:bg-blue-300/10',
-        reddit: 'hover:border-red-400/50 hover:bg-red-400/10',
-        github: 'hover:border-gray-400/50 hover:bg-gray-400/10',
-    } as const;
-
-    // Public methods
-    openExternalLink(url: string, event: Event): void {
-        event.preventDefault();
-        window.open(url, '_blank', 'noopener,noreferrer');
-    }
-
     getPlatformStyling(platform: string): string {
-        return this.platformStyles[platform] || 'hover:border-tttRed/50 hover:bg-tttRed/10';
+        const styles: Record<string, string> = {
+            youtube: 'hover:border-red-500/50 hover:bg-red-500/10',
+            twitch: 'hover:border-purple-500/50 hover:bg-purple-500/10',
+            kick: 'hover:border-green-600/50 hover:bg-green-600/10',
+            x: 'hover:border-blue-400/50 hover:bg-blue-400/10',
+            mastodon: 'hover:border-purple-400/50 hover:bg-purple-400/10',
+            bluesky: 'hover:border-sky-400/50 hover:bg-sky-400/10',
+            instagram: 'hover:border-pink-500/50 hover:bg-pink-500/10',
+            tiktok: 'hover:border-red-400/50 hover:bg-red-400/10',
+            steam: 'hover:border-blue-300/50 hover:bg-blue-300/10',
+            reddit: 'hover:border-red-400/50 hover:bg-red-400/10',
+            github: 'hover:border-gray-400/50 hover:bg-gray-400/10',
+        };
+        return styles[platform] || 'hover:border-tttRed/50 hover:bg-tttRed/10';
     }
 }
