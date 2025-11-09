@@ -91,5 +91,4 @@ describe('AufstellungComponent', () => {
         expect(rekrutInfo.name).toBe('Rekrut');
         expect(rekrutInfo.priority).toBe(5);
     });
-
 });

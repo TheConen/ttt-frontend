@@ -3,6 +3,7 @@
 ## Security Headers
 
 Configured in `src/index.html`:
+
 - `X-Content-Type-Options: nosniff`
 - `X-Frame-Options: DENY`
 - `X-XSS-Protection: 1; mode=block`
@@ -13,8 +14,8 @@ Configured in `src/index.html`:
 
 - Guard: `SecurityGuard` (`src/app/core/guards/security.guard.ts`)
 - Features:
-  - XSS pattern detection in route parameters
-  - Rate limiting (100ms minimum between route changes)
+    - XSS pattern detection in route parameters
+    - Rate limiting (100ms minimum between route changes)
 - Applied to: All application routes via `canActivate`
 - Note: Route validation removed (redundant with Angular router's wildcard route)
 

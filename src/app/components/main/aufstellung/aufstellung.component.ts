@@ -1,8 +1,8 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 import { ActivableDirective } from '../../../shared/directives/activable.directive';
-import { Member as BackendMember, CampaignRibbon, RankType } from '../../../shared/types/member.types';
+import { CampaignRibbon, Member as BackendMember, RankType } from '../../../shared/types/member.types';
 import { MemberService } from '../../../core/services/member.service';
 
 // Configuration constants
