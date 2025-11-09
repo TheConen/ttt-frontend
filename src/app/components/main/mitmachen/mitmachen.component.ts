@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonDirective } from 'primeng/button';
-import { TrackByUtils, BasePageComponent } from '../../../shared/utils';
+import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
 const MITMACHEN_CONFIG = {

@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TrackByUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
+import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
+import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 
 interface TimelineEvent {

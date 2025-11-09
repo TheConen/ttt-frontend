@@ -1,6 +1,8 @@
 import { Component, OnInit, inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TrackByUtils, KeyboardNavigationUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
+import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
+import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 import { ActivableDirective } from '../../../shared/directives/activable.directive';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 import { Member as BackendMember, Medal, CampaignRibbon, Abteilung, RankType } from '../../../shared/types/member.types';
@@ -302,10 +304,6 @@ export class AufstellungComponent extends BasePageComponent implements OnInit {
         this.cdr.detectChanges();
     }
 
-    // Keyboard navigation handler for member details toggle
-    handleMemberKeyboardNavigation(member: Member, event: KeyboardEvent): void {
-        KeyboardNavigationUtils.handleToggle(event, this.hasExpandableContent(member), () => this.toggleMemberDetails(member));
-    }
 
     getRankInfo(rank: RankType): RankInfo {
         return this.rankInfo[rank];

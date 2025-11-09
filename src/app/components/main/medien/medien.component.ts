@@ -3,7 +3,9 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
-import { TrackByUtils, KeyboardNavigationUtils, BasePageComponent, PageLayoutComponent } from '../../../shared/utils';
+import { TrackByUtils } from '../../../shared/utils/trackby.utils';
+import { BasePageComponent } from '../../../shared/components/base-page/base-page.component';
+import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 import { SanitizationService } from '../../../core/services/sanitization.service';
 import { TwitchStream } from '../../../shared/types/medien.types';
 import { MedienService } from '../../../core/services/medien.service';
@@ -70,7 +72,10 @@ export class MedienComponent extends BasePageComponent {
     }
 
     handleKeyboardNavigation(url: string, event: KeyboardEvent): void {
-        KeyboardNavigationUtils.handleExternalLink(event, url, (url, event) => this.openExternalLink(url, event));
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            this.openExternalLink(url, event);
+        }
     }
 
     getPlatformStyling(platform: string): string {
