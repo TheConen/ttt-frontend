@@ -1,5 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { PageLayoutComponent } from '../../../shared/components/page-layout/page-layout.component';
 import { ActivableDirective } from '../../../shared/directives/activable.directive';
 import { Member as BackendMember, CampaignRibbon, RankType } from '../../../shared/types/member.types';
@@ -111,6 +111,8 @@ type Member = BackendMember & { isExpanded?: boolean };
 })
 export class AufstellungComponent implements OnInit {
     private readonly memberService = inject(MemberService);
+    private readonly document = inject(DOCUMENT);
+    private readonly platformId = inject(PLATFORM_ID);
 
     readonly pageTitle = AUFSTELLUNG_CONFIG.PAGE_TITLE;
     readonly pageSubtitle = AUFSTELLUNG_CONFIG.PAGE_SUBTITLE;
@@ -258,23 +260,15 @@ export class AufstellungComponent implements OnInit {
     }
 
     toggleMemberDetails(member: Member): void {
-        const wasExpanded = member.isExpanded;
+        member.isExpanded = !member.isExpanded;
 
-        // Close all other members
-        for (const m of this.members) {
-            m.isExpanded = false;
-        }
-
-        // Toggle current member
-        member.isExpanded = !wasExpanded;
-
-        // Scroll to member card on mobile when expanding
-        if (member.isExpanded && globalThis.window !== undefined) {
+        // Scroll to member after expansion animation
+        if (member.isExpanded && isPlatformBrowser(this.platformId)) {
             setTimeout(() => {
-                const element = globalThis.document.getElementById(`member-${member.id}`);
+                const element = this.document.getElementById(`member-${member.id}`);
                 if (element) {
-                    const offsetTop = element.getBoundingClientRect().top + globalThis.window.scrollY - 80;
-                    globalThis.window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                    const offsetTop = element.getBoundingClientRect().top + window.scrollY - 80;
+                    window.scrollTo({ top: offsetTop, behavior: 'smooth' });
                 }
             }, 100);
         }

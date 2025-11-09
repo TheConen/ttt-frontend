@@ -189,7 +189,7 @@
         @apply text-tttWhite flex-1 text-base font-semibold;
     }
 }
-/* Zentrale Button Styles */
+/* Central Button Styles */
 .ttt-btn-primary {
     @apply from-tttRed to-tttRed-600 text-tttWhite hover:shadow-tttRed/30 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-semibold shadow-lg transition-all duration-300 hover:shadow-xl;
 }

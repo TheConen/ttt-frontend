@@ -4,12 +4,10 @@ import { catchError, retry } from 'rxjs/operators';
 import { TwitchStream } from '../../shared/types/medien.types';
 import { ApiService } from './api.service';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class MedienService {
     private readonly baseUrl = environment.apiBaseUrl;
-    private readonly http = inject(HttpClient);
     private readonly api = inject(ApiService);
 
     /**
