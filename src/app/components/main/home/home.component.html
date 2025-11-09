@@ -24,9 +24,11 @@
                   type="button"
                   (click)="goToImage(i)"
                   class="banner-indicator"
-                  [class.bg-tttRed]="i === currentImageIndex"
-                  [class.bg-tttWhite/40]="i !== currentImageIndex"
-                  [class.scale-125]="i === currentImageIndex"
+                  [ngClass]="{
+                    'bg-tttRed': i === currentImageIndex,
+                    'bg-tttWhite/40': i !== currentImageIndex,
+                    'scale-125': i === currentImageIndex
+                  }"
                   [attr.aria-label]="
                       'Zu Banner ' + (i + 1) + ' wechseln: ' + getCleanTitle(slide.title)
                   "
