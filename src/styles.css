@@ -1,5 +1,4 @@
 /* Global styles and Tailwind CSS v4 setup */
-@import "primeicons/primeicons.css";
 @import "tailwindcss";
 @plugin "tailwindcss-primeui";
 
