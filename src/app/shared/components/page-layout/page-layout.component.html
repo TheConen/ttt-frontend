@@ -1,0 +1,18 @@
+<section class="bg-tttBlack min-h-screen py-12">
+    <div class="ttt-page-container">
+        <!-- Header -->
+        @if (pageTitle) {
+            <div class="ttt-text-center mb-8">
+                <h1 class="ttt-hero-title mb-2">{{ pageTitle }}</h1>
+                @if (pageSubtitle) {
+                    <p class="ttt-hero-text text-tttGray-200 mb-4">{{ pageSubtitle }}</p>
+                }
+            </div>
+        }
+
+        <!-- Content -->
+        <div class="space-y-8">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</section>

@@ -1,12 +1,14 @@
-<div class="flex min-h-screen flex-col bg-tttGray">
-    <ttt-header></ttt-header>
+<div class="bg-tttBlack text-tttWhite flex min-h-screen flex-col">
+    <div class="relative z-50">
+        <ttt-header></ttt-header>
+    </div>
 
     <div class="flex flex-1 flex-col md:flex-row">
+        <ttt-left-sidebar></ttt-left-sidebar>
         <main class="flex-1">
             <router-outlet />
         </main>
-        <nav class="order-first md:w-64">Left Sidebar</nav>
-        <aside class="md:w-64">Right Sidebar</aside>
+        <ttt-right-sidebar></ttt-right-sidebar>
     </div>
 
     <ttt-footer></ttt-footer>

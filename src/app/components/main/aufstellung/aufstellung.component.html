@@ -1,0 +1,390 @@
+<!-- Roster component -->
+<ttt-page-layout [pageTitle]="pageTitle" [pageSubtitle]="pageSubtitle">
+    <!-- Loading state -->
+    @if (isLoading) {
+        <div class="flex min-h-96 items-center justify-center">
+            <div class="text-center">
+                <div class="border-tttGray-300 border-t-tttRed mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4"></div>
+                <p class="text-tttWhite/70">Mitgliederdaten werden geladen...</p>
+            </div>
+        </div>
+    }
+
+    <!-- Error state -->
+    @if (loadingError && !isLoading) {
+        <div class="flex min-h-96 items-center justify-center">
+            <div class="text-center">
+                <div class="mb-4 flex justify-center">
+                    <i class="pi pi-exclamation-triangle text-tttRed text-4xl" aria-hidden="true"></i>
+                </div>
+                <h2 class="text-tttWhite mb-2 text-xl font-bold">Fehler</h2>
+                <p class="text-tttWhite/70 mb-4">{{ loadingError }}</p>
+                <button (click)="retryLoading()" class="ttt-btn-primary" aria-label="Mitgliederdaten erneut laden">
+                    <i class="pi pi-refresh" aria-hidden="true"></i>
+                    <span>Erneut versuchen</span>
+                </button>
+            </div>
+        </div>
+    }
+
+    <!-- Main content -->
+    @if (!isLoading && !loadingError) {
+        <div>
+            <!-- Statistics overview -->
+            <section class="mb-6">
+                <div class="ttt-page-container">
+                    <div class="ttt-text-center mb-4">
+                        <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
+                            <i class="pi pi-chart-bar text-tttRed"></i>
+                            {{ sections.OVERVIEW.TITLE }}
+                        </h2>
+                        <p class="ttt-description-text">{{ sections.OVERVIEW.SUBTITLE }}</p>
+                    </div>
+
+                    <div class="mb-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+                        @for (rank of rankOrder; track rank) {
+                            <div
+                                class="border-tttWhite/10 bg-tttGray-800/50 hover:border-tttRed/30 hover:shadow-tttRed/10 rounded-lg border p-3 text-center backdrop-blur-sm transition-all duration-300 hover:shadow-lg"
+                            >
+                                <div class="mb-2 flex justify-center">
+                                    <img
+                                        [src]="getRankInfo(rank).icon"
+                                        [alt]="getRankInfo(rank).name + ' Abzeichen'"
+                                        class="h-8 w-8 object-contain transition-transform duration-300 hover:scale-110"
+                                        loading="lazy"
+                                    />
+                                </div>
+                                <h3 class="text-tttWhite mb-1 text-sm font-semibold">{{ getRankInfo(rank).name }}</h3>
+                                <div class="mb-0.5 text-2xl font-bold" [class]="getRankInfo(rank).color">
+                                    {{ memberStats[rank] }}
+                                </div>
+                                <div class="text-tttWhite/50 text-[10px]">Mitglieder</div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Member summary -->
+                    <div class="text-center">
+                        <div class="bg-tttRed inline-flex items-center gap-2 rounded-lg px-3 py-1.5">
+                            <i class="pi pi-users text-tttWhite text-base" aria-hidden="true"></i>
+                            <span class="text-tttWhite text-base font-bold">{{ totalMembers }} aktive Mitglieder</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Member roster -->
+            <section class="bg-tttGray-900 py-8">
+                <div class="ttt-page-container">
+                    <div class="ttt-text-center mb-6">
+                        <h2 class="ttt-section-title mb-2 flex items-center justify-center gap-3">
+                            <i class="pi pi-users text-tttRed"></i>
+                            {{ sections.ROSTER.TITLE }}
+                        </h2>
+                        <p class="ttt-description-text">{{ sections.ROSTER.SUBTITLE }}</p>
+                    </div>
+
+                    <!-- Rank groups -->
+                    <div class="space-y-8">
+                        @for (rank of rankOrder; track rank) {
+                            <div [class.hidden]="membersByRank[rank].length === 0">
+                                <!-- Rank header -->
+                                <div class="mb-6 flex items-center gap-4">
+                                    @if (rank === "offizier") {
+                                        <img
+                                            [src]="getRankInfo(rank).icon"
+                                            [alt]="getRankInfo(rank).name + ' Abzeichen'"
+                                            class="h-6 w-6 object-contain"
+                                            loading="lazy"
+                                        />
+                                    }
+                                    <h3 class="text-tttWhite text-xl font-bold">{{ getRankInfo(rank).name }}</h3>
+                                    <div class="from-tttRed/50 h-px flex-1 bg-gradient-to-r to-transparent"></div>
+                                    <span class="text-tttWhite/70 text-sm font-medium">{{ membersByRank[rank].length }} Mitglieder</span>
+                                </div>
+
+                                <!-- Members Grid -->
+                                <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-6">
+                                    @for (member of membersByRank[rank]; track member.id) {
+                                        <div class="relative h-full">
+                                            <!-- Member card -->
+                                            <div
+                                                [id]="'member-' + member.id"
+                                                class="group ttt-content-card hover:border-tttRed/50 hover:bg-tttRed/5 relative flex min-h-[140px] flex-col justify-between p-3 text-center transition-all duration-300"
+                                                [ngClass]="{
+                                                    'cursor-pointer': hasExpandableContent(member),
+                                                    'bg-tttRed/5': member.isExpanded,
+                                                    'border-tttRed/50': member.isExpanded,
+                                                }"
+                                                [tttActivable]="hasExpandableContent(member)"
+                                                [activableRole]="'button'"
+                                                [activableAriaLabel]="
+                                                    hasExpandableContent(member)
+                                                        ? 'Details für ' + member.name + (member.isExpanded ? ' ausblenden' : ' anzeigen')
+                                                        : null
+                                                "
+                                                (activableActivate)="toggleMemberDetails(member)"
+                                                [attr.aria-expanded]="member.isExpanded"
+                                            >
+                                                <div>
+                                                    <!-- Avatar (officers only) -->
+                                                    @if (member.rank === "offizier") {
+                                                        <div class="relative mx-auto mb-2 flex justify-center">
+                                                            @if (member.avatar && member.avatar !== "") {
+                                                                <div
+                                                                    class="h-12 w-12 overflow-hidden rounded-full border-2 transition-all duration-300"
+                                                                    [class]="
+                                                                        'border-' +
+                                                                        getRankInfo(member.rank).color.split('-')[1] +
+                                                                        '-400/50 group-hover:border-' +
+                                                                        getRankInfo(member.rank).color.split('-')[1] +
+                                                                        '-400'
+                                                                    "
+                                                                >
+                                                                    <img
+                                                                        [src]="member.avatar"
+                                                                        [alt]="member.name + ' Avatar'"
+                                                                        class="h-full w-full object-cover"
+                                                                        loading="lazy"
+                                                                    />
+                                                                </div>
+                                                            } @else {
+                                                                <!-- Avatar fallback -->
+                                                                <div
+                                                                    class="flex h-12 w-12 items-center justify-center rounded-full border-2 border-yellow-400/50 bg-yellow-400/10 transition-transform duration-300 group-hover:scale-110"
+                                                                >
+                                                                    <i class="pi pi-user text-lg text-yellow-400" aria-hidden="true"></i>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    }
+
+                                                    <!-- Member info -->
+                                                    <h4
+                                                        class="text-tttWhite group-hover:text-tttRed mb-1 truncate text-sm font-bold transition-colors duration-300"
+                                                        [class.mt-2]="member.rank !== 'offizier'"
+                                                    >
+                                                        {{ member.name }}
+                                                    </h4>
+                                                    <span
+                                                        class="mb-1 block rounded px-1.5 py-0.5 text-xs font-medium"
+                                                        [class]="getRankBadgeClasses(member.rank)"
+                                                    >
+                                                        {{ getRankInfo(member.rank).shortName }}
+                                                    </span>
+                                                </div>
+
+                                                <!-- Compact stats -->
+                                                <div class="mb-1 flex justify-center gap-1 text-xs">
+                                                    @if (member.medals.length > 0) {
+                                                        <span
+                                                            class="flex h-5 w-5 items-center justify-center rounded bg-yellow-400/20"
+                                                            [title]="member.medals.length + ' Medaille(n)'"
+                                                        >
+                                                            <i class="pi pi-star-fill text-xs text-yellow-400" aria-hidden="true"></i>
+                                                        </span>
+                                                    }
+                                                    @if (member.campaignRibbons.length > 0) {
+                                                        <span
+                                                            class="flex h-5 w-5 items-center justify-center rounded bg-purple-400/20"
+                                                            [title]="member.campaignRibbons.length + ' Kampagne(n)'"
+                                                        >
+                                                            <i class="pi pi-flag text-xs text-purple-400" aria-hidden="true"></i>
+                                                        </span>
+                                                    }
+                                                    @if (member.abteilungen.length > 0) {
+                                                        <span
+                                                            class="flex h-5 w-5 items-center justify-center rounded bg-blue-400/20"
+                                                            [title]="member.abteilungen.length + ' Abteilung(en)'"
+                                                        >
+                                                            <i class="pi pi-briefcase text-xs text-blue-400" aria-hidden="true"></i>
+                                                        </span>
+                                                    }
+                                                </div>
+
+                                                <!-- Member since -->
+                                                <p class="text-tttGray-500 text-xs">
+                                                    {{ getMemberYear(member.memberSince) }}
+                                                </p>
+
+                                                <!-- Expand indicator -->
+                                                @if (hasExpandableContent(member)) {
+                                                    <div class="mt-1 flex justify-center">
+                                                        <i
+                                                            class="pi text-tttGray-500 text-xs transition-transform duration-300"
+                                                            [class.pi-chevron-down]="!member.isExpanded"
+                                                            [class.pi-chevron-up]="member.isExpanded"
+                                                            aria-hidden="true"
+                                                        ></i>
+                                                    </div>
+                                                }
+                                            </div>
+
+                                            <!-- Expanded details INLINE with absolute positioning like Chronik -->
+                                            @if (member.isExpanded) {
+                                                <div
+                                                    class="absolute right-0 left-0 z-10 mt-2 min-w-[calc(100vw-2rem)] sm:min-w-[600px] lg:min-w-[800px]"
+                                                >
+                                                    <div class="ttt-content-card border-tttRed/50 bg-tttRed/5 p-4">
+                                                        <!-- Member header -->
+                                                        <div class="border-tttGray-700/50 mb-4 flex items-center gap-3 border-b pb-3">
+                                                            <div class="h-16 w-16 flex-shrink-0">
+                                                                @if (member.avatar && member.avatar !== "") {
+                                                                    <div
+                                                                        class="h-16 w-16 overflow-hidden rounded-full border-2"
+                                                                        [class]="
+                                                                            'border-' +
+                                                                            getRankInfo(member.rank).color.split('-')[1] +
+                                                                            '-400/50'
+                                                                        "
+                                                                    >
+                                                                        <img
+                                                                            [src]="member.avatar"
+                                                                            [alt]="member.name"
+                                                                            class="h-full w-full object-cover"
+                                                                        />
+                                                                    </div>
+                                                                } @else {
+                                                                    <div
+                                                                        class="flex h-16 w-16 items-center justify-center rounded-full border-2 border-yellow-400/50 bg-yellow-400/10"
+                                                                    >
+                                                                        <i
+                                                                            class="pi pi-user text-2xl text-yellow-400"
+                                                                            aria-hidden="true"
+                                                                        ></i>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                            <div class="flex-1">
+                                                                <h4 class="text-tttWhite mb-1 text-xl font-bold">{{ member.name }}</h4>
+                                                                <div class="flex items-center gap-2">
+                                                                    <span
+                                                                        class="rounded px-2 py-1 text-sm font-medium"
+                                                                        [class]="getRankBadgeExpandedClasses(member.rank)"
+                                                                    >
+                                                                        {{ getRankInfo(member.rank).name }}
+                                                                    </span>
+                                                                    <span class="text-tttGray-400 text-sm">
+                                                                        Mitglied seit {{ getFormattedMemberSince(member.memberSince) }}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <button
+                                                                (click)="toggleMemberDetails(member)"
+                                                                class="bg-tttGray-800/50 hover:bg-tttRed/20 flex h-8 w-8 items-center justify-center rounded-full transition-all duration-300"
+                                                            >
+                                                                <i class="pi pi-times text-tttGray-400" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+
+                                                        <div class="grid gap-4 md:grid-cols-3">
+                                                            <!-- Medals -->
+                                                            @if (member.medals.length > 0) {
+                                                                <div class="space-y-2">
+                                                                    <h5 class="text-tttWhite flex items-center gap-2 text-sm font-semibold">
+                                                                        <i class="pi pi-star-fill text-yellow-400" aria-hidden="true"></i>
+                                                                        Auszeichnungen
+                                                                    </h5>
+                                                                    <div class="space-y-2">
+                                                                        @for (medal of member.medals; track medal.id) {
+                                                                            <div
+                                                                                class="bg-tttGray-800/50 border-tttGray-600/30 flex items-center gap-2 rounded-lg border p-2"
+                                                                            >
+                                                                                <img
+                                                                                    [src]="medal.image"
+                                                                                    [alt]="medal.name"
+                                                                                    class="h-6 w-6 object-contain"
+                                                                                />
+                                                                                <div class="min-w-0 flex-1">
+                                                                                    <p class="text-tttWhite truncate text-xs font-medium">
+                                                                                        {{ medal.name }}
+                                                                                    </p>
+                                                                                    <p class="text-tttGray-400 truncate text-xs">
+                                                                                        {{ medal.description }}
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                            <!-- Campaign Ribbons -->
+                                                            @if (member.campaignRibbons.length > 0) {
+                                                                <div class="space-y-2">
+                                                                    <h5 class="text-tttWhite flex items-center gap-2 text-sm font-semibold">
+                                                                        <i class="pi pi-flag text-purple-400" aria-hidden="true"></i>
+                                                                        Kampagnen-Teilnahmen
+                                                                    </h5>
+                                                                    <div class="space-y-2">
+                                                                        @for (
+                                                                            ribbon of getSortedCampaignRibbons(member.campaignRibbons);
+                                                                            track ribbon.id
+                                                                        ) {
+                                                                            <div
+                                                                                class="bg-tttGray-800/50 border-tttGray-600/30 flex items-center gap-2 rounded-lg border p-2"
+                                                                            >
+                                                                                <img
+                                                                                    [src]="ribbon.image"
+                                                                                    [alt]="ribbon.name"
+                                                                                    class="h-6 w-6 object-contain"
+                                                                                />
+                                                                                <div class="min-w-0 flex-1">
+                                                                                    <p class="text-tttWhite truncate text-xs font-medium">
+                                                                                        {{ ribbon.campaign }}
+                                                                                    </p>
+                                                                                    <p class="text-tttGray-400 text-xs">
+                                                                                        {{ ribbon.year }}
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            }
+
+                                                            <!-- Departments -->
+                                                            @if (member.abteilungen.length > 0) {
+                                                                <div class="space-y-2">
+                                                                    <h5 class="text-tttWhite flex items-center gap-2 text-sm font-semibold">
+                                                                        <i class="pi pi-briefcase text-blue-400" aria-hidden="true"></i>
+                                                                        Abteilungen
+                                                                    </h5>
+                                                                    <div class="space-y-2">
+                                                                        @for (abt of member.abteilungen; track abt.id) {
+                                                                            <div
+                                                                                class="bg-tttGray-800/50 border-tttGray-600/30 flex items-center gap-2 rounded-lg border p-2"
+                                                                            >
+                                                                                <img
+                                                                                    [src]="abt.icon"
+                                                                                    [alt]="abt.name"
+                                                                                    class="h-6 w-6 object-contain"
+                                                                                />
+                                                                                <div class="min-w-0 flex-1">
+                                                                                    <p class="text-tttWhite truncate text-xs font-medium">
+                                                                                        {{ abt.name }}
+                                                                                    </p>
+                                                                                    <p class="text-tttGray-400 truncate text-xs">
+                                                                                        {{ abt.description }}
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </section>
+        </div>
+    }
+</ttt-page-layout>
