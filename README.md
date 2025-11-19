@@ -1,26 +1,68 @@
-# TttFrontend
+# TTT Frontend
 
-This project is using [Angular CLI](https://github.com/angular/angular-cli) version 20.x, PrimeNG 20 and Tailwind CSS 4.
+Angular 20 application for Tactical Training Team website.
 
-## Development server
+## Project Structure
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+```
+src/app/
+├── core/
+│   ├── services/          # Singleton services (API, CSP, events, medien, members)
+│   ├── guards/           # Route guards (security)
+│   ├── interceptors/     # HTTP interceptors (security)
+│   └── config/          # Application configuration (CSP)
+├── shared/
+│   ├── components/       # Shared components (base-page, page-layout)
+│   ├── types/           # TypeScript type definitions
+│   └── utils/           # Barrel exports for shared utilities
+├── components/
+│   ├── header/          # Header component
+│   ├── footer/          # Footer component
+│   ├── sidebar/         # Left and right sidebars
+│   └── main/            # Main content pages (home, aufstellung, chronik, medien, etc.)
+└── environments/        # Environment configurations
+```
 
-## Code scaffolding
+## Development
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+```bash
+pnpm install
+pnpm run start
+```
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+pnpm run build
+```
 
-## Running unit tests
+## Documentation
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+- [Security](docs/security.md) - Security implementation details
+- [CSP Management](docs/csp-management.md) - Content Security Policy configuration
+- [Backend Overview](docs/backend-overview.md) - Backend API integration
 
-## Running end-to-end tests
+## Technology Stack
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **Angular 20** - Frontend framework
+- **PrimeNG 20** - UI component library with @primeuix/themes
+- **TailwindCSS 4** - Utility-first CSS framework
+- **RxJS 7** - Reactive programming library
+- **TypeScript 5.9** - Type-safe JavaScript
+
+## Testing
+
+```bash
+pnpm run test        # Run unit tests
+pnpm run lint        # Run ESLint
+```
+
+## Code Quality
+
+```bash
+pnpm run prettier        # Format code
+pnpm run prettier:check  # Check code formatting
+```
 
 ## Further help
 

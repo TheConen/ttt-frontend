@@ -1,12 +1,12 @@
-<div class="w-full content-center bg-tttWhite md:px-64 dark:bg-tttBlack">
-    <p-menubar [model]="items" styleClass="px-0 py-3 border-none">
+<div class="w-full content-center bg-black md:px-64">
+    <p-menubar [model]="items" styleClass="px-0 py-3 border-none bg-black">
         <ng-template #start>
             <a routerLink="/" class="mr-8">
-                <img src="/logo.png" class="max-h-6" alt="Tactical Training Team Logo" />
+                <img [src]="logoPath" class="max-h-6" [alt]="logoAlt" />
             </a>
         </ng-template>
         <ng-template #end>
-            <a routerLink="/mitmachen" pButton size="large" class="font-heading font-bold">Jetzt mitmachen</a>
+            <a routerLink="/mitmachen" pButton size="large" class="ttt-btn-primary font-heading font-bold"> Mitmachen </a>
         </ng-template>
     </p-menubar>
 </div>

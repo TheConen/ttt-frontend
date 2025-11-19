@@ -1,0 +1,566 @@
+<!-- Join page -->
+<div class="bg-tttBlack min-h-screen">
+    <!-- Hero section with background -->
+    <section class="relative overflow-hidden py-20">
+        <!-- Background Image -->
+        <div class="absolute inset-0">
+            <img src="/img/home-banner/home-banner1.webp" alt="TTT Mitmachen Background" class="h-full w-full object-cover" />
+            <div class="from-tttBlack/95 via-tttBlack/85 to-tttBlack/75 absolute inset-0 bg-gradient-to-r"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="relative z-10 flex h-full items-center">
+            <div class="ttt-text-center mx-auto max-w-3xl px-6">
+                <div class="ttt-badge mb-6">
+                    <i class="pi pi-users"></i>
+                    <span>Das TTT als offene Community</span>
+                </div>
+
+                <h1 class="ttt-hero-title">MITMACHEN BEIM <span class="text-tttRed">TTT</span></h1>
+
+                <p class="ttt-hero-text">
+                    {{ pageSubtitle }}
+                    Unsere Treffen sind <strong class="text-tttRed">{{ eventSchedule }}</strong
+                    >. Mitmachen kann jeder - egal ob Rekrut oder Gast.
+                </p>
+
+                <div class="mt-8 flex justify-center">
+                    <img src="/img/logo-hex-black.webp" alt="TTT Logo" class="h-20 w-auto" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ways to join the TTT -->
+    <section class="py-12">
+        <div class="ttt-page-container">
+            <div class="ttt-text-center mb-8">
+                <h2 class="ttt-section-title-large">Deine Wege in das TTT</h2>
+                <p class="ttt-description-text">Zwei verschiedene Wege führen zu uns – wähle den passenden für dich</p>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-2">
+                <!-- Recruit - community member -->
+                <div class="ttt-content-card flex flex-col">
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="bg-tttRed flex h-12 w-12 items-center justify-center rounded-lg">
+                            <i class="pi pi-user-plus text-lg text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="ttt-feature-title">Rekrut - Community Mitglied</h3>
+                            <p class="text-tttGray-300 text-sm">Der Standard-Weg ins TTT</p>
+                        </div>
+                    </div>
+
+                    <p class="text-tttGray-300 mb-4 text-sm leading-relaxed">
+                        Als Rekrut wirst du fester Bestandteil unserer Community und kannst an allen Events teilnehmen. Du durchläufst eine
+                        kurze Einführungsphase und lernst unsere Spielweise kennen.
+                    </p>
+
+                    <div class="mb-4 space-y-2">
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Vollwertige Community-Mitgliedschaft</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Teilnahme an allen Events</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Zugang zu internen Bereichen</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Möglichkeit zur Weiterentwicklung</span>
+                        </div>
+                    </div>
+
+                    <a
+                        [href]="externalLinks.discord"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ttt-btn-primary mt-auto w-full text-center"
+                    >
+                        Discord beitreten
+                    </a>
+                </div>
+
+                <!-- Guest -->
+                <div class="ttt-content-card flex flex-col">
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="bg-tttGray-600 flex h-12 w-12 items-center justify-center rounded-lg">
+                            <i class="pi pi-users text-lg text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="ttt-feature-title">Gast</h3>
+                            <p class="text-tttGray-300 text-sm">Flexibel und unverbindlich</p>
+                        </div>
+                    </div>
+
+                    <p class="text-tttGray-300 mb-4 text-sm leading-relaxed">
+                        Der Rang "Gast" eignet sich für Spieler, die gelegentlich bei uns teilnehmen möchten, ohne Verpflichtungen zu
+                        übernehmen. Dieser Rang ist auch für Spieler aus anderen Arma Communities gedacht.
+                    </p>
+
+                    <div class="mb-4 space-y-2">
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Keine Verpflichtungen oder Probezeit</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Ideal für andere Community-Mitglieder</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Gelegentliche Teilnahme möglich</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Schneller Einstieg</span>
+                        </div>
+                    </div>
+
+                    <a
+                        [href]="externalLinks.discord"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ttt-btn-secondary mt-auto w-full text-center"
+                    >
+                        Discord beitreten
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Die Voraussetzungen -->
+    <section class="py-12">
+        <div class="ttt-page-container">
+            <div class="ttt-text-center mb-8">
+                <h2 class="ttt-section-title-large">Die Voraussetzungen</h2>
+                <p class="ttt-description-text">Was du für die Teilnahme an unseren Events brauchst</p>
+            </div>
+
+            <div class="ttt-content-card">
+                <!-- Spiel-Anforderungen -->
+                <div class="bg-tttGray-800 mb-6 rounded-lg p-4">
+                    <h3 class="text-tttWhite mb-4 flex items-center gap-2 text-lg font-semibold">
+                        <i class="pi pi-desktop text-tttRed"></i>
+                        Spiel-Anforderungen
+                    </h3>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        <!-- Arma 3 -->
+                        <div class="bg-tttBlack/30 flex items-center gap-3 rounded-lg p-3">
+                            <i class="pi pi-desktop text-tttRed text-lg"></i>
+                            <div>
+                                <p class="text-tttWhite text-sm font-medium">Arma 3</p>
+                                <p class="text-tttGray-300 text-xs">Apex & Contact DLCs erforderlich</p>
+                            </div>
+                        </div>
+                        <!-- Arma Reforger -->
+                        <div class="bg-tttBlack/30 flex items-center gap-3 rounded-lg p-3">
+                            <i class="pi pi-play text-tttGreen text-lg"></i>
+                            <div>
+                                <p class="text-tttWhite text-sm font-medium">Arma Reforger</p>
+                                <p class="text-tttGray-300 text-xs">Nur Base Game erforderlich</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weitere Voraussetzungen -->
+                <div>
+                    <h3 class="text-tttWhite mb-4 flex items-center gap-2 text-lg font-semibold">
+                        <i class="pi pi-check-circle text-tttGreen"></i>
+                        Weitere Voraussetzungen
+                    </h3>
+                    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                        <!-- Ab 18 Jahre -->
+                        <div class="bg-tttGray-800 rounded-lg p-4 text-center">
+                            <div class="bg-tttRed mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
+                                <i class="pi pi-id-card text-sm text-white"></i>
+                            </div>
+                            <h4 class="text-tttWhite mb-2 text-sm font-semibold">Ab 18 Jahre</h4>
+                            <p class="text-tttGray-300 text-xs leading-relaxed">
+                                Wir sind der Meinung, dass Arma 3 und Reforger reife Persönlichkeiten brauchen, die die Geduld aufbringen,
+                                taktisch zu spielen.
+                            </p>
+                        </div>
+                        <!-- Headset für TS3 & Discord -->
+                        <div class="bg-tttGray-800 rounded-lg p-4 text-center">
+                            <div class="mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-[#5865F2]">
+                                <i class="pi pi-microphone text-sm text-white"></i>
+                            </div>
+                            <h4 class="text-tttWhite mb-2 text-sm font-semibold">Headset für TS3 & Discord</h4>
+                            <p class="text-tttGray-300 text-xs leading-relaxed">
+                                Für den Spielbetrieb und zur Kommunikation innerhalb der Community zwingend notwendig.
+                            </p>
+                        </div>
+                        <!-- Disziplin während Events -->
+                        <div class="bg-tttGray-800 rounded-lg p-4 text-center">
+                            <div class="bg-tttGreen mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
+                                <i class="pi pi-shield text-sm text-white"></i>
+                            </div>
+                            <h4 class="text-tttWhite mb-2 text-sm font-semibold">Disziplin während Events</h4>
+                            <p class="text-tttGray-300 text-xs leading-relaxed">
+                                Motivation die das taktische Spielen erfordert und die Geduld, den Feind auch mal nur zu beobachten.
+                            </p>
+                        </div>
+                        <!-- Geeigneter Computer -->
+                        <div class="bg-tttGray-800 rounded-lg p-4 text-center">
+                            <div class="bg-tttGray-600 mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
+                                <i class="pi pi-cog text-sm text-white"></i>
+                            </div>
+                            <h4 class="text-tttWhite mb-2 text-sm font-semibold">Geeigneter Computer</h4>
+                            <p class="text-tttGray-300 text-xs leading-relaxed">
+                                PC der auch bei anspruchsvollen Missionen mit bis zu 60+ Spielern in beiden Arma-Titeln flüssig läuft.
+                            </p>
+                        </div>
+                        <!-- Bereitschaft um Neues zu lernen -->
+                        <div class="bg-tttGray-800 rounded-lg p-4 text-center">
+                            <div class="bg-tttGreen mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
+                                <i class="pi pi-book text-sm text-white"></i>
+                            </div>
+                            <h4 class="text-tttWhite mb-2 text-sm font-semibold">Bereitschaft um Neues zu lernen</h4>
+                            <p class="text-tttGray-300 text-xs leading-relaxed">
+                                Sich innerhalb des Spiels in ein Team einzugliedern und sich an die Spielgewohnheiten des TTT anzupassen.
+                            </p>
+                        </div>
+                        <!-- Zuverlässigkeit & Pünktlichkeit -->
+                        <div class="bg-tttGray-800 rounded-lg p-4 text-center">
+                            <div class="bg-tttRed mx-auto mb-3 flex h-10 w-10 items-center justify-center rounded-lg">
+                                <i class="pi pi-clock text-sm text-white"></i>
+                            </div>
+                            <h4 class="text-tttWhite mb-2 text-sm font-semibold">Zuverlässigkeit & Pünktlichkeit</h4>
+                            <p class="text-tttGray-300 text-xs leading-relaxed">
+                                Regelmäßige und pünktliche Teilnahme an Events. Bei Verhinderung rechtzeitige Abmeldung.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arma3Sync und Tech-Check -->
+    <section class="py-12">
+        <div class="ttt-page-container">
+            <div class="ttt-text-center mb-8">
+                <h2 class="ttt-section-title-large">Arma3Sync und Tech-Check</h2>
+                <p class="ttt-description-text">
+                    Für Arma 3 Events benötigst du Arma3Sync für Mods. Arma Reforger lädt Mods automatisch beim Server-Join.
+                </p>
+            </div>
+
+            <div class="mx-auto max-w-6xl">
+                <!-- Arma3Sync Tutorial -->
+                <div class="border-tttRed/30 relative mb-8 overflow-hidden rounded-xl border-2">
+                    <!-- Background Image -->
+                    <div class="absolute inset-0">
+                        <img src="/img/mitmachen/mitmachen-arma3sync.webp" alt="Arma3Sync Background" class="h-full w-full object-cover" />
+                        <div class="from-tttBlack/90 via-tttBlack/80 to-tttBlack/70 absolute inset-0 bg-gradient-to-r"></div>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="relative z-10 p-6">
+                        <div class="mb-6 flex items-start gap-4">
+                            <div class="bg-tttRed flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg shadow-lg">
+                                <i class="pi pi-download text-lg text-white"></i>
+                            </div>
+                            <div class="flex-1">
+                                <!-- Header with better background -->
+                                <div class="bg-tttBlack/80 border-tttRed/20 mb-6 rounded-lg border p-4 backdrop-blur-sm">
+                                    <h3 class="ttt-feature-title text-tttWhite mb-2 drop-shadow-lg">Arma3Sync - Nur für Arma 3</h3>
+                                    <p class="text-tttWhite mb-0 text-sm leading-relaxed drop-shadow-md">
+                                        Für Arma 3 Events musst du Modifikationen über Arma3Sync herunterladen. Bei Arma Reforger werden
+                                        Mods automatisch beim Server-Join geladen. Wähle deine bevorzugte Lernmethode für Arma3Sync.
+                                    </p>
+                                </div>
+
+                                <!-- Tutorial Options -->
+                                <div class="grid gap-4 md:grid-cols-3">
+                                    <!-- Schriftliche Anleitung -->
+                                    <div
+                                        class="bg-tttBlack/60 border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 flex flex-col gap-3 rounded-lg border p-4 backdrop-blur-sm transition-all duration-300"
+                                    >
+                                        <div class="flex items-center gap-3">
+                                            <div class="bg-tttRed/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg">
+                                                <i class="pi pi-file-text text-tttRed text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-tttWhite text-sm font-semibold">Schriftliche Anleitung</h4>
+                                                <p class="text-tttGray-300 text-xs">Detaillierte Wiki-Anleitung</p>
+                                            </div>
+                                        </div>
+                                        <a
+                                            [href]="externalLinks.arma3SyncGuide"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="from-tttRed to-tttRed-600 text-tttWhite hover:shadow-tttRed/30 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-bold shadow-lg transition-all duration-300 hover:shadow-xl"
+                                        >
+                                            <i class="pi pi-file-text text-xs"></i>
+                                            Anleitung öffnen
+                                        </a>
+                                    </div>
+                                    <!-- Video-Tutorial -->
+                                    <div
+                                        class="bg-tttBlack/60 border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 flex flex-col gap-3 rounded-lg border p-4 backdrop-blur-sm transition-all duration-300"
+                                    >
+                                        <div class="flex items-center gap-3">
+                                            <div class="bg-tttRed/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg">
+                                                <i class="pi pi-play text-tttRed text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-tttWhite text-sm font-semibold">Video-Tutorial</h4>
+                                                <p class="text-tttGray-300 text-xs">Schritt-für-Schritt Video</p>
+                                            </div>
+                                        </div>
+                                        <a
+                                            [href]="externalLinks.arma3SyncVideo"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="from-tttRed to-tttRed-600 text-tttWhite hover:shadow-tttRed/30 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-bold shadow-lg transition-all duration-300 hover:shadow-xl"
+                                        >
+                                            <i class="pi pi-play text-xs"></i>
+                                            Video ansehen
+                                        </a>
+                                    </div>
+                                    <!-- Tipps & Tricks -->
+                                    <div
+                                        class="bg-tttBlack/60 border-tttRed/20 hover:bg-tttBlack/70 hover:border-tttRed/40 flex flex-col gap-3 rounded-lg border p-4 backdrop-blur-sm transition-all duration-300"
+                                    >
+                                        <div class="flex items-center gap-3">
+                                            <div class="bg-tttRed/30 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg">
+                                                <i class="pi pi-lightbulb text-tttRed text-sm"></i>
+                                            </div>
+                                            <div>
+                                                <h4 class="text-tttWhite text-sm font-semibold">Tipps & Tricks</h4>
+                                                <p class="text-tttGray-300 text-xs">Hilfreiche Video-Tipps</p>
+                                            </div>
+                                        </div>
+                                        <a
+                                            [href]="externalLinks.arma3SyncTips"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            class="from-tttRed to-tttRed-600 text-tttWhite hover:shadow-tttRed/30 inline-flex items-center gap-2 rounded-lg bg-gradient-to-r px-4 py-2 text-sm font-bold shadow-lg transition-all duration-300 hover:shadow-xl"
+                                        >
+                                            <i class="pi pi-lightbulb text-xs"></i>
+                                            Tipps ansehen
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tech-Check -->
+                <div class="ttt-content-card">
+                    <div class="mb-4 flex items-start gap-4">
+                        <div class="bg-tttGreen flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-lg">
+                            <i class="pi pi-cog text-tttBlack text-lg"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="ttt-feature-title mb-2">Tech-Check</h3>
+                            <p class="text-tttGray-300 mb-4 text-sm leading-relaxed">
+                                Bevor du an Events teilnimmst, solltest du sicherstellen, dass alles korrekt funktioniert.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="from-tttGray-800 to-tttGray-700 rounded-lg bg-gradient-to-r p-4">
+                        <h4 class="text-tttWhite mb-3 text-base font-semibold">
+                            <i class="pi pi-info-circle text-tttGreen mr-2 text-sm"></i>
+                            Wichtige Hinweise zum Tech-Check
+                        </h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2">
+                                <i class="pi pi-check text-tttGreen mt-1 text-xs"></i>
+                                <span class="text-tttGray-300 text-sm"
+                                    >Solltest du Fragen oder Probleme haben, stehen dir unsere Technikchecker zur Verfügung</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="pi pi-check text-tttGreen mt-1 text-xs"></i>
+                                <span class="text-tttGray-300 text-sm"
+                                    >Erkenne sie anhand des Hammer-Symbols im Discord oder TeamSpeak (ts3.tacticalteam.de)</span
+                                >
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="pi pi-exclamation-triangle text-tttRed mt-1 text-xs"></i>
+                                <span class="text-tttGray-300 text-sm"
+                                    ><strong
+                                        >Überprüfe vor dem Event bitte, ob alles funktioniert - spätestens bis 18 Uhr am Event-Tag!</strong
+                                    ></span
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dein Event in das TTT -->
+    <section class="from-tttGray-900 via-tttRed/10 to-tttGray-800 bg-gradient-to-br py-12">
+        <div class="ttt-page-container">
+            <div class="ttt-text-center mb-8">
+                <h2 class="ttt-section-title-large">Dein Event in das TTT</h2>
+                <p class="ttt-description-text">Zwei verschiedene Wege stehen zur Auswahl – je nach deiner Erfahrung</p>
+            </div>
+
+            <div class="grid gap-8 lg:grid-cols-2">
+                <!-- Einsteiger Event - Für Jeden -->
+                <div class="ttt-content-card flex flex-col">
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="bg-tttGray-600 flex h-12 w-12 items-center justify-center rounded-lg">
+                            <i class="pi pi-graduation-cap text-lg text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="ttt-feature-title">Einsteiger Event - Für Jeden</h3>
+                            <p class="text-tttGray-300 text-sm">Der Standard-Weg ins TTT</p>
+                        </div>
+                    </div>
+
+                    <p class="text-tttGray-300 mb-4 text-sm leading-relaxed">
+                        Um erfolgreich an unseren TTT-Events teilzunehmen, musst du eine Einführung in das taktische Spiel erhalten, indem
+                        du an einem unserer "Einsteiger-Events" teilnimmst.
+                    </p>
+
+                    <div class="text-tttGray-300 mb-4 text-sm leading-relaxed">
+                        Ohne Teilnahme an einem Einsteiger-Event kannst du nicht an den normalen TTT-Events teilnehmen.
+                    </div>
+
+                    <div class="mb-6 flex-grow space-y-2">
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Für alle Erfahrungsstufen geeignet</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Solides Fundament für taktisches Spiel</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Voraussetzung für normale Events</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttWhite mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Regelmäßige Termine verfügbar</span>
+                        </div>
+                    </div>
+
+                    <a
+                        [href]="externalLinks.events"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ttt-btn-secondary mt-auto w-full text-center"
+                    >
+                        Nächstes Einsteiger-Event finden
+                    </a>
+                </div>
+
+                <!-- Fast Path - Für Veteranen -->
+                <div class="ttt-content-card flex flex-col">
+                    <div class="mb-4 flex items-center gap-3">
+                        <div class="bg-tttRed flex h-12 w-12 items-center justify-center rounded-lg">
+                            <i class="pi pi-star text-lg text-white"></i>
+                        </div>
+                        <div>
+                            <h3 class="ttt-feature-title">Fast Path - Für Veteranen</h3>
+                            <p class="text-tttGray-300 text-sm">Der schnelle Weg für Erfahrene</p>
+                        </div>
+                    </div>
+
+                    <p class="text-tttGray-300 mb-4 text-sm leading-relaxed">
+                        Du hast bereits Erfahrung im taktischen Spielen von Arma und verstehst den Begriff MilSim. Du beherrschst ACE &
+                        ACRE2 und kennst dich mit taktischen Bewegungen und Angriffsmanövern aus?
+                    </p>
+
+                    <div class="text-tttGray-300 mb-4 text-sm leading-relaxed">
+                        Dann vereinbare einen Termin für einen Fast-Path mit unserer Personal-Abteilung (&#64;Personal) im Discord.
+                    </div>
+
+                    <div class="mb-6 flex-grow space-y-2">
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Erfahrung mit ACE & ACRE2 erforderlich</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Kenntnisse in taktischen Bewegungen</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">MilSim-Erfahrung vorhanden</span>
+                        </div>
+                        <div class="flex items-start gap-2">
+                            <i class="pi pi-check text-tttRed mt-1 text-xs"></i>
+                            <span class="text-tttGray-300 text-sm">Termin mit Personal-Abteilung</span>
+                        </div>
+                    </div>
+
+                    <a
+                        [href]="externalLinks.discord"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="ttt-btn-primary mt-auto w-full text-center"
+                    >
+                        Personal-Abteilung kontaktieren
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Das nächste Einsteiger Event finden -->
+    <section class="from-tttRed via-tttRed-600 to-tttRed-700 bg-gradient-to-r py-16">
+        <div class="ttt-hero-container ttt-text-center">
+            <h2 class="mb-4 text-3xl font-bold text-white md:text-4xl">Das nächste Einsteiger Event finden</h2>
+            <p class="text-tttRed-100 ttt-constrained-text mb-6 text-lg">
+                <strong>Anmeldung TTT-Discord → Setup (Arma3Sync für Arma 3) → Einsteiger-Event → Los geht's!</strong>
+            </p>
+
+            <div class="mb-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <a
+                    [href]="externalLinks.events"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-tttRed hover:bg-tttGray-100 inline-flex transform items-center gap-2 rounded-xl bg-white px-8 py-4 text-lg font-bold shadow-lg transition-all duration-300 hover:scale-105"
+                >
+                    <i class="pi pi-calendar"></i>
+                    Jetzt nachschauen
+                </a>
+
+                <a
+                    [href]="externalLinks.discord"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hover:text-tttRed inline-flex items-center gap-2 rounded-xl border-2 border-white bg-transparent px-8 py-4 text-lg font-bold text-white transition-all duration-300 hover:bg-white"
+                >
+                    <i class="pi pi-discord"></i>
+                    Discord beitreten
+                </a>
+            </div>
+
+            <div class="mb-8 flex flex-wrap items-center justify-center gap-6 text-white">
+                <div class="ttt-text-center">
+                    <div class="text-2xl font-bold">80+</div>
+                    <div class="text-tttRed-200 text-sm">Aktive Mitglieder</div>
+                </div>
+                <div class="bg-tttRed-400 hidden h-8 w-px sm:block"></div>
+                <div class="ttt-text-center">
+                    <div class="text-2xl font-bold">2x</div>
+                    <div class="text-tttRed-200 text-sm">Events pro Woche</div>
+                </div>
+                <div class="bg-tttRed-400 hidden h-8 w-px sm:block"></div>
+                <div class="ttt-text-center">
+                    <div class="text-2xl font-bold">2013</div>
+                    <div class="text-tttRed-200 text-sm">Gegründet</div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,37 @@
+<aside class="bg-tttGray-900 border-tttGray-800 border-l md:w-64">
+    <div class="p-6">
+        <h3 class="text-tttWhite mb-4 flex items-center gap-2 text-lg font-bold">
+            <i [class]="discordIcon.class"></i>
+            Live Discord
+        </h3>
+        <div class="space-y-3">
+            <!-- Discord Widget -->
+            <div class="bg-tttGray-800 border-tttGray-700 overflow-hidden rounded-lg border">
+                <iframe
+                    src="https://discord.com/widget?id=121399943393968128&theme=dark"
+                    width="100%"
+                    height="400"
+                    sandbox="allow-popups allow-same-origin allow-scripts"
+                    class="w-full border-0"
+                    title="TTT Discord Server"
+                >
+                </iframe>
+            </div>
+
+            <!-- Fallback Discord Link -->
+            <div class="bg-tttGray-800 border-tttGray-700 rounded-lg border p-4">
+                <div class="text-center">
+                    <p class="text-tttGray-300 mb-3 text-sm">Widget lädt nicht?</p>
+                    <a
+                        href="https://discord.tacticalteam.de"
+                        target="_blank"
+                        class="bg-tttRed hover:bg-tttRed-600 inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors"
+                    >
+                        <i class="pi pi-discord text-tttWhite"></i>
+                        Discord beitreten
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</aside>
