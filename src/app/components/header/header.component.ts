@@ -5,7 +5,7 @@ import { Menubar } from 'primeng/menubar';
 import { ButtonDirective } from 'primeng/button';
 
 const HEADER_CONFIG = {
-    LOGO_PATH: '/img/logo.png',
+    LOGO_PATH: '/img/logo.webp',
     LOGO_ALT: 'Tactical Training Team Logo',
 } as const;
 
