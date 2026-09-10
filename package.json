@@ -35,7 +35,7 @@
         "@openng/optimus-ui-tailwindcss": "2.0.1",
         "@tailwindcss/postcss": "4.3.3",
         "@types/node": "24.13.3",
-        "angular-eslint": "22.1.0",
+        "angular-eslint": "22.5.0",
         "autoprefixer": "10.5.4",
         "eslint": "10.9.0",
         "eslint-config-prettier": "10.1.8",
